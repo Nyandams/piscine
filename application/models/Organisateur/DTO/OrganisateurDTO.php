@@ -3,6 +3,11 @@
 class OrganisateurDTO extends CI_Model
 {
     /**
+     * @var int
+     */
+    private $idOrganisateur;
+    
+    /**
      * @var string
      */
     private $loginOrganisateur = '';
@@ -21,6 +26,22 @@ class OrganisateurDTO extends CI_Model
      * @var string
      */
     private $prenomOrganisateur = '';
+
+    /**
+     * @return the $idOrganisateur
+     */
+    public function getIdOrganisateur()
+    {
+        return $this->idOrganisateur;
+    }
+
+    /**
+     * @param number $idOrganisateur
+     */
+    public function setIdOrganisateur($idOrganisateur)
+    {
+        $this->idOrganisateur = $idOrganisateur;
+    }
 
     /**
      * @return $loginOrganisateur

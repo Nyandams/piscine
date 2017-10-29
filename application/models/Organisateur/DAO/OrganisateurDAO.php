@@ -4,6 +4,7 @@ class OrganisateurDAO extends CI_Model
 {
     
     private $correlationTable = array(
+        'idOrganisateur'            => 'idOrganisateur',
         'loginOrganisateur'         => 'loginOrganisateur',
         'motDePasseOrganisateur'    => 'motDePasseOrganisateur',
         'nomOrganisateur'           => 'nomOrganisateur',
