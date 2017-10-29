@@ -13,7 +13,7 @@ class OrganisateurDAO extends CI_Model
     
     public function __construct(){
         parent::__construct();
-        $this->load->model('NotFoundOrganisateurException');
+        $this->load->model('Organisateur/NotFoundOrganisateurException');
         $this->load->model('Organisateur/DTO/OrganisateurDTO');
     }
     

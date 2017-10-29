@@ -5,7 +5,7 @@ class OrganisateurDTO extends CI_Model
     /**
      * @var int
      */
-    private $idOrganisateur;
+    private $idOrganisateur = NULL;
     
     /**
      * @var string

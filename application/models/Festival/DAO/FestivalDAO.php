@@ -15,6 +15,11 @@ class FestivalDAO extends CI_Model
         $this->load->model('Festival/DTO/FestivalDTO');
     }
 
+    /**
+     * renvoi tous les festivals
+     * @throws NotFoundFestivalException
+     * @return FestivalCollection
+     */
     public function getFestivals(){
         $resultat = $this->db->select()
                              ->from('Festival')
@@ -28,6 +33,7 @@ class FestivalDAO extends CI_Model
                 $dto = $this->hydrateFromDatabase($festival);
                 $festivalCollection->append($dto);
             }
+            return $festivalCollection;
         }
         throw new NotFoundFestivalException();
     }
