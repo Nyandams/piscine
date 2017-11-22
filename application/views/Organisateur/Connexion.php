@@ -14,5 +14,10 @@
     <?php echo form_error('mdp'); ?>
 
     <input type="submit" value="Envoyer" />
+   
 
 </form>
+<?php 
+echo $lol;
+?>
+ <a href="reinit">reinit</a>

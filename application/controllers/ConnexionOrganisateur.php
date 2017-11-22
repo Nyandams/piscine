@@ -35,4 +35,10 @@ class ConnexionOrganisateur extends CI_Controller
             $this->load->view('Organisateur/Connexion');
         }
     }   
+    
+    public function reinit(){
+        $data = array();
+        $data['lol'] = 'lol';
+        $this->load->view('Organisateur/Connexion', $data);
+    }
 }

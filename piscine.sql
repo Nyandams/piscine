@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Lun 30 Octobre 2017 à 16:46
+-- Généré le :  Mer 22 Novembre 2017 à 22:34
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -47,6 +47,19 @@ CREATE TABLE `contact` (
 CREATE TABLE `editeur` (
   `idEditeur` int(50) NOT NULL,
   `libelleEditeur` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Facture`
+--
+
+CREATE TABLE `Facture` (
+  `idFacture` int(11) NOT NULL,
+  `dateEmissionFacture` date NOT NULL,
+  `datePaiementFacture` date NOT NULL,
+  `idReservation` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -96,6 +109,18 @@ CREATE TABLE `jeu` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `localiser`
+--
+
+CREATE TABLE `localiser` (
+  `idZone` int(11) NOT NULL,
+  `idReservation` int(11) NOT NULL,
+  `nbEmplacement` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `logement`
 --
 
@@ -138,11 +163,9 @@ INSERT INTO `organisateur` (`idOrganisateur`, `loginOrganisateur`, `motDePasseOr
 
 CREATE TABLE `reservation` (
   `idReservation` int(11) NOT NULL,
-  `nbEmplacementReservation` int(11) NOT NULL,
   `prixNegociationReservation` int(11) NOT NULL,
-  `dateEmissionFactureReservation` date NOT NULL,
-  `datePaiementReservation` date NOT NULL,
-  `idFestival` int(11) NOT NULL
+  `idFestival` int(11) NOT NULL,
+  `idEditeur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -181,7 +204,20 @@ CREATE TABLE `suivi` (
 
 CREATE TABLE `typeJeu` (
   `idTypeJeu` int(11) NOT NULL,
-  `libelleTypeJeu` varchar(50) NOT NULL
+  `libelleTypeJeu` varchar(50) NOT NULL,
+  `idZone` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `zone`
+--
+
+CREATE TABLE `zone` (
+  `idZone` int(11) NOT NULL,
+  `nomZone` varchar(100) NOT NULL,
+  `idEditeur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -201,6 +237,12 @@ ALTER TABLE `editeur`
   ADD PRIMARY KEY (`idEditeur`);
 
 --
+-- Index pour la table `Facture`
+--
+ALTER TABLE `Facture`
+  ADD PRIMARY KEY (`idFacture`);
+
+--
 -- Index pour la table `festival`
 --
 ALTER TABLE `festival`
@@ -217,6 +259,12 @@ ALTER TABLE `hebergement`
 --
 ALTER TABLE `jeu`
   ADD PRIMARY KEY (`idJeu`);
+
+--
+-- Index pour la table `localiser`
+--
+ALTER TABLE `localiser`
+  ADD PRIMARY KEY (`idZone`,`idReservation`);
 
 --
 -- Index pour la table `logement`
@@ -249,6 +297,12 @@ ALTER TABLE `typeJeu`
   ADD PRIMARY KEY (`idTypeJeu`);
 
 --
+-- Index pour la table `zone`
+--
+ALTER TABLE `zone`
+  ADD PRIMARY KEY (`idZone`);
+
+--
 -- AUTO_INCREMENT pour les tables exportées
 --
 
@@ -262,6 +316,11 @@ ALTER TABLE `contact`
 --
 ALTER TABLE `editeur`
   MODIFY `idEditeur` int(50) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `Facture`
+--
+ALTER TABLE `Facture`
+  MODIFY `idFacture` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `festival`
 --
@@ -297,6 +356,11 @@ ALTER TABLE `suivi`
 --
 ALTER TABLE `typeJeu`
   MODIFY `idTypeJeu` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `zone`
+--
+ALTER TABLE `zone`
+  MODIFY `idZone` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
