@@ -4,14 +4,14 @@ class EditeurDAO extends CI_Model
 {
     private $correlationTable = array(
         'idEditeur'         => 'idEditeur',
-        'li                             belleEditeur'    => 'libelleEditeur'       
+        'libelleEditeur'    => 'libelleEditeur'       
     );
     
     public function __construct(){
         parent::__construct();
-        $this->load->model('Editeur/Editeur/NotFoundEditeurException');
-        $this->load->model('Editeur/Editeur/DTO/EditeurDTO');
-        $this->load->model('Editeur/Editeur/DTO/EditeurCollection');
+        $this->load->model('Editeur/NotFoundEditeurException');
+        $this->load->model('Editeur/DTO/EditeurDTO');
+        $this->load->model('Editeur/DTO/EditeurCollection');
     }
     
     /**

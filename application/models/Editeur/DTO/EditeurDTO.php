@@ -1,48 +1,48 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class EditeurService extends CI_Model
+class EditeurDTO extends CI_Model
 {
     /**
-     * @var /Editeur/Editeur/DTO/EditeurDTO
+     * @var int
      */
-    private $EditeurDTO = null;
+    private $idEditeur = NULL;
     
     /**
-     * @var /Editeur/Contact/DTO/EditeurCollection
+     * @var string
      */
-    private $contactCollection = NULL;
-    
-    
+    private $libelleEditeur = '';
     /**
-     * @return the $EditeurDTO
+     * @return the $idEditeur
      */
-    public function getEditeurDTO()
+    
+    
+    public function getIdEditeur()
     {
-        return $this->EditeurDTO;
+        return $this->idEditeur;
     }
 
     /**
-     * @param /Editeur/Editeur $EditeurDTO
+     * @return the $libelleEditeur
      */
-    public function setEditeurDTO($EditeurDTO)
+    public function getLibelleEditeur()
     {
-        $this->EditeurDTO = $EditeurDTO;
+        return $this->libelleEditeur;
     }
 
     /**
-     * @return the $contactCollection
+     * @param number $idEditeur
      */
-    public function getContactCollection()
+    public function setIdEditeur($idEditeur)
     {
-        return $this->contactCollection;
+        $this->idEditeur = $idEditeur;
     }
 
     /**
-     * @param /Editeur/Editeur/DTO/EditeurCollection $contactCollection
+     * @param string $libelleEditeur
      */
-    public function setContactCollection($contactCollection)
+    public function setLibelleEditeur($libelleEditeur)
     {
-        $this->contactCollection = $contactCollection;
+        $this->libelleEditeur = $libelleEditeur;
     }
 
 }

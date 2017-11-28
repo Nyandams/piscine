@@ -1,13 +1,13 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class ContactFactory extends CI_Model
+class HebergementFactory extends CI_Model
 {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Editeur/Contact/DAO/ContactDAO');
+        $this->load->model('Hebergement/DAO/HebergementDAO');
     }
     
     static public function getInstance() {
-        return new ContactDAO();
+        return new HebergementDAO();
     }
 }
