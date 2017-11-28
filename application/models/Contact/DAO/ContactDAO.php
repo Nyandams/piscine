@@ -1,6 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class contactDAO extends CI_Model
+class ContactDAO extends CI_Model
 {
     private $correlationTable = array(
         'idContact'             => 'idContact',
