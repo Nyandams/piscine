@@ -4,7 +4,7 @@ class EditeurFactory extends CI_Model
 {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Editeur/EditeurService');
+        $this->load->model('Editeur/DAO/EditeurDAO');
     }
     
     static public function getInstance() {

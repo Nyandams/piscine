@@ -4,7 +4,7 @@ class ContactFactory extends CI_Model
 {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Editeur/Contact/DAO/ContactDAO');
+        $this->load->model('Contact/DAO/ContactDAO');
     }
     
     static public function getInstance() {
