@@ -2,6 +2,8 @@
 
 class EditeurDAO extends CI_Model
 {
+    private $table = 'Editeur';
+    
     private $correlationTable = array(
         'idEditeur'         => 'idEditeur',
         'libelleEditeur'    => 'libelleEditeur'       
@@ -21,7 +23,7 @@ class EditeurDAO extends CI_Model
      */
     public function getEditeurs(){
         $resultat = $this->db->select()
-        ->from('Editeur')
+        ->from($this->table)
         ->get()
         ->result();
         
@@ -36,6 +38,25 @@ class EditeurDAO extends CI_Model
             return $editeurCollection;
         }
         throw new NotFoundEditeurException();
+    }
+
+    public function saveEditeur($editeurDTO){
+        $bdd = hydrateFromDTO($editeurDTO);
+        $this->db->set($bdd)
+                 ->insert($this->table);
+    }
+     
+    /**
+     * @param EditeurDTO $dto
+     * @return array('id' => value)
+     */
+    private function hydrateFromDTO($dto){
+        $bdd = array();
+        foreach($this->correlationTable as $getterName => $setterName){
+            $getter = 'get'.ucwords($getterName);
+            $bdd[$setterName] = $dto->$getter();
+        }
+        return $bdd;
     }
     
     /**
