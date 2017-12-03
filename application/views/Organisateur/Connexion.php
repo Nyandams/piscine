@@ -17,7 +17,3 @@
    
 
 </form>
-<?php 
-echo $lol;
-?>
- <a href="reinit">reinit</a>
