@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mer 29 Novembre 2017 à 23:42
+-- Généré le :  Dim 03 Décembre 2017 à 21:46
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -163,7 +163,7 @@ INSERT INTO `organisateur` (`idOrganisateur`, `loginOrganisateur`, `motDePasseOr
 
 CREATE TABLE `reservation` (
   `idReservation` int(11) NOT NULL,
-  `prixNegociationReservation` int(11) NOT NULL,
+  `prixNegociationReservation` float NOT NULL,
   `idFestival` int(11) NOT NULL,
   `idEditeur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

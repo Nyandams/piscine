@@ -32,10 +32,8 @@
 
     <input type="submit" value="Envoyer" />
    
-<<<<<<< HEAD
 
 </form>
-=======
 
 </form>
 
@@ -524,14 +522,14 @@
         </tbody>
     </table>
 
-<script type="text/javascript" > 
-$(document).ready(function() {
-    $('#example').DataTable();
-} );
-</script>
+    <script type="text/javascript" > 
+    $(document).ready(function() {
+        $('#example').DataTable();
+    } );
+    </script>
 
-</body>
+	</body>
 
  
- </html>
->>>>>>> damien
+</html>
+
