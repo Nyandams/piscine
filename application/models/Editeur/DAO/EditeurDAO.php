@@ -17,34 +17,88 @@ class EditeurDAO extends CI_Model
     }
     
     /**
-     * renvoi tous les Editeurs
-     * @throws NotFoundEditeurException
+     * renvoie tous les Editeurs
      * @return EditeurCollection
      */
     public function getEditeurs(){
         $resultat = $this->db->select()
-        ->from($this->table)
-        ->get()
-        ->result();
+                             ->from($this->table)
+                             ->get()
+                             ->result();
         
-        if (!empty($resultat)){
-            $editeurCollection = new EditeurCollection();
-            
-            foreach($resultat as $element){
-                $dto = $this->hydrateFromDatabase($element);
-                $EditeurCollection->append($dto);
-            }
-            
-            return $editeurCollection;
+        $editeurCollection = new EditeurCollection();
+        
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $EditeurCollection->append($dto);
         }
-        throw new NotFoundEditeurException();
+        
+        return $editeurCollection;
     }
-
+    
+    /**
+     * sauvegarde un editeur dans la BDD
+     * @param EditeurDTO $editeurDTO
+     */
     public function saveEditeur($editeurDTO){
         $bdd = hydrateFromDTO($editeurDTO);
         $this->db->set($bdd)
                  ->insert($this->table);
     }
+    
+    /**
+     * Supprime l'editeurDTO de la BDD
+     * @param EditeurDTO $editeurDTO
+     * @return Boolean
+     */
+    public function deleteEditeur($editeurDTO){
+        $id = $editeurDTO->getIdEditeur();
+        return $this->db->where('id', $id)->delete($this->table);
+    }
+    
+    
+    public function updateEditeur($dto){
+        $bdd = hydrateFromDTO($dto);
+        
+        $this->db->update_batch($this->table, $bdd, 'idEditeur');
+    }
+    
+    /**
+     * @param int $id
+     * @return EditeurDTO
+     */
+    public function getEditeurById($id){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->where('idEditeur', $id)
+                             ->get();
+        
+        $dto = hydrateFromDatabase($resultat);
+        return $dto;
+    }
+    
+    /**
+     * retourne un editeurCollection contenant les editeurs pouvant correspondre à $chaineCar
+     * @param string $chaineCar
+     * @return EditeurCollection
+     */
+    public function listeRechercheEditeur($chaineCar){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->like('libelleEditeur', $chaineCar)
+                             ->get()
+                             ->result();
+        
+        $editeurCollection = new EditeurCollection();
+        
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $EditeurCollection->append($dto);
+        }
+        
+        return $editeurCollection;
+    }
+    
      
     /**
      * @param EditeurDTO $dto
