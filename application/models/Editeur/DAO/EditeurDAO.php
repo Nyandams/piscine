@@ -2,7 +2,7 @@
 
 class EditeurDAO extends CI_Model
 {
-    private $table = 'Editeur';
+    private $table = 'editeur';
     
     private $correlationTable = array(
         'idEditeur'         => 'idEditeur',
@@ -17,7 +17,7 @@ class EditeurDAO extends CI_Model
     }
     
     /**
-     * renvoie tous les Editeurs
+     * renvoie une collection d' "EditeurDTO"
      * @return EditeurCollection
      */
     public function getEditeurs(){
