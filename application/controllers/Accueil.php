@@ -8,11 +8,26 @@ class Accueil extends CI_Controller {
 
 		// Permet de gérer les urls
 		$this->load->helper('url');
+
+
+		// Récupération des données de l'Editeur
+		$this->load->model("Editeur/EditeurFactory", "fact");
+		$this->load->model("Editeur/DTO/EditeurDTO", "dto");
+		$this->load->model("Editeur/DTO/EditeurCollection");
 	
 	}
 	
 	public function accueilSimple() {
-		$data['page'] = $this->load->view("tabTest", '', true);
+		$data['page'] = $this->tableauEditeur();
 		$this->load->view("accueilSimple/index", $data);
+	}
+
+
+	// @return tableau des éditeurs prêt à être affiché dans une page.
+	public function tableauEditeur () {
+		$dao = $this->fact->getInstance();
+		$data['editeursDto'] = $dao->getEditeurs();
+		return $this->load->view("tabEditeur", $data, true);
+		
 	}
 }

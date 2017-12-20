@@ -34,7 +34,8 @@
                 <td>Edinburgh</td>
                 <td>61</td>
                 <td>2011/04/25</td>
-                <td>$320,800</td>
+                <td>$320,800 <span class="glyphicon glyphicon-remove"></span></td>
+                
             </tr>
             <tr>
                 <td>Garrett Winters</td>
@@ -489,6 +490,7 @@
 
     <script type="text/javascript" > 
     $(document).ready(function() {
+        // Javascript de la table de base
         $('#example').DataTable();
     } );
     </script>

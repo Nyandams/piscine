@@ -30,7 +30,7 @@ class EditeurDAO extends CI_Model
         
         foreach($resultat as $element){
             $dto = $this->hydrateFromDatabase($element);
-            $EditeurCollection->append($dto);
+            $editeurCollection->append($dto);
         }
         
         return $editeurCollection;
