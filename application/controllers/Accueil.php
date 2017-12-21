@@ -20,6 +20,7 @@ class Accueil extends CI_Controller {
 	public function accueilSimple() {
 		$data['page'] = $this->tableauEditeur();
 		$this->load->view("accueilSimple/index", $data);
+		
 	}
 
 
@@ -30,4 +31,15 @@ class Accueil extends CI_Controller {
 		return $this->load->view("tabEditeur", $data, true);
 		
 	}
+
+	public function supprimerEditeurAjax () {
+		$this->accueilSimple2();
+		
+	}
+
+	public function accueilSimple2() {
+		$data['page'] = "Page arrivée grâce a l'ajax";
+		$this->load->view("accueilSimple/index", $data);
+	}
+
 }

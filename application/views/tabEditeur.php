@@ -43,10 +43,30 @@
         </tbody>
     </table>
 
+    <button id="testAjax">Click pour faire une requete en ajax !</button>
+
 
     <script type="text/javascript" > 
     $(document).ready(function() {
         // Javascript de la table de base
         $('#example').DataTable();
-    } );
+
+        //Bouton pour tester ajax
+        $("#testAjax").click(function() {
+            
+            $.ajax({
+                url : "<?php echo site_url('Accueil/supprimerEditeurAjax'); ?>",
+                type : 'GET',
+                dataType : 'text',
+                data : '1',
+                success : function (msg) {
+                    alert ("Bien réussi.");
+                }
+            });
+
+            return false;
+
+        });
+    });
+
     </script>
