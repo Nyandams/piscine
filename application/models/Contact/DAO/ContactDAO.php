@@ -47,7 +47,7 @@ class ContactDAO extends CI_Model
     
     /**
      * passage d'un tableau récupéré en BDD à un dto
-     * @param $db
+     * @param  $db
      * @return EditeurDTO
      */
     private function hydrateFromDatabase($db){

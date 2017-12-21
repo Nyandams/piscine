@@ -48,7 +48,7 @@ class EditeurDAO extends CI_Model
     
     /**
      * Supprime l'editeurDTO de la BDD
-     * @param EditeurDTO $editeurDTO
+     * @param  EditeurDTO $editeurDTO
      * @return Boolean
      */
     public function deleteEditeur($editeurDTO){
