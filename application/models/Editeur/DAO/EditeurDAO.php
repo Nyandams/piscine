@@ -52,7 +52,7 @@ class EditeurDAO extends CI_Model
      */
     public function deleteEditeur($editeurDTO){
         $id = $editeurDTO->getIdEditeur();
-        return $this->db->where('id', $id)->delete($this->table);
+        return $this->db->where('idEditeur', $id)->delete($this->table);
     }
     
     /**
@@ -73,10 +73,12 @@ class EditeurDAO extends CI_Model
         $resultat = $this->db->select()
                              ->from($this->table)
                              ->where('idEditeur', $id)
-                             ->get();
+                             ->get()
+                             ->result();
+        $dto = $this->hydrateFromDatabase(current($resultat));
         
-        $dto = hydrateFromDatabase($resultat);
         return $dto;
+        
     }
     
     /**
@@ -116,10 +118,11 @@ class EditeurDAO extends CI_Model
     }
     
     /**
-     * passage d'un tableau récupéré en BDD à un dto
+     * passage d'une ligne de tableau récupéré en BDD à un dto
      * @param $db
      * @return EditeurDTO
      */
+     
     private function hydrateFromDatabase($db){
         $dto = new EditeurDTO();
         foreach($this->correlationTable as $setterName => $getterName){

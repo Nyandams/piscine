@@ -14,6 +14,8 @@ class Accueil extends CI_Controller {
 		$this->load->model("Editeur/EditeurFactory", "fact");
 		$this->load->model("Editeur/DTO/EditeurDTO", "dto");
 		$this->load->model("Editeur/DTO/EditeurCollection");
+		$this->load->model("Editeur/DAO/EditeurDAO", "dao");
+
 	
 	}
 	
@@ -26,15 +28,16 @@ class Accueil extends CI_Controller {
 
 	// @return tableau des éditeurs prêt à être affiché dans une page.
 	public function tableauEditeur () {
-		$dao = $this->fact->getInstance();
-		$data['editeursDto'] = $dao->getEditeurs();
+		$instanceDao = $this->fact->getInstance();
+		$supp = $instanceDao->getEditeurById(1);
+		$instanceDao->deleteEditeur($supp);
+		$data['editeursDto'] = $instanceDao->getEditeurs();
 		return $this->load->view("tabEditeur", $data, true);
 		
 	}
 
 	public function supprimerEditeurAjax () {
 		$this->accueilSimple2();
-		
 	}
 
 	public function accueilSimple2() {

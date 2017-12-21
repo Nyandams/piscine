@@ -23,6 +23,7 @@
             
             <!-- Insertion des données de manière dynamique -->
             <?php
+                
                 // Récupération des données
                 $ligne = ''; // Stocke une ligne le temps de la créer
                 foreach ($editeursDto as $key => $editeur) {
@@ -37,6 +38,8 @@
                     
                     echo  $ligne;
                 }
+                
+
             ?>
 
 
@@ -51,22 +54,15 @@
         // Javascript de la table de base
         $('#example').DataTable();
 
-        //Bouton pour tester ajax
-        $("#testAjax").click(function() {
-            
-            $.ajax({
-                url : "<?php echo site_url('Accueil/supprimerEditeurAjax'); ?>",
-                type : 'GET',
-                dataType : 'text',
-                data : '1',
-                success : function (msg) {
-                    alert ("Bien réussi.");
-                }
-            });
-
-            return false;
-
-        });
+        /*$.ajax({
+            url : "<?php echo site_url('Accueil/supprimerEditeurAjax'); ?>",
+            type : "POST",
+            dataType : 'text',
+            data : '1',
+            success : function (msg) {
+                alert ("Bien réussi.");
+            }
+        });*/
     });
 
     </script>
