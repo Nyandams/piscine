@@ -48,15 +48,17 @@ class EditeurDAO extends CI_Model
     
     /**
      * Supprime l'editeurDTO de la BDD
-     * @param  EditeurDTO $editeurDTO
-     * @return Boolean
+     * @param EditeurDTO $editeurDTO
      */
     public function deleteEditeur($editeurDTO){
         $id = $editeurDTO->getIdEditeur();
         return $this->db->where('id', $id)->delete($this->table);
     }
     
-    
+    /**
+     * Modifie l'editeurDTO dans la BDD
+     * @param EditeurDTO $editeurDTO
+     */
     public function updateEditeur($dto){
         $bdd = hydrateFromDTO($dto);
         
