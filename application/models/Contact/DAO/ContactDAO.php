@@ -2,7 +2,7 @@
 
 class ContactDAO extends CI_Model
 {
-    private $table = 'contact'
+    private $table = 'contact';
 
     private $correlationTable = array(
         'idContact'             => 'idContact',
@@ -52,7 +52,7 @@ class ContactDAO extends CI_Model
      * @param ContactDTO $contactDTO
      */
     public function saveContact($contactDTO){
-        $bdd = hydrateFromDTO($contactDTO);
+        $bdd = $this->hydrateFromDTO($contactDTO);
         $this->db->set($bdd)
                  ->insert($this->table);
     }
@@ -98,7 +98,7 @@ class ContactDAO extends CI_Model
      * @return array('id' => value)
      */
     private function hydrateFromDTO($dto){
-        $bdd = array()
+        $bdd = array();
         foreach($this->correlationTable as $getterName => $setterName){
             # ucwords met la 1ere lettre d'un string en majuscule
             $getter = 'get'.ucwords($getterName);

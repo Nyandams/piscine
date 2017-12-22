@@ -41,7 +41,7 @@ class EditeurDAO extends CI_Model
      * @param EditeurDTO $editeurDTO
      */
     public function saveEditeur($editeurDTO){
-        $bdd = hydrateFromDTO($editeurDTO);
+        $bdd = $this->hydrateFromDTO($editeurDTO);
         $this->db->set($bdd)
                  ->insert($this->table);
     }
