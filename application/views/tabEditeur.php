@@ -6,7 +6,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
-  <table id="example" class="table table-striped table-bordered col-sm-10 text-left" cellspacing="0" width="100%">
+  <table id="tabEditeur" class="table table-striped table-bordered col-sm-10 text-left" cellspacing="0" width="100%">
         <thead>
             <tr>
                 <th>Id</th>
@@ -27,13 +27,19 @@
                 // Récupération des données
                 $ligne = ''; // Stocke une ligne le temps de la créer
                 foreach ($editeursDto as $key => $editeur) {
+                    $idEditeur = $editeur->getIdEditeur();
                     
                     // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un éditeur.
                     $ligne = '<tr>';
 
-                    $ligne = $ligne . '<td>' . $editeur->getIdEditeur() . '</td>';
-                    $ligne = $ligne . '<td>' . $editeur->getLibelleEditeur() . '</td>';
+                    $ligne = $ligne . '<td>' . $idEditeur . '</td>';
 
+                    // On ajoute le bouton supprimer et modifier dans la dernière colonne.
+                    $ligne = $ligne . '<td class="row">
+                        <label class="col-lg-8">' . $editeur->getLibelleEditeur() . '</label>
+                        <button class="col-lg-2 glyphicon glyphicon-pencil" id="modifierEditeur_'. $idEditeur . '">
+                        <button class="col-lg-2 glyphicon glyphicon-trash" id="supprimerEditeur_'. $idEditeur . '">
+                        </td>';
                     $ligne = $ligne . '</tr>';
                     
                     echo  $ligne;
@@ -42,27 +48,72 @@
 
             ?>
 
-
+            
         </tbody>
     </table>
 
-    <button id="testAjax">Click pour faire une requete en ajax !</button>
-
-
     <script type="text/javascript" > 
-    $(document).ready(function() {
-        // Javascript de la table de base
-        $('#example').DataTable();
 
-        /*$.ajax({
-            url : "<?php echo site_url('Accueil/supprimerEditeurAjax'); ?>",
-            type : "POST",
-            dataType : 'text',
-            data : '1',
-            success : function (msg) {
-                alert ("Bien réussi.");
+       
+        $(document).ready(function() {
+            // Javascript de la table de base
+            $('#tabEditeur').DataTable();
+
+
+            // Ajout des listener sur les bouton supprimer
+            var tabPencil = $('[id^="supprimerEditeur"]');
+            var longueur = tabPencil.length;
+            for (var i = 0; i < longueur; i++) {
+                
+                // Il faut utiliser une fonction anonyme pour les boucles for
+                (function(){
+                    var idEditeur = getIdEditeurFromIdBtn(tabPencil[i].id);
+
+                    $(tabPencil[i]).click(function() {
+                        supprimerEditeur(idEditeur);
+                    });
+                })();
             }
-        });*/
-    });
+
+            // Ajout des listener sur les bouton modifier
+            var tabPencil = $('[id^="modifierEditeur"]');
+            var longueur = tabPencil.length;
+            for (var i = 0; i < longueur; i++) {
+                
+                // Il faut utiliser une fonction anonyme pour les boucles for
+                (function(){
+                    var idEditeur = getIdEditeurFromIdBtn(tabPencil[i].id);
+
+                    $(tabPencil[i]).click(function() {
+                        modifierEditeur(idEditeur);
+                    });
+                })();
+            }
+            
+            // Supprime un editeur passé ayant l'id passé en argument
+            function supprimerEditeur (idEditeur) {
+                $.ajax({
+                    type : "POST",
+                    url : "<?php echo site_url('Accueil/supprimerEditeurAjax'); ?>",
+                    dataType : 'html',
+                    data : {idEdit : idEditeur},
+                });
+            }
+
+            // TODO
+            function modifierEditeur (idEditeur) {
+                $.ajax({
+                    type : "POST",
+                    url : "<?php echo site_url('Accueil/modifierEditeurAjax'); ?>",
+                    dataType : 'json',
+                    data : {"idEditeur" : idEditeur}
+                });
+            }
+        });
+
+        function getIdEditeurFromIdBtn (idBtn) {
+            // Extrait l'id de l'editeur a partir d'id du bouton
+            return idBtn.substring(idBtn.indexOf('_') + 1, idBtn.length);
+        }
 
     </script>

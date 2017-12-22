@@ -22,6 +22,7 @@ class Accueil extends CI_Controller {
 	public function accueilSimple() {
 		$data['page'] = $this->tableauEditeur();
 		$this->load->view("accueilSimple/index", $data);
+
 		
 	}
 
@@ -29,16 +30,28 @@ class Accueil extends CI_Controller {
 	// @return tableau des éditeurs prêt à être affiché dans une page.
 	public function tableauEditeur () {
 		$instanceDao = $this->fact->getInstance();
-		$supp = $instanceDao->getEditeurById(1);
-		$instanceDao->deleteEditeur($supp);
 		$data['editeursDto'] = $instanceDao->getEditeurs();
 		return $this->load->view("tabEditeur", $data, true);
 		
 	}
 
-	public function supprimerEditeurAjax () {
-		$this->accueilSimple2();
+	/* Modifie un éditeur via une requete en ajax
+	@param : idEditeur : int
+	*/
+	public function modifierEditeurAjax() {
+
 	}
+
+	/* Supprime un éditeur via une requete en ajax
+	@param : idEditeur : int
+	*/
+	public function supprimerEditeurAjax () {
+		$idEditeur = $this->input->post("idEdit");
+		$instanceDao = $this->fact->getInstance();
+		$supp = $instanceDao->getEditeurById($idEditeur);
+		$instanceDao->deleteEditeur($supp);
+	}
+
 
 	public function accueilSimple2() {
 		$data['page'] = "Page arrivée grâce a l'ajax";
