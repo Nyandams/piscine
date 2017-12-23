@@ -22,6 +22,7 @@ class Editeur extends CI_Controller {
 	//affiche le tableau des éditeurs
 	public function accueilSimple() {
 		$data['page'] = $this->tableauEditeur();
+		$data['title']= 'Editeurs';
 		$this->load->view("Theme/theme", $data);
 
 		
