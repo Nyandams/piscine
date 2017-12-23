@@ -8,13 +8,16 @@ class Editeur extends CI_Controller {
 
 		// Permet de gérer les urls
 		$this->load->helper('url');
-
-
-		// Récupération des données de l'Editeur
-		$this->load->model("Editeur/EditeurFactory", "fact");
-		$this->load->model("Editeur/DTO/EditeurDTO", "dto");
-		$this->load->model("Editeur/DTO/EditeurCollection");
-		$this->load->model("Editeur/DAO/EditeurDAO", "dao");
+		
+		if (!$this->session->has_userdata('connexionOrganisateur')){
+		    redirect('/welcome');
+		} else {
+		    // Récupération des données de l'Editeur
+		    $this->load->model("Editeur/EditeurFactory", "fact");
+		    $this->load->model("Editeur/DTO/EditeurDTO", "dto");
+		    $this->load->model("Editeur/DTO/EditeurCollection");
+		    $this->load->model("Editeur/DAO/EditeurDAO", "dao");
+		}
 	}
 	
 	public function index() {
@@ -25,9 +28,7 @@ class Editeur extends CI_Controller {
 	public function editeurListe() {
 		$data['page'] = $this->tableauEditeur();
 		$data['title']= 'Editeurs';
-		$this->load->view("Theme/theme", $data);
-
-		
+		$this->load->view("Theme/theme", $data);	
 	}
 
 
@@ -54,6 +55,6 @@ class Editeur extends CI_Controller {
 		$instanceDao = $this->fact->getInstance();
 		$supp = $instanceDao->getEditeurById($idEditeur);
 		$instanceDao->deleteEditeur($supp);
-		redirect('/editeur/editeurliste', 'refresh');
+		redirect('/editeur/editeurliste');
 	}
 }

@@ -4,9 +4,10 @@ class ConnexionOrganisateur extends CI_Controller
 {
     public function __construct() {
         parent::__construct();
+        
+        $this->load->helper('url');
         $this->load->library('form_validation');
         $this->load->model('Organisateur/OrganisateurFactory');
-        $this->load->helper('url');
     }
     
     public function index() {
@@ -15,25 +16,42 @@ class ConnexionOrganisateur extends CI_Controller
 
     
     public function connexion() {
-        $this->form_validation->set_rules('pseudo', '"Nom d\'utilisateur"', 'trim|min_length[3]|required|max_length[52]|alpha_dash|encode_php_tags');
-        $this->form_validation->set_rules('mdp', '"Mot de passe"', 'required|min_length[3]|max_length[52]|alpha_dash|encode_php_tags');
         
-        
-        if($this->form_validation->run()) {
-            $login = $this->input->post('pseudo');
-            $mdp = $this->input->post('mdp');
+        if (!$this->session->has_userdata('connexionOrganisateur')){
             
-            $organisateurDao = OrganisateurFactory::getInstance();
-            $connexionValide = $organisateurDao->connexionOrganisateur($login, $mdp);
+            $this->form_validation->set_rules('pseudo', '"Nom d\'utilisateur"', 'trim|min_length[3]|required|max_length[52]|alpha_dash|encode_php_tags');
+            $this->form_validation->set_rules('mdp', '"Mot de passe"', 'required|min_length[3]|max_length[52]|alpha_dash|encode_php_tags');
             
-            if( $connexionValide ) {
-                redirect('/editeur/editeurliste', 'refresh');
+            if($this->form_validation->run()) {
+                $login = $this->input->post('pseudo');
+                $mdp = $this->input->post('mdp');
+                
+                $organisateurDao = OrganisateurFactory::getInstance();
+                $connexionValide = $organisateurDao->connexionOrganisateur($login, $mdp);
+                
+                if( $connexionValide ) {
+                    $this->session->set_userdata('connexionOrganisateur', true);
+                    redirect('/editeur/editeurliste');
+                } else {
+                    $this->load->view('Organisateur/Connexion');
+                }
+                
             } else {
                 $this->load->view('Organisateur/Connexion');
             }
             
         } else {
-            $this->load->view('Organisateur/Connexion');
+            redirect('/welcome');
         }
-    }   
+    }
+    
+    
+    public function deconnexion(){
+        if (!$this->session->has_userdata('connexionOrganisateur')){
+            redirect('/welcome');
+        } else {
+            $this->session->unset_userdata('connexionOrganisateur');
+            redirect('/connexionOrganisateur');
+        }
+    }
 }
