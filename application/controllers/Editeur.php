@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Accueil extends CI_Controller {
+class Editeur extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
@@ -19,9 +19,10 @@ class Accueil extends CI_Controller {
 	
 	}
 	
+	//affiche le tableau des éditeurs
 	public function accueilSimple() {
 		$data['page'] = $this->tableauEditeur();
-		$this->load->view("accueilSimple/index", $data);
+		$this->load->view("Theme/theme", $data);
 
 		
 	}
@@ -31,31 +32,25 @@ class Accueil extends CI_Controller {
 	public function tableauEditeur () {
 		$instanceDao = $this->fact->getInstance();
 		$data['editeursDto'] = $instanceDao->getEditeurs();
-		return $this->load->view("tabEditeur", $data, true);
+		return $this->load->view("Editeur/tabEditeur", $data, true);
 		
 	}
 
-	/* Modifie un éditeur via une requete en ajax
+	/* Modifie un éditeur via une requete
 	@param : idEditeur : int
 	*/
-	public function modifierEditeurAjax() {
+	public function modifierEditeur() {
 
 	}
 
-	/* Supprime un éditeur via une requete en ajax
+	/* Supprime un éditeur via une requete
 	@param : idEditeur : int
 	*/
-	public function supprimerEditeurAjax () {
-		$idEditeur = $this->input->post("idEdit");
+	public function supprimerEditeur() {
+		$idEditeur = $this->input->get("idEditeur");
 		$instanceDao = $this->fact->getInstance();
 		$supp = $instanceDao->getEditeurById($idEditeur);
 		$instanceDao->deleteEditeur($supp);
+		redirect('/editeur/accueilsimple', 'refresh');
 	}
-
-
-	public function accueilSimple2() {
-		$data['page'] = "Page arrivée grâce a l'ajax";
-		$this->load->view("accueilSimple/index", $data);
-	}
-
 }
