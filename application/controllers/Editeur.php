@@ -8,6 +8,9 @@ class Editeur extends CI_Controller {
 
 		// Permet de gérer les urls
 		$this->load->helper('url');
+
+		//Permet de gérer les formulaires
+		 $this->load->helper('form');
 		
 		if (!$this->session->has_userdata('connexionOrganisateur')){
 		    redirect('/welcome');
@@ -56,5 +59,22 @@ class Editeur extends CI_Controller {
 		$supp = $instanceDao->getEditeurById($idEditeur);
 		$instanceDao->deleteEditeur($supp);
 		redirect('/editeur/editeurliste');
+	}
+
+	// Ajoute un éditeur via une méthode post 
+	public function ajouterEditeur() {
+		// Récupération des valeurs
+		$nomEditeur = $this->input->post('nomEditeur');
+
+		// création du dto qu'on va envoyer
+		$dto = new EditeurDTO();
+		$dto->setIdEditeur(null);
+		$dto->setLibelleEditeur($nomEditeur);
+
+		// Envoie du dto
+		$instanceDao = $this->fact->getInstance();
+		$instanceDao->saveEditeur($dto);
+		redirect('/editeur/editeurliste');
+
 	}
 }

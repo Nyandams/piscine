@@ -2,6 +2,37 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
+<!-- Modal -->
+<div class="modal fade" id="ajouterEditeurModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLabel">Ajouter éditeur</h5>
+      </div>
+
+      <form method="POST" action="ajouterEditeur">
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="nomEditeur">Nom de l'éditeur</label>
+            <input type="text" class="form-control" id="nomEditeur" name="nomEditeur" placeholder="Entrer le nom">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          <button type="submit" class="btn btn-secondary">Sauvegarder</button>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+</div>
+
 <table id="tabEditeur" class="table table-striped table-bordered col-sm-10 text-left" cellspacing="0" width="100%">
         <thead>
             <tr>
@@ -47,6 +78,10 @@
             
         </tbody>
     </table>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterEditeurModal">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </button>
 
     <script type="text/javascript" > 
 
