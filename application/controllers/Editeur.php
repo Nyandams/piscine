@@ -15,12 +15,14 @@ class Editeur extends CI_Controller {
 		$this->load->model("Editeur/DTO/EditeurDTO", "dto");
 		$this->load->model("Editeur/DTO/EditeurCollection");
 		$this->load->model("Editeur/DAO/EditeurDAO", "dao");
-
+	}
 	
+	public function index() {
+	    $this->editeurListe();
 	}
 	
 	//affiche le tableau des éditeurs
-	public function accueilSimple() {
+	public function editeurListe() {
 		$data['page'] = $this->tableauEditeur();
 		$data['title']= 'Editeurs';
 		$this->load->view("Theme/theme", $data);
@@ -52,6 +54,6 @@ class Editeur extends CI_Controller {
 		$instanceDao = $this->fact->getInstance();
 		$supp = $instanceDao->getEditeurById($idEditeur);
 		$instanceDao->deleteEditeur($supp);
-		redirect('/editeur/accueilsimple', 'refresh');
+		redirect('/editeur/editeurliste', 'refresh');
 	}
 }

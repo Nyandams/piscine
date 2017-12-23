@@ -6,6 +6,7 @@ class ConnexionOrganisateur extends CI_Controller
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('Organisateur/OrganisateurFactory');
+        $this->load->helper('url');
     }
     
     public function index() {
@@ -26,7 +27,7 @@ class ConnexionOrganisateur extends CI_Controller
             $connexionValide = $organisateurDao->connexionOrganisateur($login, $mdp);
             
             if( $connexionValide ) {
-                $this->load->view('Organisateur/Ok');
+                redirect('/editeur/editeurliste', 'refresh');
             } else {
                 $this->load->view('Organisateur/Connexion');
             }
@@ -35,10 +36,4 @@ class ConnexionOrganisateur extends CI_Controller
             $this->load->view('Organisateur/Connexion');
         }
     }   
-    
-    public function reinit(){
-        $data = array();
-        $data['lol'] = 'lol';
-        $this->load->view('Organisateur/Connexion', $data);
-    }
 }
