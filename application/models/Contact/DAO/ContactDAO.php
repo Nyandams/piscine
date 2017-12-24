@@ -90,6 +90,18 @@ class ContactDAO extends CI_Model
         $dto = hydrateFromDatabase($resultat);
         return $dto;
     }
+    
+    
+    public function getContactEditeurPrincipal($idEditeur){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->where('idEditeur', $idEditeur)
+                             ->where('estPrincipalContact', 1)
+                             ->get();
+        
+        $dto = hydrateFromDatabase($resultat);
+        return $dto;
+    }
 
 
     
