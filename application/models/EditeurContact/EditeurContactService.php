@@ -3,10 +3,10 @@
 class EditeurContactService extends CI_Model
 {
     private $editeurDAO = null;
-    
     private $contactDAO = null;
-    
-    public function __construct($editeurDAO, $contactDAO){
+
+
+    public function __construct($editeurDAO, $contactDAO) {
         parent::__construct();
         $this->load->model('Editeur/NotFoundEditeurException');
         $this->load->model('Editeur/DTO/EditeurDTO');
@@ -17,7 +17,7 @@ class EditeurContactService extends CI_Model
         $this->load->model('Contact/DTO/ContactCollection');
     }
     
-    
+    // Renvoie tout les éditeurs avec leur contact principal
     public function getEditeurContactPrincipal(){
         $editeurCollection = $this->editeurDAO->getEditeurs();
         $editeurContactCollection = new EditeurContactCollection();
@@ -45,7 +45,7 @@ class EditeurContactService extends CI_Model
         return $editeurContactCollection;
     }
     
-    
+    // Renvoie tout les contacts avec leur éditeurs
     public function getEditeurContact(){
         $contactCollection = $this->contactDAO->getContact();
         $editeurContactCollection = new EditeurContactCollection();
@@ -70,7 +70,5 @@ class EditeurContactService extends CI_Model
             $editeurContactCollection->append($editeurContact);
         }
         return $editeurContactCollection;
-        
-        
     }
 }

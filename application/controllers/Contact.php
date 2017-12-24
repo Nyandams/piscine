@@ -15,11 +15,17 @@ class Contact extends CI_Controller {
 		if (!$this->session->has_userdata('connexionOrganisateur')){
 		    redirect('/welcome');
 		} else {
-		    // Récupération des données de l'Contact
+		    // Récupération des données de Contact
 		    $this->load->model("Contact/ContactFactory", "fact");
 		    $this->load->model("Contact/DTO/ContactDTO", "dto");
 		    $this->load->model("Contact/DTO/ContactCollection");
 		    $this->load->model("Contact/DAO/ContactDAO", "dao");
+
+		    // Récupération des données pour l'editeur associé au contact
+		    $this->load->model("EditeurContact/EditeurContactFactory", "factEditContact");
+		    $this->load->model("EditeurContact/DTO/EditeurContactDTO", "dtoEditContact");
+		    $this->load->model("EditeurContact/DTO/EditeurContactCollection");
+		    $this->load->model("EditeurContact/EditeurContactService", "servEditContact");
 		}
 	}
 	
@@ -35,12 +41,11 @@ class Contact extends CI_Controller {
 	}
 
 
-	// @return tableau des contacts prêt à être affiché dans une page.
+	// @return tableau des contacts et de l'éditeur associé prêt à être affiché dans une page.
 	public function tableauContact () {
-		$instanceDao = $this->fact->getInstance();
-		$data['ContactsDto'] = $instanceDao->getContact();
-		return $this->load->view("Contact/tabContact", $data, true);
-		
+		$editContactDTO = $this->dtoEditContact->getInstance();
+		//$data['ContactsEditeursDto'] = $editContactDTO->getContact();
+		//return $this->load->view("Contact/tabContact", $data, true);
 	}
 
 	/* Modifie un contact via une requete

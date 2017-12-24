@@ -40,15 +40,14 @@
         </tfoot>
         <tbody>
             
-            <!-- Insertion des données de manière dynamique -->
+            <!-- Insertion des données de manière dynamique 
             <?php
                 
                 // Récupération des données
                 $ligne = ''; // Stocke une ligne le temps de la créer
                 foreach ($ContactsDto as $key => $Contact) {
                     $idContact = $Contact->getIdContact();
-                    
-                    
+
                     // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un contact.
                     $ligne = '<tr>';
 
@@ -70,25 +69,13 @@
 
             ?>
 
-            
+            -->
         </tbody>
     </table>
 
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterContactModal">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>
-
-
-    <!--
-    <form method="POST" action="ajouterContact">
-    
-      <div class="form-group">
-        <label for="nomJeu">Nom du jeu</label>
-        <input type="text" class="form-control" id="nomJeu" name="nomJeu" placeholder="Entrer le nom">
-      </div>
-      <button type="submit" class="btn btn-secondary">Sauvegarder</button>
-    </form>
-     -->
    
     <script type="text/javascript" >        
         $(document).ready(function() {
