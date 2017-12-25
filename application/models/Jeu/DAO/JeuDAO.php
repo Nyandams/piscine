@@ -57,7 +57,7 @@ class JeuDAO extends CI_Model
      * @return Boolean
      */
     public function deleteJeu($jeuDTO){
-        $id = $jeuDTO->getIdjeu();
+        $id = $jeuDTO->getIdJeu();
         return $this->db->where('id', $id)->delete($this->table);
     }
     
