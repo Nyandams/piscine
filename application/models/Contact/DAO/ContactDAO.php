@@ -44,7 +44,7 @@ class ContactDAO extends CI_Model
         }
         throw new NotFoundContactException();
     }
-
+    
 
    /**
      * sauvegarde un contact dans la BDD
