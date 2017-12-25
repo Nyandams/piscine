@@ -23,6 +23,8 @@ class EditeurContactDTO extends CI_Model
     
     /**
      * @var int
+     *
+     * renvoie 1 s'il le principal contact d'un éditeur 0 sinon
      */
     private $estPrincipalContact = null;
     

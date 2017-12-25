@@ -91,7 +91,7 @@ class ContactDAO extends CI_Model
         return $dto;
     }
     
-    
+    // Renvoie le contact principale sous forme de dto, de l'editeur passé en argument.
     public function getContactEditeurPrincipal($idEditeur){
         $resultat = $this->db->select()
                              ->from($this->table)

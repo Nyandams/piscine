@@ -75,6 +75,5 @@ class Editeur extends CI_Controller {
 		$instanceDao = $this->fact->getInstance();
 		$instanceDao->saveEditeur($dto);
 		redirect('/editeur/editeurliste');
-
 	}
 }

@@ -22,20 +22,23 @@ class Contact extends CI_Controller {
 		    $this->load->model("Contact/DAO/ContactDAO", "dao");
 
 		    // Récupération des données pour l'editeur associé au contact
-		    $this->load->model("EditeurContact/EditeurContactFactory", "factEditContact");
-		    $this->load->model("EditeurContact/DTO/EditeurContactDTO", "dtoEditContact");
+		    $this->load->model("EditeurContact/EditeurContactFactory");
+		    $this->load->model("EditeurContact/DTO/EditeurContactDTO");
 		    $this->load->model("EditeurContact/DTO/EditeurContactCollection");
-		    $this->load->model("EditeurContact/EditeurContactService", "servEditContact");
+
+		    //Recupération des données de l'éditeur
+		    $this->load->model("Editeur/DAO/EditeurDAO");
 		}
 	}
 	
 	public function index() {
 	    $this->ContactListe();
+	    
 	}
 	
 	//affiche le tableau des contacts
 	public function ContactListe() {
-		$data['page'] = "";
+		$data['page'] = $this->tableauContact();
 		$data['title']= 'Contacts';
 		$this->load->view("Theme/theme", $data);	
 	}
@@ -43,9 +46,11 @@ class Contact extends CI_Controller {
 
 	// @return tableau des contacts et de l'éditeur associé prêt à être affiché dans une page.
 	public function tableauContact () {
-		$editContactDTO = $this->dtoEditContact->getInstance();
-		//$data['ContactsEditeursDto'] = $editContactDTO->getContact();
-		//return $this->load->view("Contact/tabContact", $data, true);
+		// Récupération du service
+		$editContactDAO = $this->EditeurContactFactory->getInstance();
+		// Récupération de tout les contacts et éditeur associés
+		$data['ContactsEditeursDto'] = $editContactDAO->getEditeurContact();
+		return $this->load->view("Contact/tabContact", $data, true);
 	}
 
 	/* Modifie un contact via une requete
