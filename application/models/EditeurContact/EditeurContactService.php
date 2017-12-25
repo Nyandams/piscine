@@ -60,8 +60,8 @@ class EditeurContactService extends CI_Model
             $editeurContact->setEstPrincipalContact($contactDTO->getEstPrincipalContact());
             
             try{
-                $editeurDTO = $this->EditeurDAO->getEditeurById($this->ContactDTO->getIdEditeur());
-                $editeurContact->setLibelleEditeur($editeurDTO->getLibelleEditeur);
+                $editeurDTO = $this->EditeurDAO->getEditeurById($contactDTO->getIdEditeur());
+                $editeurContact->setLibelleEditeur($editeurDTO->getLibelleEditeur());
             }catch(Exception $e){
                 
             }
