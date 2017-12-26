@@ -65,7 +65,7 @@ class FestivalDAO extends CI_Model
     public function updateFestival($dto){
         $bdd = hydrateFromDTO($dto);
         
-        $this->db->update_batch($this->table, $bdd, 'idFestival');
+        $this->db->replace($this->table, $bdd);
     }
     
     /**

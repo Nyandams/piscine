@@ -72,11 +72,11 @@ class OrganisateurDAO extends CI_Model
      * Modifie OrganisateurDTO dans la BDD
      * @param OrganisateurDTO $organisateurDTO
      */
-    public function updateEditeur($dto){
-        $organisateurDTO->setMotDePasseOrganisateur(md5($organisateurDTO->getMotDePasseOrganisateur()));
-        $bdd = hydrateFromDTO($dto);
+    public function updateOrganisateur($dto){
+        $dto->setMotDePasseOrganisateur(md5($dto->getMotDePasseOrganisateur()));
+        $bdd = $this->hydrateFromDTO($dto);
         
-        $this->db->update_batch($this->table, $bdd, 'idEditeur');
+        $this->db->replace($this->table, $bdd);
     }
     
     

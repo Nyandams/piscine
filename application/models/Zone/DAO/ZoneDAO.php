@@ -59,7 +59,7 @@ class ZoneDAO extends CI_Model
     public function updateZone($dto){
         $bdd = hydrateFromDTO($dto);
         
-        $this->db->update_batch($this->table, $bdd, 'idZone');
+        $this->db->replace($this->table, $bdd);
     }
     
     /**
