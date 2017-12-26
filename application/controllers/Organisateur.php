@@ -75,7 +75,7 @@ class Organisateur extends CI_Controller
         if($this->form_validation->run()) {
             $organisateurDTO = new OrganisateurDTO();
             $organisateurDTO->setLoginOrganisateur($this->input->post('pseudo'));
-            $organisateurDTO->setMotDePasseOrganisateur(md5($this->input->post('mdp')));
+            $organisateurDTO->setMotDePasseOrganisateur($this->input->post('mdp'));
             $organisateurDTO->setNomOrganisateur($this->input->post('nom'));
             $organisateurDTO->setPrenomOrganisateur($this->input->post('prenom'));
             $save = $this->dao->saveOrganisateur($organisateurDTO);
