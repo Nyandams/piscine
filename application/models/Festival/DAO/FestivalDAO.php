@@ -38,6 +38,86 @@ class FestivalDAO extends CI_Model
         throw new NotFoundFestivalException();
     }
     
+
+     /**
+     * sauvegarde un festival dans la BDD
+     * @param FestivalDTO $festivalDTO
+     */
+    public function saveFestival($festivalDTO){
+        $bdd = hydrateFromDTO($festivalDTO);
+        $this->db->set($bdd)
+                 ->insert($this->table);
+    }
+    
+
+   
+    /**
+     * Supprime le festivalDTO de la BDD
+     * @param FestivalDTO $festivalDTO
+     * @return Boolean
+     */
+    public function deleteFestival($festivalDTO){
+        $id = $festivalDTO->getIdFestival();
+        return $this->db->where('id', $id)->delete($this->table);
+    }
+    
+    
+    public function updateFestival($dto){
+        $bdd = hydrateFromDTO($dto);
+        
+        $this->db->update_batch($this->table, $bdd, 'idFestival');
+    }
+    
+    /**
+     * @param int $id
+     * @return FestivalDTO
+     */
+    public function getFestivalById($id){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->where('idFestival', $id)
+                             ->get();
+        
+        $dto = hydrateFromDatabase($resultat);
+        return $dto;
+    }
+    
+    /**
+     * retourne un festivalCollection contenant les festivals pouvant correspondre à $chaineCar (recherche par année)
+     * @param string $chaineCar
+     * @return FestivalCollection
+     */
+    public function listeRechercheFestival($chaineCar){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->like('anneeFestival', $chaineCar)
+                             ->get()
+                             ->result();
+        
+        $festivalCollection = new FestivalCollection();
+        
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $FestivalCollection->append($dto);
+        }
+        
+        return $festivalCollection;
+    }
+    
+     
+    /**
+     * @param FestivalDTO $dto
+     * @return array('id' => value)
+     */
+    private function hydrateFromDTO($dto){
+        $bdd = array();
+        foreach($this->correlationTable as $getterName => $setterName){
+            $getter = 'get'.ucwords($getterName);
+            $bdd[$setterName] = $dto->$getter();
+        }
+        return $bdd;
+    }
+    
     /**
      * passage d'un tableau récupéré en BDD à un dto
      * @param $db

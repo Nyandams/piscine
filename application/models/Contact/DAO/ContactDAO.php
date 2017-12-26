@@ -103,7 +103,30 @@ class ContactDAO extends CI_Model
         return $dto;
     }
 
-
+    
+    /**
+     * retourne un contactCollection contenant les contact pouvant correspondre à $chaineCar
+     * @param string $chaineCar
+     * @return ContactCollection
+     */
+    public function listeRechercheContact($chaineCar){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->like('libelleContact', $chaineCar)
+                             ->get()
+                             ->result();
+        
+        $contactCollection = new ContactCollection();
+        
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $ContactCollection->append($dto);
+        }
+        
+        return $contactCollection;
+    }
+    
+     
     
     /**
      * @param ContactDTO $dto
@@ -133,3 +156,4 @@ class ContactDAO extends CI_Model
         return $dto;
     }
 }
+

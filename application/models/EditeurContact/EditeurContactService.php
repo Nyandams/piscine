@@ -2,6 +2,9 @@
 
 class EditeurContactService extends CI_Model
 {
+    private $editeurDAO = null;
+    private $contactDAO = null;
+    
     public function __construct() {
         parent::__construct();
         $this->load->model('Editeur/NotFoundEditeurException');
@@ -13,7 +16,16 @@ class EditeurContactService extends CI_Model
         $this->load->model('Contact/DTO/ContactDTO');
         $this->load->model('Contact/DTO/ContactCollection');
         $this->load->model("Contact/DAO/ContactDAO", "contactDAO");
+        
+        
 
+    }
+    
+    public function initConstruct($daoEditeur, $daoContact){
+        $this->editeurDAO = $daoEditeur;
+        $this->contactDAO = $daoContact;
+        
+        return $this;
     }
     
     // Renvoie tout les éditeurs avec leur contact principal
