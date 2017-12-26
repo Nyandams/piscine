@@ -10,6 +10,7 @@
   <link type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="icon" href="https://www.festivaldujeu-montpellier.org/wp-content/uploads/2017/03/cropped-Logo_carre-192x192.png">
 
 </head>
 <body>
@@ -22,11 +23,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="#">Logo</a>
+      <a class="navbar-brand" href="<?php echo site_url('Welcome')?>">Sortons jouer</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
+        <li class="active"><a href="<?php echo site_url('Welcome')?>">Home</a></li>
         <li><a href= <?php echo site_url(''); ?>>Editeurs</a></li>
         <li><a href="#">Projects</a></li>
         <li><a href=<?php echo site_url('Contact'); ?>>Contact</a></li>
