@@ -10,6 +10,7 @@ class ContactDAO extends CI_Model
         'nomContact'            => 'nomContact',
         'prenomContact'         => 'prenomContact',
         'mailContact'           => 'mailContact',
+        'telephoneContact'      => 'telephoneContact',
         'rueContact'            => 'rueContact',
         'villeContact'          => 'rueContact',
         'cpContact'             => 'cpContact',

@@ -48,6 +48,27 @@ class ContactDTO extends CI_Model
     private $idEditeur = null;
     
     /**
+     * @var int
+     */
+    private $telelphoneContact = null;
+    
+    /**
+     * @return the $telelphoneContact
+     */
+    public function getTelelphoneContact()
+    {
+        return $this->telelphoneContact;
+    }
+
+    /**
+     * @param number $telelphoneContact
+     */
+    public function setTelelphoneContact($telelphoneContact)
+    {
+        $this->telelphoneContact = $telelphoneContact;
+    }
+
+    /**
      * @return the $idEditeur
      */
     public function getIdEditeur()
