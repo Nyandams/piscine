@@ -55,7 +55,7 @@ class ContactDTO extends CI_Model
     /**
      * @return the $telelphoneContact
      */
-    public function getTelelphoneContact()
+    public function getTelephoneContact()
     {
         return $this->telelphoneContact;
     }
@@ -63,7 +63,7 @@ class ContactDTO extends CI_Model
     /**
      * @param number $telelphoneContact
      */
-    public function setTelelphoneContact($telelphoneContact)
+    public function setTelephoneContact($telelphoneContact)
     {
         $this->telelphoneContact = $telelphoneContact;
     }
