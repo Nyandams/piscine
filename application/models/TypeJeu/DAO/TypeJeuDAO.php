@@ -61,7 +61,7 @@ class TypeJeuDAO extends CI_Model
     public function updateTypeJeu($dto){
         $bdd = hydrateFromDTO($dto);
         
-        $this->db->update_batch($this->table, $bdd, 'idTypeJeu');
+        $this->db->replace($this->table, $bdd);
     }
     
     /**

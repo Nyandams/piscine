@@ -62,7 +62,7 @@ class EditeurDAO extends CI_Model
     public function updateEditeur($dto){
         $bdd = hydrateFromDTO($dto);
         
-        $this->db->update_batch($this->table, $bdd, 'idEditeur');
+        $this->db->replace($this->table, $bdd);
     }
     
     /**

@@ -19,7 +19,7 @@
       <form class="form-signin" method="post" action="">
         <h2 class="form-signin-heading">Connectez vous</h2>
         <label for="pseudo" class="sr-only">pseudo</label>
-        <input type="text" id="pseudo" name="pseudo" class="form-control" placeholder="login" value="<?php echo set_value('pseudo'); ?>">
+        <input type="text" id="pseudo" name="pseudo" class="form-control" placeholder="pseudo" value="<?php echo set_value('pseudo'); ?>">
         <?php echo form_error('pseudo'); ?>
         <label for="mdp" class="sr-only">mot de passe</label>
         <input type="password" id="mdp" name="mdp" class="form-control" placeholder="mot de passe" value="">

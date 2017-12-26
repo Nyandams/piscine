@@ -30,7 +30,7 @@ class ConnexionOrganisateur extends CI_Controller
                 $connexionValide = $organisateurDao->connexionOrganisateur($login, $mdp);
                 
                 if( $connexionValide ) {
-                    $this->session->set_userdata('connexionOrganisateur', true);
+                    $this->session->set_userdata('connexionOrganisateur', $login);
                     redirect('/editeur/editeurliste');
                 } else {
                     $this->load->view('Organisateur/Connexion');

@@ -63,7 +63,7 @@ class FactureDAO extends CI_Model
     public function updateFacture($dto){
         $bdd = hydrateFromDTO($dto);
         
-        $this->db->update_batch($this->table, $bdd, 'idFacture');
+        $this->db->replace($this->table, $bdd);
     }
     
     /**

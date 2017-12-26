@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Dim 03 Décembre 2017 à 21:46
+-- Généré le :  Mar 26 Décembre 2017 à 21:08
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -32,11 +32,20 @@ CREATE TABLE `contact` (
   `nomContact` varchar(50) NOT NULL,
   `prenomContact` varchar(50) NOT NULL,
   `mailContact` varchar(50) NOT NULL,
+  `telephoneContact` int(50) NOT NULL,
   `rueContact` varchar(50) NOT NULL,
   `villeContact` varchar(50) NOT NULL,
   `cpContact` varchar(50) NOT NULL,
   `idEditeur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `contact`
+--
+
+INSERT INTO `contact` (`idContact`, `estPrincipalContact`, `nomContact`, `prenomContact`, `mailContact`, `telephoneContact`, `rueContact`, `villeContact`, `cpContact`, `idEditeur`) VALUES
+(1, 1, 'Zizou', 'Deuhb', 'deuhb.zizou@mali.faim', 0, 'nulle part', 'brazaville', '', 1),
+(2, 0, 'ioho', 'jiioj', 'iiohi', 0, 'jiojioji', 'jjiojiojio', 'jjioj', 1);
 
 -- --------------------------------------------------------
 
@@ -48,6 +57,14 @@ CREATE TABLE `editeur` (
   `idEditeur` int(50) NOT NULL,
   `libelleEditeur` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `editeur`
+--
+
+INSERT INTO `editeur` (`idEditeur`, `libelleEditeur`) VALUES
+(1, 'Editeur1'),
+(2, 'editeur2');
 
 -- --------------------------------------------------------
 
@@ -153,7 +170,8 @@ CREATE TABLE `organisateur` (
 --
 
 INSERT INTO `organisateur` (`idOrganisateur`, `loginOrganisateur`, `motDePasseOrganisateur`, `nomOrganisateur`, `prenomOrganisateur`) VALUES
-(1, 'login', 'motdepasse', 'Test', 'Jean');
+(2, 'piscine', '64f847250ae222f2fd892bc6810b294f', 'nomRandom', 'piscine'),
+(5, 'aaa', '47bce5c74f589f4867dbd57e9ca9f808', 'aaa', 'aaa');
 
 -- --------------------------------------------------------
 
@@ -310,12 +328,12 @@ ALTER TABLE `zone`
 -- AUTO_INCREMENT pour la table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `idContact` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `idContact` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `editeur`
 --
 ALTER TABLE `editeur`
-  MODIFY `idEditeur` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `idEditeur` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `Facture`
 --
@@ -340,7 +358,7 @@ ALTER TABLE `logement`
 -- AUTO_INCREMENT pour la table `organisateur`
 --
 ALTER TABLE `organisateur`
-  MODIFY `idOrganisateur` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idOrganisateur` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT pour la table `reservation`
 --

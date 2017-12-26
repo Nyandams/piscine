@@ -10,6 +10,7 @@ class ContactDAO extends CI_Model
         'nomContact'            => 'nomContact',
         'prenomContact'         => 'prenomContact',
         'mailContact'           => 'mailContact',
+        'telephoneContact'      => 'telephoneContact',
         'rueContact'            => 'rueContact',
         'villeContact'          => 'rueContact',
         'cpContact'             => 'cpContact',
@@ -74,7 +75,7 @@ class ContactDAO extends CI_Model
     public function updateContact($dto){
         $bdd = hydrateFromDTO($dto);
         
-        $this->db->update_batch($this->table, $bdd, 'idContact');
+        $this->db->replace($this->table, $bdd);
     }
     
     /**
