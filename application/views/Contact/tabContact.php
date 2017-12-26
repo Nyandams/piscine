@@ -101,6 +101,7 @@
                     $estPrincipalContact = $EditContact->getEstPrincipalContact();
                     $nomContact = $EditContact->getNomContact();
                     $prenomContact = $EditContact->getPrenomContact();
+                    echo ($nomContact);
                     $mailContact = $EditContact->getMailContact();
                     $rueContact = $EditContact->getRueContact();
                     $villeContact = $EditContact->getVilleContact();

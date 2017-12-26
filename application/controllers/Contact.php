@@ -64,7 +64,7 @@ class Contact extends CI_Controller {
 	@param : idContact : int
 	*/
 	public function supprimerContact() {
-		$idContact = $this->input->get("idContact");
+		$idContact = $this->input->get('idContact');
 		$instanceDao = $this->fact->getInstance();
 		$supp = $instanceDao->getContactById($idContact);
 		$instanceDao->deleteContact($supp);
@@ -79,6 +79,7 @@ class Contact extends CI_Controller {
 		$dto->setEstPrincipalContact(0);
 		$dto->setNomContact($this->input->post('nomContact'));
 		$dto->setPrenomContact($this->input->post('prenomContact'));
+		$dto->setTelephoneContact($this->input->post('numTelephone'));
 		$dto->setMailContact($this->input->post('adresseMail'));
 		$dto->setRueContact($this->input->post('adresse'));
 		$dto->setVilleContact($this->input->post('ville'));

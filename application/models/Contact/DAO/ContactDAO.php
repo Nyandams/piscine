@@ -12,7 +12,7 @@ class ContactDAO extends CI_Model
         'mailContact'           => 'mailContact',
         'telephoneContact'      => 'telephoneContact',
         'rueContact'            => 'rueContact',
-        'villeContact'          => 'rueContact',
+        'villeContact'          => 'villeContact',
         'cpContact'             => 'cpContact',
         'idEditeur'             => 'idEditeur'
     );
@@ -34,9 +34,6 @@ class ContactDAO extends CI_Model
                              ->from($this->table)
                              ->get()
                              ->result();
-        
-
-
 
         $contactCollection = new ContactCollection();
         
@@ -44,6 +41,8 @@ class ContactDAO extends CI_Model
             $dto = $this->hydrateFromDatabase($element);
             $contactCollection->append($dto);
         }
+
+    
         return $contactCollection;
     }
 
@@ -65,7 +64,7 @@ class ContactDAO extends CI_Model
      */
     public function deleteContact($contactDTO){
         $id = $contactDTO->getIdContact();
-        return $this->db->where('id', $id)->delete($this->table);
+        return $this->db->where('idContact', $id)->delete($this->table);
     }
     
     /**
@@ -86,9 +85,11 @@ class ContactDAO extends CI_Model
         $resultat = $this->db->select()
                              ->from($this->table)
                              ->where('idContact', $id)
-                             ->get();
+                             ->get()
+                             ->result();
+                             
         
-        $dto = $this->hydrateFromDatabase($resultat);
+        $dto = $this->hydrateFromDatabase($resultat[0]);
         return $dto;
     }
     
@@ -99,8 +100,8 @@ class ContactDAO extends CI_Model
                              ->where('idEditeur', $idEditeur)
                              ->where('estPrincipalContact', 1)
                              ->get();
-        
-        $dto = $this->hydrateFromDatabase($resultat);
+        print_r($resultat);
+        $dto = $this->hydrateFromDatabase($resultat[0]);
         return $dto;
     }
 
@@ -150,10 +151,13 @@ class ContactDAO extends CI_Model
      */
     private function hydrateFromDatabase($db){
         $dto = new ContactDTO();
+
         foreach($this->correlationTable as $setterName => $getterName){
             $setter = 'set' .ucwords($setterName);
-            $dto->$setter($db->$getterName);
+            $dto->$setter(
+                $db->$getterName);
         }
+        
         return $dto;
     }
 }

@@ -65,6 +65,7 @@ class EditeurContactService extends CI_Model
             $editeurContact = new EditeurContactDTO();
             $editeurContact->setIdContact($contactDTO->getIdContact());
             $editeurContact->setNomContact($contactDTO->getNomContact());
+            $editeurContact->setPrenomContact($contactDTO->getPrenomContact());
             $editeurContact->setRueContact($contactDTO->getRueContact());
             $editeurContact->setVilleContact($contactDTO->getVilleContact());
             $editeurContact->setCpContact($contactDTO->getCpContact());

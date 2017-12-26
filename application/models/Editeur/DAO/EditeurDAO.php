@@ -75,6 +75,7 @@ class EditeurDAO extends CI_Model
                              ->where('idEditeur', $id)
                              ->get()
                              ->result();
+                             
         $dto = $this->hydrateFromDatabase(current($resultat));
         
         return $dto;
