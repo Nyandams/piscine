@@ -103,49 +103,6 @@ class ContactDAO extends CI_Model
         return $dto;
     }
 
-
-    
-
-   /**
-     * sauvegarde un contact dans la BDD
-     * @param ContactDTO $ContactDTO
-     */
-    public function saveContact($ContactDTO){
-        $bdd = hydrateFromDTO($ContactDTO);
-        $this->db->set($bdd)
-                 ->insert($this->table);
-    }
-    
-    /**
-     * Supprime l'contactDTO de la BDD
-     * @param ContactDTO $contactDTO
-     * @return Boolean
-     */
-    public function deleteContact($contactDTO){
-        $id = $contactDTO->getIdContact();
-        return $this->db->where('id', $id)->delete($this->table);
-    }
-    
-    
-    public function updateContact($dto){
-        $bdd = hydrateFromDTO($dto);
-        
-        $this->db->update_batch($this->table, $bdd, 'idContact');
-    }
-    
-    /**
-     * @param int $id
-     * @return ContactDTO
-     */
-    public function getContactById($id){
-        $resultat = $this->db->select()
-                             ->from($this->table)
-                             ->where('idContact', $id)
-                             ->get();
-        
-        $dto = hydrateFromDatabase($resultat);
-        return $dto;
-    }
     
     /**
      * retourne un contactCollection contenant les contact pouvant correspondre à $chaineCar
@@ -170,18 +127,6 @@ class ContactDAO extends CI_Model
     }
     
      
-    /**
-     * @param ContactDTO $dto
-     * @return array('id' => value)
-     */
-    private function hydrateFromDTO($dto){
-        $bdd = array();
-        foreach($this->correlationTable as $getterName => $setterName){
-            $getter = 'get'.ucwords($getterName);
-            $bdd[$setterName] = $dto->$getter();
-        }
-        return $bdd;
-    }
     
     /**
      * @param ContactDTO $dto
