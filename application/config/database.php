@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'www.lecha.ovh',
+	'hostname' => 'localhost',
 	'username' => 'piscine',
 	'password' => 'piscine',
 	'database' => 'piscine',
