@@ -14,6 +14,7 @@ class EditeurContactFactory extends CI_Model
     static public function getInstance() {
         $editeurDAO = EditeurFactory::getInstance();
         $contactDAO = ContactFactory::getInstance();
+        
         $dao = new EditeurContactService();
         return $dao->initConstruct($editeurDAO, $contactDAO);
     }

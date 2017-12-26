@@ -27,7 +27,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
-        <li><a href= <?php echo site_url(''); ?>>Créateurs</a></li>
+        <li><a href= <?php echo site_url(''); ?>>Editeurs</a></li>
         <li><a href="#">Projects</a></li>
         <li><a href=<?php echo site_url('Contact'); ?>>Contact</a></li>
       </ul>
@@ -69,7 +69,7 @@
           </ul>
         </li>          
         <li ><a href="#">Libros<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>        
-        <li ><a href="#">Tags<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tags"></span></a></li>
+        <li ><a href="<?php echo site_url('organisateur'); ?>">Organisateurs<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a></li>
       </ul>
     </div>
   </div>
