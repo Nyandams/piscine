@@ -21,6 +21,12 @@ class Contact extends CI_Controller {
 		    $this->load->model("Contact/DTO/ContactCollection");
 		    $this->load->model("Contact/DAO/ContactDAO", "dao");
 
+		    // Récupération des éditeurs
+		    $this->load->model("Editeur/EditeurFactory", "factEditeur");
+		    $this->load->model("Editeur/DTO/EditeurDTO", "dtoEditeur");
+		    $this->load->model("Editeur/DTO/EditeurCollection");
+		    $this->load->model("Editeur/DAO/EditeurDAO", "daoEditeur");
+
 		    // Récupération des données pour l'editeur associé au contact
 		    $this->load->model("EditeurContact/EditeurContactFactory");
 		    $this->load->model("EditeurContact/DTO/EditeurContactDTO");
@@ -48,8 +54,12 @@ class Contact extends CI_Controller {
 	public function tableauContact () {
 		// Récupération du service
 		$editContactDAO = $this->EditeurContactFactory->getInstance();
+		// Récupération du dao Editeur
+		$editDAO = $this->factEditeur->getInstance();
+
 		// Récupération de tout les contacts et éditeur associés
 		$data['ContactsEditeursDto'] = $editContactDAO->getEditeurContact();
+		$data['EditeurDto'] = $editDAO->getEditeurs();
 		return $this->load->view("Contact/tabContact", $data, true);
 	}
 

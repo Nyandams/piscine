@@ -16,47 +16,73 @@
             <form method="POST" action="ajouterContact">
                 <div class="container-fluid">
                     <div class="form-row">
-                            <div class="form-group col-sm-6">
-                                <label for="nomContact">Nom</label>
-                                <input type="text" class="form-control" id="nomContact" name="nomContact" placeholder="Entrer le nom">
-                            </div>
-
-                            <div class="form-group col-sm-6">
-                                <label for="prenomContact">Prenom</label>
-                                <input type="text" class="form-control" id="prenomContact" name="prenomContact" placeholder="Entrer le prenom">
-                            </div>
+                        <div class="form-group col-sm-6">
+                            <label for="nomContact">Nom</label>
+                            <input type="text" class="form-control" id="nomContact" name="nomContact" placeholder="Entrer le nom">
                         </div>
 
-                        <div class="form-row">
-                            <div class="form-group col-sm-8">
-                                <label for="adresseMail">Adresse email</label>
-                                <input type="mail" class="form-control" id="adresseMail" name="adresseMail" placeholder="Entrer l'email">
-                            </div>
-
-                            <div class="form-group col-sm-4">
-                                <label for="numTelephone">Numéro téléphone</label>
-                                <input type="text" class="input-medium bfh-phone form-control" data-format="+1 (ddd) ddd-dddd" id="numTelephone" name="numTelephone" placeholder="Entrer le numéro de téléphone">
-                            </div>
-                        </div>
-                      
-                        <div class="form-row">
-                            <div class="col-sm-6">
-                                <label for="adresse">Adresse</label>
-                                <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Entrer l'adresse">
-                            </div>
-
-                            <div class="col-sm-2">
-                                <label for="codePostal">Code postal</label>
-                                <input type="number" class="form-control" id="codePostal" name="codePostal" placeholder="Entrer le code postal">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <label for="ville">Ville</label>
-                                <input type="text" class="form-control" id="ville" name="ville" placeholder="Entrer la ville">
-                            </div>
+                        <div class="form-group col-sm-6">
+                            <label for="prenomContact">Prenom</label>
+                            <input type="text" class="form-control" id="prenomContact" name="prenomContact" placeholder="Entrer le prenom">
                         </div>
                     </div>
-            
+
+                    <div class="form-row">
+                        <div class="form-group col-sm-8">
+                            <label for="adresseMail">Adresse email</label>
+                            <input type="mail" class="form-control" id="adresseMail" name="adresseMail" placeholder="Entrer l'email">
+                        </div>
+
+                        <div class="form-group col-sm-4">
+                            <label for="numTelephone">Numéro téléphone</label>
+                            <input type="text" class="input-medium bfh-phone form-control" data-format="+1 (ddd) ddd-dddd" id="numTelephone" name="numTelephone" placeholder="Entrer le numéro de téléphone">
+                        </div>
+                    </div>
+                  
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <label for="adresse">Adresse</label>
+                            <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Entrer l'adresse">
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label for="codePostal">Code postal</label>
+                            <input type="text" class="form-control" id="codePostal" name="codePostal" placeholder="Entrer le code postal">
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label for="ville">Ville</label>
+                            <input type="text" class="form-control" id="ville" name="ville" placeholder="Entrer la ville">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-sm-8">
+                            <label for="selectEditeur">Chez quel éditeur travail ce contact ?</label>
+                            <select class="selectEditeur" name="selectEditeur">
+
+                                <?php
+                                // Affichage des différents éditeurs.
+                                $selection = '';
+                                foreach ($EditeurDto as $key => $EditContact) {
+                                    $selection = $selection . "<option>";
+                                    $libEditeur = $EditContact->getLibelleEditeur();
+                                    $selection = $selection . $libEditeur . "</option>";
+                                }
+
+                                echo ($selection);
+                                ?>
+                            </select>
+                            <label for="selectEditeur">Contact principal ?</label>
+                            <select class="selectPrincipal" name="selectPrincipal">
+                                <option>Oui</option>
+                                <option>Non</option>  
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button type="submit" class="btn btn-secondary">Sauvegarder</button>
@@ -101,7 +127,6 @@
                     $estPrincipalContact = $EditContact->getEstPrincipalContact();
                     $nomContact = $EditContact->getNomContact();
                     $prenomContact = $EditContact->getPrenomContact();
-                    echo ($nomContact);
                     $mailContact = $EditContact->getMailContact();
                     $rueContact = $EditContact->getRueContact();
                     $villeContact = $EditContact->getVilleContact();
@@ -145,7 +170,4 @@
             // Javascript de la table de base
             $('#tabContact').DataTable();
         });
-
-       
-
     </script>
