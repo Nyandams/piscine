@@ -87,7 +87,7 @@ class ContactDAO extends CI_Model
                              ->where('idContact', $id)
                              ->get();
         
-        $dto = hydrateFromDatabase($resultat);
+        $dto = $this->hydrateFromDatabase($resultat);
         return $dto;
     }
     
@@ -99,7 +99,7 @@ class ContactDAO extends CI_Model
                              ->where('estPrincipalContact', 1)
                              ->get();
         
-        $dto = hydrateFromDatabase($resultat);
+        $dto = $this->hydrateFromDatabase($resultat);
         return $dto;
     }
 

@@ -73,18 +73,23 @@ class Contact extends CI_Controller {
 
 	// Ajoute un contact via une méthode post 
 	public function ajouterContact() {
-		// Récupération des valeurs
-		$nomContact = $this->input->post('nomContact');
-
 		// création du dto qu'on va envoyer
 		$dto = new ContactDTO();
 		$dto->setIdContact(null);
-		$dto->setLibelleContact($nomContact);
+		$dto->setEstPrincipalContact(0);
+		$dto->setNomContact($this->input->post('nomContact'));
+		$dto->setPrenomContact($this->input->post('prenomContact'));
+		$dto->setMailContact($this->input->post('adresseMail'));
+		$dto->setRueContact($this->input->post('adresse'));
+		$dto->setVilleContact($this->input->post('ville'));
+		$dto->setCpContact($this->input->post('codePostal'));
+		$dto->setIdEditeur(18);
+
 
 		// Envoie du dto
 		$instanceDao = $this->fact->getInstance();
 		$instanceDao->saveContact($dto);
-		redirect('/Contact/Contactliste');
+		redirect('/Contact/ContactListe');
 
 	}
 }
