@@ -44,6 +44,7 @@ class OrganisateurDAO extends CI_Model
     /**
      * sauvegarde un organisateur dans la BDD
      * @param OrganisateurDTO $organisateurDTO
+     * @return boolean
      */
     public function saveOrganisateur($organisateurDTO){
         try{
@@ -91,8 +92,6 @@ class OrganisateurDAO extends CI_Model
         }catch(NotFoundOrganisateurException $e){
             return false;
         }
-        
-        //ajouter md5
         if(md5($mdp) == $organisateurDto->getMotDePasseOrganisateur()){
             return true;
         }else{
