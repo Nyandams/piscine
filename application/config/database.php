@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'piscine',
-	'password' => 'piscine',
+	'hostname' => '',
+	'username' => '',
+	'password' => '',
 	'database' => 'piscine',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
