@@ -1,4 +1,4 @@
-<!-- js pour les tableaux-->
+q<!-- js pour les tableaux-->
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
@@ -21,6 +21,7 @@
             <label for="nomEditeur">Nom de l'éditeur</label>
             <input type="text" class="form-control" id="nomEditeur" name="nomEditeur" placeholder="Entrer le nom">
           </div>
+          
         </div>
 
         <div class="modal-footer">
