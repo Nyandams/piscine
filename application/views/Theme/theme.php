@@ -28,12 +28,13 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="<?php echo site_url('Welcome')?>">Home</a></li>
-        <li><a href= <?php echo site_url(''); ?>>Editeurs</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href=<?php echo site_url('Contact'); ?>>Contact</a></li>
+        <li><a href="<?php echo site_url('Editeur'); ?>">Editeurs</a></li>
+        <li><a href="<?php echo site_url('Contact');?>">Contacts</a></li>
+        <li><a href="<?php echo site_url('organisateur'); ?>">Organisateur</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="<?php echo site_url('connexionOrganisateur/deconnexion'); ?>"><span class="glyphicon glyphicon-log-in"></span> Deconnexion</a></li>
+      	<li><a href="#"><span class="glyphicon glyphicon-bell"></span></a></li>
+        <li><a href="<?php echo site_url('connexionOrganisateur/deconnexion'); ?>"><span class="glyphicon glyphicon-log-in"></span> Déconnexion</a></li>
       </ul>
     </div>
   </div>
@@ -69,8 +70,7 @@
             <li><a href="#">Informes</a></li>
           </ul>
         </li>          
-        <li ><a href="#">Libros<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>        
-        <li ><a href="<?php echo site_url('organisateur'); ?>">Organisateurs<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a></li>
+        <li ><a href="#">Libros<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
       </ul>
     </div>
   </div>
