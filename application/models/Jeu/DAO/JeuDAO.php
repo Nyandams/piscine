@@ -76,34 +76,17 @@ class JeuDAO extends CI_Model
         $resultat = $this->db->select()
                              ->from($this->table)
                              ->where('idJeu', $id)
-                             ->get();
-        
-        $dto = hydrateFromDatabase($resultat);
-        return $dto;
-    }
-    
-    /**
-     * retourne un jeuCollection contenant les jeux pouvant correspondre à $chaineCar
-     * @param string $chaineCar
-     * @return JeuCollection
-     */
-    public function listeRechercheJeu($chaineCar){
-        $resultat = $this->db->select()
-                             ->from($this->table)
-                             ->like('libelleJeu', $chaineCar)
                              ->get()
                              ->result();
         
-        $jeuCollection = new JeuCollection();
-        
-        foreach($resultat as $element){
-            $dto = $this->hydrateFromDatabase($element);
-            $JeuCollection->append($dto);
+        if(!empty($resultat)){
+            $dto = hydrateFromDatabase($resultat[0]);
+            return $dto;
+        } else {
+            throw new NotFoundJeuException();
         }
-        
-        return $jeuCollection;
-    }
-    
+       
+    }    
      
     /**
      * @param JeuDTO $dto

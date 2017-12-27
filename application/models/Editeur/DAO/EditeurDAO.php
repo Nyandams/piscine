@@ -75,33 +75,15 @@ class EditeurDAO extends CI_Model
                              ->where('idEditeur', $id)
                              ->get()
                              ->result();
-                             
-        $dto = $this->hydrateFromDatabase(current($resultat));
         
-        return $dto;
-        
-    }
-    
-    /**
-     * retourne un editeurCollection contenant les editeurs pouvant correspondre à $chaineCar
-     * @param string $chaineCar
-     * @return EditeurCollection
-     */
-    public function listeRechercheEditeur($chaineCar){
-        $resultat = $this->db->select()
-                             ->from($this->table)
-                             ->like('libelleEditeur', $chaineCar)
-                             ->get()
-                             ->result();
-        
-        $editeurCollection = new EditeurCollection();
-        
-        foreach($resultat as $element){
-            $dto = $this->hydrateFromDatabase($element);
-            $EditeurCollection->append($dto);
+        if(!empty($resultat)){
+            $dto = $this->hydrateFromDatabase(current($resultat));
+            return $dto;
+        } else {
+            throw new NotFoundEditeurException();
         }
         
-        return $editeurCollection;
+        
     }
     
      

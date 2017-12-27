@@ -31,4 +31,17 @@ class ReservationDAO extends CI_Model
         }
         return $dto;
     }
+    
+    /**
+     * @param ReservationDTO $dto
+     * @return array('id' => value)
+     */
+    private function hydrateFromDTO($dto){
+        $bdd = array();
+        foreach($this->correlationTable as $getterName => $setterName){
+            $getter = 'get'.ucwords($getterName);
+            $bdd[$setterName] = $dto->$getter();
+        }
+        return $bdd;
+    }
 }

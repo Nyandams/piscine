@@ -76,32 +76,16 @@ class FestivalDAO extends CI_Model
         $resultat = $this->db->select()
                              ->from($this->table)
                              ->where('idFestival', $id)
-                             ->get();
-        
-        $dto = hydrateFromDatabase($resultat);
-        return $dto;
-    }
-    
-    /**
-     * retourne un festivalCollection contenant les festivals pouvant correspondre à $chaineCar (recherche par année)
-     * @param string $chaineCar
-     * @return FestivalCollection
-     */
-    public function listeRechercheFestival($chaineCar){
-        $resultat = $this->db->select()
-                             ->from($this->table)
-                             ->like('anneeFestival', $chaineCar)
                              ->get()
                              ->result();
         
-        $festivalCollection = new FestivalCollection();
-        
-        foreach($resultat as $element){
-            $dto = $this->hydrateFromDatabase($element);
-            $FestivalCollection->append($dto);
+        if(!empty($resultat)){
+            $dto = hydrateFromDatabase($resultat[0]);
+            return $dto;
+        } else {
+            throw new NotFoundFestivalException();
         }
         
-        return $festivalCollection;
     }
     
      

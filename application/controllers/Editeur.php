@@ -56,8 +56,13 @@ class Editeur extends CI_Controller {
 	public function supprimerEditeur() {
 		$idEditeur = $this->input->get("idEditeur");
 		$instanceDao = $this->fact->getInstance();
-		$supp = $instanceDao->getEditeurById($idEditeur);
-		$instanceDao->deleteEditeur($supp);
+		try{
+		    $supp = $instanceDao->getEditeurById($idEditeur);
+		    $instanceDao->deleteEditeur($supp);
+		} catch(Exception $e){
+		    
+		}
+		
 		redirect('/editeur/editeurliste');
 	}
 

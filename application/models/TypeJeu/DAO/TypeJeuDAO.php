@@ -72,34 +72,17 @@ class TypeJeuDAO extends CI_Model
         $resultat = $this->db->select()
                              ->from($this->table)
                              ->where('idTypeJeu', $id)
-                             ->get();
-        
-        $dto = hydrateFromDatabase($resultat);
-        return $dto;
-    }
-    
-    /**
-     * retourne un typejeuCollection contenant les types de jeu pouvant correspondre à $chaineCar
-     * @param string $chaineCar
-     * @return TypeJeuCollection
-     */
-    public function listeRechercheTypeJeu($chaineCar){
-        $resultat = $this->db->select()
-                             ->from($this->table)
-                             ->like('libelleTypeJeu', $chaineCar)
                              ->get()
                              ->result();
         
-        $typejeuCollection = new TypeJeuCollection();
-        
-        foreach($resultat as $element){
-            $dto = $this->hydrateFromDatabase($element);
-            $TypeJeuCollection->append($dto);
-        }
-        
-        return $typejeuCollection;
+        if(!empty($resultat)){
+            $dto = hydrateFromDatabase($resultat[0]);
+            return $dto;
+        } else {
+            throw new NotFoundTypeJeuException();
+        } 
     }
-    
+   
      
     /**
      * @param TypeJeuDTO $dto

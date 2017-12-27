@@ -74,35 +74,17 @@ class FactureDAO extends CI_Model
         $resultat = $this->db->select()
                              ->from($this->table)
                              ->where('idFacture', $id)
-                             ->get();
-        
-        $dto = hydrateFromDatabase($resultat);
-        return $dto;
-    }
-    
-    /**
-     * retourne une factureCollection contenant les factures pouvant correspondre à $chaineCar (recherche par date d'émission de la facture)
-     * @param string $chaineCar
-     * @return FactureCollection
-     */
-    public function listeRechercheFacture($chaineCar){
-        $resultat = $this->db->select()
-                             ->from($this->table)
-                             ->like('dateEmissionFacture', $chaineCar)
                              ->get()
                              ->result();
         
-        $factureCollection = new FactureCollection();
-        
-        foreach($resultat as $element){
-            $dto = $this->hydrateFromDatabase($element);
-            $FactureCollection->append($dto);
+        if(!empty($resultat)){
+            $dto = hydrateFromDatabase($resultat[0]);
+            return $dto;
+        } else {
+            throw new NotFoundFactureException();
         }
-        
-        return $factureCollection;
     }
     
-
 
     /**
      * @param FactureDTO $dto
