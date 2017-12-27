@@ -31,3 +31,8 @@ footer {
 #contenuPage{
 	padding : 15px;
 }
+
+.alarmeSuivi{
+	color : white;
+	background-color : red;
+}

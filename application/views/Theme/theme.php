@@ -33,7 +33,7 @@
         <li><a href="<?php echo site_url('organisateur'); ?>">Organisateur</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-      	<li><a href="#"><span class="glyphicon glyphicon-bell"></span></a></li>
+      	<li><a href="#"><span class="glyphicon glyphicon-bell"><span class="badge alarmeSuivi">4</span></span></a></li>
         <li><a href="<?php echo site_url('connexionOrganisateur/deconnexion'); ?>"><span class="glyphicon glyphicon-log-in"></span> Déconnexion</a></li>
       </ul>
     </div>
