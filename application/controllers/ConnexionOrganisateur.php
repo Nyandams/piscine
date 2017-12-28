@@ -31,7 +31,7 @@ class ConnexionOrganisateur extends CI_Controller
                 
                 if( $connexionValide ) {
                     $this->session->set_userdata('connexionOrganisateur', $login);
-                    redirect('/editeur/editeurliste');
+                    redirect('/festival');
                 } else {
                     $this->load->view('Organisateur/Connexion');
                 }

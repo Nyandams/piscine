@@ -24,7 +24,7 @@ class Welcome extends CI_Controller {
 	    if (!$this->session->has_userdata('connexionOrganisateur')){
 	        redirect('/connexionOrganisateur');
 	    } else {
-	        redirect('/editeur');
+	        redirect('/festival');
 	    }
 
 	}

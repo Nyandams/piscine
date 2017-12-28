@@ -10,6 +10,7 @@
     <!-- Bootstrap -->
     <link type="text/css" href="<?php echo base_url('assets/css/bootstrap.min.css');?>" rel="stylesheet">
     <link type="text/css" href="<?php echo base_url('assets/css/connexion.css');?>" rel="stylesheet">
+  	<link rel="icon" href="https://www.festivaldujeu-montpellier.org/wp-content/uploads/2017/03/cropped-Logo_carre-192x192.png">
   </head>
   
  <body>
