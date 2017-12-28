@@ -1,12 +1,11 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
 class ReservationDAO extends CI_Model
 {
     private $correlationTable = array(
-        'idReservation'             => 'idReservation',
+        'idReservation' => 'idReservation',
         'prixNegociationReservation'=> 'prixNegociationReservation',
         'idFestival'                => 'idFestival',
-        'idEditeur'                 => 'idEditeur'
+        'idEditeur'  => 'idEditeur'
     );
     
     public function __construct(){
@@ -16,8 +15,93 @@ class ReservationDAO extends CI_Model
         $this->load->model('Reservation/DTO/ReservationCollection');
     }
     
+        /**
+     * renvoie une collection d' "ReservationDTO"
+     * @return ReservationCollection
+     */
+
+        public function getReservation(){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->get()
+                             ->result();
+        
+        $reservationCollection = new ReservationCollection();
+        
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $reservationCollection->append($dto);
+        }
+        
+        return $reservationCollection;
+    }
+        
+    /**
+     * sauvegarde une reservation dans la BDD
+     * @param ReservationDTO $reservationDTO
+     */
+    public function saveReservation($reservationDTO){
+        $bdd = hydrateFromDTO($reservationDTO);
+        $this->db->set($bdd)
+                 ->insert($this->table);
+    }
+    
+    /**
+     * Supprime le reservationDTO de la BDD
+     * @param ReservationDTO $reservationDTO
+     * @return Boolean
+     */
+    public function deleteReservation($reservationDTO){
+        $id = $reservationDTO->getIdReservation();
+        return $this->db->where('id', $id)->delete($this->table);
+    }
     
     
+    public function updateReservation($dto){
+        $bdd = hydrateFromDTO($dto);
+        
+        $this->db->replace($this->table, $bdd);
+    }
+
+        /**
+     * @param int $id
+     * @return ReservationDTO
+     */
+    public function getReservationById($id){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->where('idReservation', $id)
+                             ->get()
+                             ->result();
+        
+        if(!empty($resultat)){
+            $dto = hydrateFromDatabase($resultat[0]);
+            return $dto;
+        } else {
+            throw new NotFoundReservationException();
+        }
+       
+    }    
+
+        // Retourne une ReservationCollection comprenant toutes les reservations correspondant a l'idEditeur passe en parametre.
+    public function getReservationByEditeur($idEditeur, $idFestival){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->where('idEditeur', $idEditeur)
+                             ->where('idFestival', $idFestival)
+                             ->get()
+                             ->result();
+        
+        $reservationCollection = new ReservationCollection();
+
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $reservationCollection->append($dto);
+        }
+
+        return $reservationCollection;
+    }
+
     /**
      * passage d'un tableau récupéré en BDD à un dto
      * @param $db
