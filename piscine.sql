@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 26 Décembre 2017 à 21:08
+-- Généré le :  Jeu 28 Décembre 2017 à 19:08
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -63,7 +63,6 @@ CREATE TABLE `editeur` (
 --
 
 INSERT INTO `editeur` (`idEditeur`, `libelleEditeur`) VALUES
-(1, 'Editeur1'),
 (2, 'editeur2');
 
 -- --------------------------------------------------------
@@ -82,15 +81,34 @@ CREATE TABLE `Facture` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `festival`
+-- Structure de la table `Festival`
 --
 
-CREATE TABLE `festival` (
+CREATE TABLE `Festival` (
   `idFestival` int(50) NOT NULL,
   `anneeFestival` int(11) NOT NULL,
   `nbEmplacementTotal` int(11) NOT NULL,
   `prixEmplacementFestival` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `Festival`
+--
+
+INSERT INTO `Festival` (`idFestival`, `anneeFestival`, `nbEmplacementTotal`, `prixEmplacementFestival`) VALUES
+(1, 2016, 152, 25),
+(2, 2017, 132, 32),
+(3, 2014, 100, 20),
+(4, 2013, 95, 18),
+(5, 2010, 125, 29),
+(6, 2011, 253, 15),
+(7, 2012, 124, 22),
+(9, 2009, 105, 12),
+(10, 2008, 52, 18),
+(11, 2007, 122, 12),
+(12, 2000, 0, 0),
+(13, 2018, 152, 25),
+(14, 2018, 152, 25);
 
 -- --------------------------------------------------------
 
@@ -261,9 +279,9 @@ ALTER TABLE `Facture`
   ADD PRIMARY KEY (`idFacture`);
 
 --
--- Index pour la table `festival`
+-- Index pour la table `Festival`
 --
-ALTER TABLE `festival`
+ALTER TABLE `Festival`
   ADD PRIMARY KEY (`idFestival`);
 
 --
@@ -340,10 +358,10 @@ ALTER TABLE `editeur`
 ALTER TABLE `Facture`
   MODIFY `idFacture` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT pour la table `festival`
+-- AUTO_INCREMENT pour la table `Festival`
 --
-ALTER TABLE `festival`
-  MODIFY `idFestival` int(50) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `Festival`
+  MODIFY `idFestival` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT pour la table `jeu`
 --

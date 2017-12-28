@@ -9,7 +9,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Ajouter un festival</h5>
             </div>
 
-            <form method="POST" action="ajoutFestival">
+            <form method="POST" action="<?php echo site_url('festival/ajoutFestival');?>">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="annee">Année</label>

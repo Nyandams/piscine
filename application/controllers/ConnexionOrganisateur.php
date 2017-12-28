@@ -8,6 +8,7 @@ class ConnexionOrganisateur extends CI_Controller
         $this->load->helper('url');
         $this->load->library('form_validation');
         $this->load->model('Organisateur/OrganisateurFactory');
+        $this->load->model('Festival/FestivalFactory');
     }
     
     public function index() {
@@ -31,6 +32,14 @@ class ConnexionOrganisateur extends CI_Controller
                 
                 if( $connexionValide ) {
                     $this->session->set_userdata('connexionOrganisateur', $login);
+                    
+                    $festivalDAO = $this->FestivalFactory->getInstance();
+                    try{
+                        $festivalDTO = $festivalDAO->getFestivalActuel();
+                        $this->session->set_userdata('idFestival', $festivalDTO->getIdFestival());
+                    }catch(Exception $e){
+                    }
+                    
                     redirect('/festival');
                 } else {
                     $this->load->view('Organisateur/Connexion');
