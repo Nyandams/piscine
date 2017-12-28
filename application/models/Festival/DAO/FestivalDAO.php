@@ -9,6 +9,8 @@ class FestivalDAO extends CI_Model
         'prixEmplacementFestival'   => 'prixEmplacementFestival'
     );
     
+    private $table = "Festival";
+    
     public function __construct(){
         parent::__construct();
         $this->load->model('Festival/NotFoundFestivalException');
@@ -23,6 +25,7 @@ class FestivalDAO extends CI_Model
     public function getFestivals(){
         $resultat = $this->db->select()
                              ->from('Festival')
+                             ->order_by('anneeFestival', 'desc')
                              ->get()
                              ->result();
         
@@ -44,7 +47,7 @@ class FestivalDAO extends CI_Model
      * @param FestivalDTO $festivalDTO
      */
     public function saveFestival($festivalDTO){
-        $bdd = hydrateFromDTO($festivalDTO);
+        $bdd = $this->hydrateFromDTO($festivalDTO);
         $this->db->set($bdd)
                  ->insert($this->table);
     }
@@ -63,7 +66,7 @@ class FestivalDAO extends CI_Model
     
     
     public function updateFestival($dto){
-        $bdd = hydrateFromDTO($dto);
+        $bdd = $this->hydrateFromDTO($dto);
         
         $this->db->replace($this->table, $bdd);
     }
@@ -80,7 +83,7 @@ class FestivalDAO extends CI_Model
                              ->result();
         
         if(!empty($resultat)){
-            $dto = hydrateFromDatabase($resultat[0]);
+            $dto = $this->hydrateFromDatabase($resultat[0]);
             return $dto;
         } else {
             throw new NotFoundFestivalException();

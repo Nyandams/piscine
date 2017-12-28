@@ -27,7 +27,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="<?php echo site_url('Welcome')?>">Festivals</a></li>
+        <li class="active"><a href="<?php echo site_url('Festival')?>">Festivals</a></li>
         <li><a href="<?php echo site_url('Editeur'); ?>">Editeurs</a></li>
         <li><a href="<?php echo site_url('Contact');?>">Contacts</a></li>
         <li><a href="<?php echo site_url('organisateur'); ?>">Organisateur</a></li>
