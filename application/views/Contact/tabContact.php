@@ -13,7 +13,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Ajouter éditeur</h5>
             </div>
 
-            <form method="POST" action="ajouterContact">
+            <form method="POST" action="Contact/ajouterContact">
                 <div class="container-fluid">
                     <div class="form-row">
                         <div class="form-group col-sm-6">
