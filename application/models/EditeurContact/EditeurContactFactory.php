@@ -6,8 +6,6 @@ class EditeurContactFactory extends CI_Model
         parent::__construct();
         $this->load->model('Editeur/EditeurFactory');
         $this->load->model('Contact/ContactFactory');
-        $this->load->model('Editeur/DAO/EditeurDAO');
-        $this->load->model('Contact/DAO/ContactDAO');
         $this->load->model('EditeurContact/EditeurContactService');
     }
     
