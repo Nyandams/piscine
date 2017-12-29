@@ -9,7 +9,7 @@ class FestivalDAO extends CI_Model
         'prixEmplacementFestival'   => 'prixEmplacementFestival'
     );
     
-    private $table = "Festival";
+    private $table = "festival";
     
     public function __construct(){
         parent::__construct();
@@ -20,12 +20,11 @@ class FestivalDAO extends CI_Model
 
     /**
      * renvoi tous les festivals
-     * @throws NotFoundFestivalException
      * @return FestivalCollection
      */
     public function getFestivals(){
         $resultat = $this->db->select()
-                             ->from('Festival')
+                             ->from($this->table)
                              ->order_by('anneeFestival', 'desc')
                              ->get()
                              ->result();
@@ -49,6 +48,7 @@ class FestivalDAO extends CI_Model
      */
     public function getFestivalActuel(){
         $festivalCollection = $this->getFestivals();
+        
         if(!empty($festivalCollection)){
             return $festivalCollection->offsetGet(0);
         } else {

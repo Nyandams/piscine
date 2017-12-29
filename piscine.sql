@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Jeu 28 Décembre 2017 à 19:08
+-- Généré le :  Ven 29 Décembre 2017 à 16:34
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -68,10 +68,10 @@ INSERT INTO `editeur` (`idEditeur`, `libelleEditeur`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Facture`
+-- Structure de la table `facture`
 --
 
-CREATE TABLE `Facture` (
+CREATE TABLE `facture` (
   `idFacture` int(11) NOT NULL,
   `dateEmissionFacture` date NOT NULL,
   `datePaiementFacture` date NOT NULL,
@@ -81,34 +81,15 @@ CREATE TABLE `Facture` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Festival`
+-- Structure de la table `festival`
 --
 
-CREATE TABLE `Festival` (
+CREATE TABLE `festival` (
   `idFestival` int(50) NOT NULL,
   `anneeFestival` int(11) NOT NULL,
   `nbEmplacementTotal` int(11) NOT NULL,
   `prixEmplacementFestival` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Contenu de la table `Festival`
---
-
-INSERT INTO `Festival` (`idFestival`, `anneeFestival`, `nbEmplacementTotal`, `prixEmplacementFestival`) VALUES
-(1, 2016, 152, 25),
-(2, 2017, 132, 32),
-(3, 2014, 100, 20),
-(4, 2013, 95, 18),
-(5, 2010, 125, 29),
-(6, 2011, 253, 15),
-(7, 2012, 124, 22),
-(9, 2009, 105, 12),
-(10, 2008, 52, 18),
-(11, 2007, 122, 12),
-(12, 2000, 0, 0),
-(13, 2018, 152, 25),
-(14, 2018, 152, 25);
 
 -- --------------------------------------------------------
 
@@ -273,15 +254,15 @@ ALTER TABLE `editeur`
   ADD PRIMARY KEY (`idEditeur`);
 
 --
--- Index pour la table `Facture`
+-- Index pour la table `facture`
 --
-ALTER TABLE `Facture`
+ALTER TABLE `facture`
   ADD PRIMARY KEY (`idFacture`);
 
 --
--- Index pour la table `Festival`
+-- Index pour la table `festival`
 --
-ALTER TABLE `Festival`
+ALTER TABLE `festival`
   ADD PRIMARY KEY (`idFestival`);
 
 --
@@ -353,14 +334,14 @@ ALTER TABLE `contact`
 ALTER TABLE `editeur`
   MODIFY `idEditeur` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT pour la table `Facture`
+-- AUTO_INCREMENT pour la table `facture`
 --
-ALTER TABLE `Facture`
+ALTER TABLE `facture`
   MODIFY `idFacture` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT pour la table `Festival`
+-- AUTO_INCREMENT pour la table `festival`
 --
-ALTER TABLE `Festival`
+ALTER TABLE `festival`
   MODIFY `idFestival` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT pour la table `jeu`

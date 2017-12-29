@@ -47,6 +47,8 @@ class EditeurContactService extends CI_Model
                 $editeurContact->setCpContact($contactDTO->getCpContact());
                 $editeurContact->setMailContact($contactDTO->getMailContact());                
                 $editeurContact->setEstPrincipalContact($contactDTO->getEstPrincipalContact());
+                $editeurContact->setTelephoneContact($contactDTO->getTelephoneContact());
+                
             } catch(Exception $e) {
                 
             }
@@ -71,6 +73,7 @@ class EditeurContactService extends CI_Model
             $editeurContact->setCpContact($contactDTO->getCpContact());
             $editeurContact->setMailContact($contactDTO->getMailContact());
             $editeurContact->setEstPrincipalContact($contactDTO->getEstPrincipalContact());
+            $editeurContact->setTelephoneContact($contactDTO->getTelephoneContact());
             
             try{
                 $editeurDTO = $this->EditeurDAO->getEditeurById($contactDTO->getIdEditeur());
