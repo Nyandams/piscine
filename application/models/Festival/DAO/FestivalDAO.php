@@ -49,7 +49,7 @@ class FestivalDAO extends CI_Model
     public function getFestivalActuel(){
         $festivalCollection = $this->getFestivals();
         
-        if(!empty($festivalCollection)){
+        if(count($festivalCollection) > 0){
             return $festivalCollection->offsetGet(0);
         } else {
             throw new NotFoundFestivalException();
