@@ -57,8 +57,12 @@ class ReserverDAO extends CI_Model
      * @return Boolean
      */
     public function deleteReserver($reserverDTO){
-        $id = $reserverDTO->getIdReserver();
-        return $this->db->where('id', $id)->delete($this->table);
+        $idReservation = $reserverDTO->getIdReservation();
+        $idJeu         = $reserverDTO->getIdJeu();
+        
+        return $this->db->where('idReservation', $idReservation)
+                        ->where('idJeu', $idJeu)
+                        ->delete($this->table);
     }
     
     /**
@@ -69,25 +73,6 @@ class ReserverDAO extends CI_Model
         $bdd = hydrateFromDTO($dto);
         
         $this->db->replace($this->table, $bdd);
-    }
-    
-    /**
-     * @param int $id
-     * @return EditeurDTO
-     */
-    public function getReserverById($id){
-        $resultat = $this->db->select()
-                             ->from($this->table)
-                             ->where('idReserver', $id)
-                             ->get()
-                             ->result();
-        
-        if(!empty($resultat)){
-            $dto = hydrateFromDatabase($resultat[0]);
-            return $dto;
-        } else {
-            throw new NotFoundReserverException();
-        }
     }
     
     /**
