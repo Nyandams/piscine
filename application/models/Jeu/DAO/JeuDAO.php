@@ -89,7 +89,25 @@ class JeuDAO extends CI_Model
             throw new NotFoundJeuException();
         }
        
-    }    
+    }
+    
+    // Renvoie tout les jeux d'un éditeur 
+    public function getJeuByIdEditeur ($idEditeur) {
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->where('idEditeur', $idEditeur)
+                             ->get()
+                             ->result();
+        
+        $jeuCollection = new JeuCollection();
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $jeuCollection->append($dto);
+        }
+        
+        return $jeuCollection;
+        
+    }
      
     /**
      * @param JeuDTO $dto

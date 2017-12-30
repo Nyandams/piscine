@@ -65,6 +65,24 @@ class ReserverDAO extends CI_Model
                         ->delete($this->table);
     }
     
+    // Renvoie le reserverDTO d'un jeu
+    public function getReserverByIdJeu($idJeu){
+        $resultat = $this->db->select()
+        ->from($this->table)
+        ->where('idJeu', $idJeu)
+        ->get()
+        ->result();
+        
+        $reserverCollection = new ReserverCollection();
+        
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $reserverCollection->append($dto);
+        }
+        
+        return $reserverCollection;
+    }
+    
     /**
      * modifie dans la base de donnée
      * @param ReserverDTO $dto

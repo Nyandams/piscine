@@ -30,6 +30,7 @@ class EnsembleReservationService extends CI_Model
         $idFestival = $this->session->userdata('idFestival');
         $ensembleReservationDTO->setIdFestival($idFestival);
         $ensembleReservationDTO->setIdEditeur($idEditeur);
+        
         try{
             $reservationDto = $this->reservationDao->getReservationByIdEditeurFestival($idEditeur, $idFestival);
             $ensembleReservationDTO->setIdReservation($reservationDto->getIdReservation());
@@ -40,6 +41,7 @@ class EnsembleReservationService extends CI_Model
         } catch (Exception $e){
 
         }
+        
         return $ensembleReservationDTO;
     }
 }
