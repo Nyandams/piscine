@@ -2,6 +2,8 @@
 
 class JeuDAO extends CI_Model
 {
+    private $table = 'jeu';
+
     private $correlationTable = array(
         'idJeu'             => 'idJeu',
         'libelleJeu'        => 'libelleJeu',
@@ -30,6 +32,8 @@ class JeuDAO extends CI_Model
                              ->from($this->table)
                              ->get()
                              ->result();
+
+        print_r($resultat);
         
         $jeuCollection = new JeuCollection();
         
@@ -37,6 +41,7 @@ class JeuDAO extends CI_Model
             $dto = $this->hydrateFromDatabase($element);
             $jeuCollection->append($dto);
         }
+
         
         return $jeuCollection;
     }
