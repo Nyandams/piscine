@@ -67,7 +67,6 @@ class ReserverDAO extends CI_Model
      */
     public function updateReserver($dto){
         $bdd = hydrateFromDTO($dto);
-        
         $this->db->replace($this->table, $bdd);
     }
     

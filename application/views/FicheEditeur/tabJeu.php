@@ -2,8 +2,8 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
-<!-- Modal -->
-<div class="modal fade" id="ajouterContactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal 
+<div class="modal fade" id="ajouterJeuModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -91,23 +91,24 @@
         </div>
     </div>
 </div>
+-->
 
-<!-- Table Contact -->
-<h3><label class="label label-default">Contacts</label></h3>
-<table id="tabContact" class="table table-striped table-bordered col-sm-12 text-left" cellspacing="0" width="100%">
+<!-- Table Jeu -->
+<h3><label class="label label-default">Jeux</label></h3>
+<table id="tabJeu" class="table table-striped table-bordered col-sm-12 text-left" cellspacing="0" width="100%">
         <!-- Entete du tableau -->
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Adresse email</th>   
+                <th>Jeu</th>
+                <th>Type</th>
+                <th>Table</th>
             </tr>
         </thead>
         <tfoot>
             <tr>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Adresse email</th>
+                <th>Jeu</th>
+                <th>Type</th>
+                <th>Table</th>
             </tr>
         </tfoot>
         <tbody>
@@ -117,45 +118,44 @@
                 
                 // Récupération des données
                 $ligne = ''; // Stocke une ligne le temps de la créer
-                foreach ($ContactsEditeursDto as $key => $EditContact) {
-                    $idContact = $EditContact->getIdContact();
-                    $estPrincipalContact = $EditContact->getEstPrincipalContact();
-                    $nomContact = $EditContact->getNomContact();
-                    $prenomContact = $EditContact->getPrenomContact();
-                    $mailContact = $EditContact->getMailContact();
-                    //$telContact = $EditContact->getTelephoneContact();
+                foreach ($jeux as $key => $jeu) {
+                    $idJeu = $jeu->getIdJeu();
+                    $nomJeu = $jeu->getLibelleJeu();
+                    $typeJeu = $jeu->getIdTypeJeu();
+                    $nbPlaceMax = $jeu->getNbMaxJoueurJeu();
 
                     // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un contact.
                     $ligne = '<tr>';
-  
-                    $ligne = $ligne . '<td>' . $nomContact . '</td>';
-                    $ligne = $ligne . '<td>' . $prenomContact . '</td>';
+
+                    $ligne = $ligne . '<td>' . $nomJeu . '</td>';
+                    $ligne = $ligne . '<td>' . $typeJeu . '</td>';
                     
 
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
                     $ligne = $ligne . '<td class="row">
-                        <label class="col-lg-6">' . $mailContact . '</label>
+                        <label class="col-lg-6">' . $nomJeu . '</label>
                         <span class="pull-right">
-                        <a class="btn btn-primary" href="modifierContact?idContact='. $idContact . '" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                        <a class="btn btn-primary" href="supprimerContact?idContact='.$idContact .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" href="modifierContact?idContact='.$idJeu . '" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" href="supprimerContact?idContact='.$idJeu .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </span>
                         </td>';
                     $ligne = $ligne . '</tr>';
                     
                     echo  $ligne;
                 }
+
             ?>
 
         </tbody>
     </table>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterContactModal">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterJeuModal">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>
    
     <script type="text/javascript" >        
         $(document).ready(function() {
             // Javascript de la table de base
-            $('#tabContact').DataTable();
+            $('#tabJeu').DataTable();
         });
     </script>

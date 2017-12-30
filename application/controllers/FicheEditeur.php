@@ -37,6 +37,13 @@ class FicheEditeur extends CI_Controller {
 		    $this->load->model("Jeu/DAO/JeuDAO");
 		    $this->load->model("Jeu/DTO/JeuCollection");
 
+		    // Récupération des données pour les réservations de l'éditeur
+		    $this->load->model("Reserver/ReserverFactory");
+		    $this->load->model("Reserver/DTO/ReserverDTO");
+		    $this->load->model("Reserver/DAO/ReserverDAO");
+		    $this->load->model("Reserver/DTO/ReserverCollection");
+
+
 		}
 	}
 	
@@ -51,10 +58,10 @@ class FicheEditeur extends CI_Controller {
 	public function creationPage() {
 		$data["tabContact"] = $this->tabContact();
 		$data["tabJeu"] = $this->tabJeu();
+		$data["zoneCommentaire"] = $this->commentairePerso();
+		$data["tabReserver"] = $this->tabReserver();
 		
-
 		return $this->load->view("FicheEditeur/fiche", $data,  true);
-
 	}
 	
 	// Renvoie le tableau des contacts
@@ -69,25 +76,31 @@ class FicheEditeur extends CI_Controller {
 	}
 
 	// Renvoie la tableau des réservations
-	public function tabReservation () {
+	public function tabReserver () {
 		// Récupération du service
-		$editContactDAO = $this->EditeurContactFactory->getInstance();
+		$reserverDAO = $this->ReserverFactory->getInstance();
 	
 		// Récupération de tout les contacts et éditeur associés
-		$data['ContactsEditeursDto'] = $editContactDAO->getEditeurContact();
+		$data['reservers'] = $reserverDAO->getReserver();
 		
-		return $this->load->view("FicheEditeur/tabContact", $data, true);
+		return $this->load->view("FicheEditeur/tabReservation", $data, true);
 
 	}
 
-	// Renvoie la tableau des réservations
+	// Renvoie la tableau des jeu
 	public function tabJeu () {
 		$jeuDAO = $this->JeuFactory->getInstance();
 		$data['jeux'] = $jeuDAO->getJeux();
 		
-		return $this->load->view("Jeu/tabJeu", $data, true);
+		return $this->load->view("FicheEditeur/tabJeu", $data, true);
 	}
-	
+
+	// Renvoie la zone de commentaire
+	public function commentairePerso () {
+		return $this->load->view("FicheEditeur/commentairePerso", "", true);
+	}
+
+
 
 	public function supprimerContact () {
 

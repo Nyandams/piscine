@@ -32,8 +32,6 @@ class JeuDAO extends CI_Model
                              ->from($this->table)
                              ->get()
                              ->result();
-
-        print_r($resultat);
         
         $jeuCollection = new JeuCollection();
         

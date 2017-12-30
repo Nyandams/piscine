@@ -2,7 +2,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
-<!-- Modal 
+<!-- Modal
 <div class="modal fade" id="ajouterContactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -93,21 +93,20 @@
 </div>
 -->
 
-<!-- Table Jeu -->
-<table id="tabJeu" class="table table-striped table-bordered col-sm-12 text-left" cellspacing="0" width="100%">
+<!-- Table Contact -->
+<h3><label class="label label-default">Reservations</label></h3>
+<table id="tabReserver" class="table table-striped table-bordered col-sm-12 text-left" cellspacing="0" width="100%">
         <!-- Entete du tableau -->
         <thead>
             <tr>
                 <th>Jeu</th>
-                <th>Type</th>
-                <th>Table</th>
+                <th>Quantite</th>  
             </tr>
         </thead>
         <tfoot>
             <tr>
                 <th>Jeu</th>
-                <th>Type</th>
-                <th>Table</th>
+                <th>Quantite</th> 
             </tr>
         </tfoot>
         <tbody>
@@ -117,33 +116,30 @@
                 
                 // Récupération des données
                 $ligne = ''; // Stocke une ligne le temps de la créer
-                foreach ($jeux as $key => $jeu) {
-                    $idJeu = $this->getIdJeu();
-                    $nomJeu = $this->getLibelleJeu();
-                    $typeJeu = $this->getIdTypeJeu();
-                    $nbPlaceMax = $this->getNbMaxJoueurJeu();
+                foreach ($reservers as $key => $reserver) {
+                    $idJeu = $reserver->getIdJeu();
+                    $idReservation = $reserver->getIdReservation();
+                    $quantiteJeu = $reserver->getQuantiteJeuReserver();
 
                     // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un contact.
                     $ligne = '<tr>';
-
-                    $ligne = $ligne . '<td>' . $nomJeu . '</td>';
-                    $ligne = $ligne . '<td>' . $typeJeu . '</td>';
+  
+                    $ligne = $ligne . '<td>' . $nomContact . '</td>';
+                    $ligne = $ligne . '<td>' . $prenomContact . '</td>';
                     
 
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
                     $ligne = $ligne . '<td class="row">
-                        <label class="col-lg-6">' . $nomJeu . '</label>
+                        <label class="col-lg-6">' . $mailContact . '</label>
                         <span class="pull-right">
-                        <a class="btn btn-primary" href="modifierContact?idContact='.$idJeu . '" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                        <a class="btn btn-primary" href="supprimerContact?idContact='.$idJeu .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" href="modifierContact?idContact='. $idContact . '" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" href="supprimerContact?idContact='.$idContact .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </span>
                         </td>';
                     $ligne = $ligne . '</tr>';
                     
                     echo  $ligne;
                 }
-                
-
             ?>
 
         </tbody>
