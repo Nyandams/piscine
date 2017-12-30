@@ -8,26 +8,19 @@ class EnsembleReservationDTO extends CI_Model
     private $ensembleReserverCollection = null;
     
     /**
-     * @var int
+     * @var ReservationDTO
      */
-    private $idReservation = null;
+    private $reservationDTO = null;
     
     /**
-     * @var float
+     * @var EnsembleLocaliserDTO
      */
-    private $prixNegociationReservation = null;
+    private $ensembleLocaliserDTO = null;
     
     /**
-     * @var int
+     * @var FactureDTO
      */
-    private $idFestival = null;
-    
-    /***
-     * @var int
-     */
-    private $idEditeur = null;
-    
-    
+    private $factureDTO = null;
     
     /**
      * @return the $ensembleReserverCollection
@@ -38,35 +31,27 @@ class EnsembleReservationDTO extends CI_Model
     }
 
     /**
-     * @return the $idReservation
+     * @return the $reservationDTO
      */
-    public function getIdReservation()
+    public function getReservationDTO()
     {
-        return $this->idReservation;
+        return $this->reservationDTO;
     }
 
     /**
-     * @return the $prixNegociationReservation
+     * @return the $ensembleLocaliserDTO
      */
-    public function getPrixNegociationReservation()
+    public function getEnsembleLocaliserDTO()
     {
-        return $this->prixNegociationReservation;
+        return $this->ensembleLocaliserDTO;
     }
 
     /**
-     * @return the $idFestival
+     * @return the $factureDTO
      */
-    public function getIdFestival()
+    public function getFactureDTO()
     {
-        return $this->idFestival;
-    }
-
-    /**
-     * @return the $idEditeur
-     */
-    public function getIdEditeur()
-    {
-        return $this->idEditeur;
+        return $this->factureDTO;
     }
 
     /**
@@ -78,35 +63,28 @@ class EnsembleReservationDTO extends CI_Model
     }
 
     /**
-     * @param number $idReservation
+     * @param ReservationDTO $reservationDTO
      */
-    public function setIdReservation($idReservation)
+    public function setReservationDTO($reservationDTO)
     {
-        $this->idReservation = $idReservation;
+        $this->reservationDTO = $reservationDTO;
     }
 
     /**
-     * @param number $prixNegociationReservation
+     * @param EnsembleLocaliserDTO $ensembleLocaliserDTO
      */
-    public function setPrixNegociationReservation($prixNegociationReservation)
+    public function setEnsembleLocaliserDTO($ensembleLocaliserDTO)
     {
-        $this->prixNegociationReservation = $prixNegociationReservation;
+        $this->ensembleLocaliserDTO = $ensembleLocaliserDTO;
     }
 
     /**
-     * @param number $idFestival
+     * @param FactureDTO $factureDTO
      */
-    public function setIdFestival($idFestival)
+    public function setFactureDTO($factureDTO)
     {
-        $this->idFestival = $idFestival;
+        $this->factureDTO = $factureDTO;
     }
 
-    /**
-     * @param number $idEditeur
-     */
-    public function setIdEditeur($idEditeur)
-    {
-        $this->idEditeur = $idEditeur;
-    }
 
 }

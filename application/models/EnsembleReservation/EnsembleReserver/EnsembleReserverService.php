@@ -16,6 +16,13 @@ class EnsembleReserverService extends CI_Model
         $this->load->model("EnsembleReservation/EnsembleReserver/DTO/EnsembleReserverCollection");
     }
     
+    /**
+     * permet d'initialiser les dao du service
+     * @param ReservationDAO $daoReserver
+     * @param JeuDAO $daoJeu
+     * @param TypeJeuDAO $daoTypeJeu
+     * @return EnsembleReserverService
+     */
     public function initConstruct($daoReserver, $daoJeu, $daoTypeJeu){
         $this->reserverDAO = $daoReserver;
         $this->jeuDAO      = $daoJeu;
@@ -23,7 +30,11 @@ class EnsembleReserverService extends CI_Model
         return $this;
     }
     
-    
+    /**
+     * renvoie la collection d'EnsembleReserverDTO correspondante à l'idReservation passée en paramètre
+     * @param int $idReservation
+     * @return EnsembleReserverCollection
+     */
     public function getEnsembleReserverByIdReservation($idReservation){
         $reserverCollection = $this->reserverDAO->getReserverByIdReservation($idReservation);
         $ensembleReserverCollection = new EnsembleReserverCollection();
@@ -31,34 +42,20 @@ class EnsembleReserverService extends CI_Model
         foreach ($reserverCollection as $reserverDto){
             $ensembleReserverTmp = new EnsembleReserverDTO();
             //récupération à partir de ReserverDTO
-            $ensembleReserverTmp->setIdJeu($reserverDto->getIdJeu());
-            $ensembleReserverTmp->setIdReservation($idReservation);
-            $ensembleReserverTmp->setQuantiteJeuReserver($reserverDto->getQuantiteJeuReserver());
-            $ensembleReserverTmp->setDotationJeuReserver($reserverDto->getDotationJeuReserver());
-            $ensembleReserverTmp->setReceptionJeuReserver($reserverDto->getReceptionJeuReserver());
-            $ensembleReserverTmp->setRenvoiJeuReserver($reserverDto->getRenvoiJeuReserver());
+            $ensembleReserverTmp->setReserverDTO($reserverDto); 
             
             //récupération à partir de JeuDTO
             try{
-                $jeuDto = $this->jeuDAO->getJeuById($ensembleReserverTmp->getIdJeu());
-                
-                $ensembleReserverTmp->setLibelleJeu($jeuDto->getLibelleJeu());
-                $ensembleReserverTmp->setNbMinJoueurJeu($jeuDto->getNbMinJoueurJeu());
-                $ensembleReserverTmp->setNbMaxJoueurJeu($jeuDto->getNbMaxJoueurJeu());
-                $ensembleReserverTmp->setNoticeJeu($jeuDto->getNoticeJeu());
-                $ensembleReserverTmp->setIdEditeur($jeuDto->getIdEditeur());
-                $ensembleReserverTmp->setIdTypeJeu($jeuDto->getIdTypeJeu());
+                $jeuDto = $this->jeuDAO->getJeuById($ensembleReserverTmp->getReserverDTO()->getIdJeu());
+                $ensembleReserverTmp->setJeuDTO($jeuDTO);
             }catch (exception $e){
                 
             }
             
             //récupération à partir de TypeJeuDTO
             try{
-                $typeJeuDto = $this->typeJeuDAO->getTypeJeuById($ensembleReserverTmp->getIdTypeJeu());
-                
-                $ensembleReserverTmp->setLibelleTypeJeu($typeJeuDto->getLibelleTypeJeu());
-                $ensembleReserverTmp->setIdZone($typeJeuDto->getIdZone());
-                
+                $typeJeuDto = $this->typeJeuDAO->getTypeJeuById($ensembleReserverTmp->getJeuDTO()->getIdTypeJeu());
+                $ensembleReserverTmp->setTypeJeu($typeJeuDto);                
             }catch (Exception $e){
                 
             }

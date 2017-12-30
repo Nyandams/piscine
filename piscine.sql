@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Ven 29 Décembre 2017 à 16:34
+-- Généré le :  Sam 30 Décembre 2017 à 22:14
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -208,9 +208,11 @@ CREATE TABLE `reserver` (
 
 CREATE TABLE `suivi` (
   `idSuivi` int(11) NOT NULL,
-  `typeSuivi` varchar(100) NOT NULL,
-  `dateSuivi` date NOT NULL,
-  `commentaireSuivi` varchar(500) NOT NULL
+  `commentaireSuivi` varchar(500) NOT NULL,
+  `premierContact` date NOT NULL,
+  `secondContact` date NOT NULL,
+  `presenceEditeur` int(11) NOT NULL,
+  `idFestival` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -302,6 +304,12 @@ ALTER TABLE `reservation`
   ADD PRIMARY KEY (`idReservation`);
 
 --
+-- Index pour la table `reserver`
+--
+ALTER TABLE `reserver`
+  ADD PRIMARY KEY (`idJeu`,`idReservation`);
+
+--
 -- Index pour la table `suivi`
 --
 ALTER TABLE `suivi`
@@ -342,7 +350,7 @@ ALTER TABLE `facture`
 -- AUTO_INCREMENT pour la table `festival`
 --
 ALTER TABLE `festival`
-  MODIFY `idFestival` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idFestival` int(50) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `jeu`
 --

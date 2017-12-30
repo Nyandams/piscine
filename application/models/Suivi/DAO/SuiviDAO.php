@@ -4,8 +4,10 @@ class SuiviDAO extends CI_Model
 {
     private $correlationTable = array(
         'idSuivi'           => 'idSuivi',
-        'typeSuivi'         => 'typeSuivi',
-        'dateSuivi'         => 'dateSuivi',
+        'premierContact'    => 'premierContact',
+        'secondContact'     => 'secondContact',
+        'presenceEditeur'   => 'presenceEditeur',
+        'idFestival'        => 'idFestival',
         'commentaireSuivi'  => 'commentaireSuivi'
     );
     

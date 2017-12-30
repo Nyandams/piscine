@@ -2,6 +2,8 @@
 
 class ZoneDAO extends CI_Model
 {
+    private $table = 'zone';
+    
     private $correlationTable = array(
         'idZone'    => 'idZone',
         'nomZone'   => 'nomZone',
@@ -52,10 +54,13 @@ class ZoneDAO extends CI_Model
      */
     public function deleteZone($zoneDTO){
         $id = $zoneDTO->getIdZone();
-        return $this->db->where('id', $id)->delete($this->table);
+        return $this->db->where('idZone', $id)->delete($this->table);
     }
     
-    
+    /**
+     * remplace dans le $dto dans la BDD
+     * @param ZoneDTO $dto
+     */
     public function updateZone($dto){
         $bdd = hydrateFromDTO($dto);
         
@@ -70,36 +75,19 @@ class ZoneDAO extends CI_Model
         $resultat = $this->db->select()
                              ->from($this->table)
                              ->where('idZone', $id)
-                             ->get();
-        
-        $dto = hydrateFromDatabase($resultat);
-        return $dto;
-    }
-    
-    /**
-     * retourne un zoneCollection contenant les zones pouvant correspondre à $chaineCar
-     * @param string $chaineCar
-     * @return ZoneCollection
-     */
-    public function listeRechercheZone($chaineCar){
-        $resultat = $this->db->select()
-                             ->from($this->table)
-                             ->like('nomZone', $chaineCar)
                              ->get()
                              ->result();
         
-        $zoneCollection = new ZoneCollection();
-        
-        foreach($resultat as $element){
-            $dto = $this->hydrateFromDatabase($element);
-            $ZoneCollection->append($dto);
+        if(!empty($resultat)){
+            $dto = hydrateFromDatabase($resultat[0]);
+            return $dto;
+        } else {
+            throw new NotFoundZoneException();
         }
-        
-        return $zoneCollection;
     }
     
 
-    
+
     /**
      * @param ZoneDTO $dto
      * @return array('id' => value)

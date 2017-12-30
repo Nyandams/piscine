@@ -2,6 +2,8 @@
 
 class FactureDAO extends CI_Model
 {
+    private $table = 'facture';
+    
     private $correlationTable = array(
         'idFacture'             => 'idFacture',
         'dateEmissionFacture'   => 'dateEmissionFacture',
@@ -74,6 +76,27 @@ class FactureDAO extends CI_Model
         $resultat = $this->db->select()
                              ->from($this->table)
                              ->where('idFacture', $id)
+                             ->get()
+                             ->result();
+        
+        if(!empty($resultat)){
+            $dto = hydrateFromDatabase($resultat[0]);
+            return $dto;
+        } else {
+            throw new NotFoundFactureException();
+        }
+    }
+    
+    
+    /**
+     * renvoie la facture correspondant à un idReservation
+     * @param int $id
+     * @return FactureDTO
+     */
+    public function getFactureByIdReservation($id){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->where('idReservation', $id)
                              ->get()
                              ->result();
         

@@ -8,14 +8,24 @@ class SuiviDTO extends CI_Model
     private $idSuivi = null;
     
     /**
-     * @var string
+     * @var DateTime
      */
-    private $typeSuivi = "";
+    private $premierContact = null;
     
     /**
      * @var DateTime
      */
-    private $dateSuivi = null;
+    private $secondContact = null;
+    
+    /**
+     * @var int
+     */
+    private $presenceEditeur = null;
+    
+    /**
+     * @var int
+     */
+    private $idFestival = null;
     
     /**
      * @var string
@@ -31,19 +41,35 @@ class SuiviDTO extends CI_Model
     }
 
     /**
-     * @return the $typeSuivi
+     * @return the $premierContact
      */
-    public function getTypeSuivi()
+    public function getPremierContact()
     {
-        return $this->typeSuivi;
+        return $this->premierContact;
     }
 
     /**
-     * @return the $dateSuivi
+     * @return the $secondContact
      */
-    public function getDateSuivi()
+    public function getSecondContact()
     {
-        return $this->dateSuivi;
+        return $this->secondContact;
+    }
+
+    /**
+     * @return the $presenceEditeur
+     */
+    public function getPresenceEditeur()
+    {
+        return $this->presenceEditeur;
+    }
+
+    /**
+     * @return the $idFestival
+     */
+    public function getIdFestival()
+    {
+        return $this->idFestival;
     }
 
     /**
@@ -63,19 +89,35 @@ class SuiviDTO extends CI_Model
     }
 
     /**
-     * @param string $typeSuivi
+     * @param DateTime $premierContact
      */
-    public function setTypeSuivi($typeSuivi)
+    public function setPremierContact($premierContact)
     {
-        $this->typeSuivi = $typeSuivi;
+        $this->premierContact = $premierContact;
     }
 
     /**
-     * @param DateTime $dateSuivi
+     * @param DateTime $secondContact
      */
-    public function setDateSuivi($dateSuivi)
+    public function setSecondContact($secondContact)
     {
-        $this->dateSuivi = $dateSuivi;
+        $this->secondContact = $secondContact;
+    }
+
+    /**
+     * @param number $presenceEditeur
+     */
+    public function setPresenceEditeur($presenceEditeur)
+    {
+        $this->presenceEditeur = $presenceEditeur;
+    }
+
+    /**
+     * @param number $idFestival
+     */
+    public function setIdFestival($idFestival)
+    {
+        $this->idFestival = $idFestival;
     }
 
     /**
@@ -86,4 +128,6 @@ class SuiviDTO extends CI_Model
         $this->commentaireSuivi = $commentaireSuivi;
     }
 
+    
+    
 }
