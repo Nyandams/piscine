@@ -2,6 +2,8 @@
 
 class TypeJeuDAO extends CI_Model
 {
+    private $table = 'typeJeu';
+    
     private $correlationTable = array(
         'idTypeJeu'         => 'idTypeJeu',
         'libelleTypeJeu'    => 'libelleTypeJeu',

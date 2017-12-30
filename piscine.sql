@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 26 Décembre 2017 à 21:08
+-- Généré le :  Ven 29 Décembre 2017 à 16:34
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -63,16 +63,15 @@ CREATE TABLE `editeur` (
 --
 
 INSERT INTO `editeur` (`idEditeur`, `libelleEditeur`) VALUES
-(1, 'Editeur1'),
 (2, 'editeur2');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Facture`
+-- Structure de la table `facture`
 --
 
-CREATE TABLE `Facture` (
+CREATE TABLE `facture` (
   `idFacture` int(11) NOT NULL,
   `dateEmissionFacture` date NOT NULL,
   `datePaiementFacture` date NOT NULL,
@@ -255,9 +254,9 @@ ALTER TABLE `editeur`
   ADD PRIMARY KEY (`idEditeur`);
 
 --
--- Index pour la table `Facture`
+-- Index pour la table `facture`
 --
-ALTER TABLE `Facture`
+ALTER TABLE `facture`
   ADD PRIMARY KEY (`idFacture`);
 
 --
@@ -335,15 +334,15 @@ ALTER TABLE `contact`
 ALTER TABLE `editeur`
   MODIFY `idEditeur` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT pour la table `Facture`
+-- AUTO_INCREMENT pour la table `facture`
 --
-ALTER TABLE `Facture`
+ALTER TABLE `facture`
   MODIFY `idFacture` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `festival`
 --
 ALTER TABLE `festival`
-  MODIFY `idFestival` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `idFestival` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT pour la table `jeu`
 --

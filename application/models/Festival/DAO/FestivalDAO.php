@@ -9,22 +9,22 @@ class FestivalDAO extends CI_Model
         'prixEmplacementFestival'   => 'prixEmplacementFestival'
     );
     
-    private $table = "Festival";
+    private $table = "festival";
     
     public function __construct(){
         parent::__construct();
         $this->load->model('Festival/NotFoundFestivalException');
         $this->load->model('Festival/DTO/FestivalDTO');
+        $this->load->model('Festival/DTO/FestivalCollection');
     }
 
     /**
      * renvoi tous les festivals
-     * @throws NotFoundFestivalException
      * @return FestivalCollection
      */
     public function getFestivals(){
         $resultat = $this->db->select()
-                             ->from('Festival')
+                             ->from($this->table)
                              ->order_by('anneeFestival', 'desc')
                              ->get()
                              ->result();
@@ -38,7 +38,22 @@ class FestivalDAO extends CI_Model
             }
             return $festivalCollection;
         }
-        throw new NotFoundFestivalException();
+        return new FestivalCollection();
+    }
+    
+    /**
+     * renvoie le festival le plus récent
+     * @return FestivalCollection
+     * @throws NotFoundFestivalException
+     */
+    public function getFestivalActuel(){
+        $festivalCollection = $this->getFestivals();
+        
+        if(count($festivalCollection) > 0){
+            return $festivalCollection->offsetGet(0);
+        } else {
+            throw new NotFoundFestivalException();
+        }
     }
     
 

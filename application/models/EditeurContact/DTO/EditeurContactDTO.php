@@ -58,7 +58,28 @@ class EditeurContactDTO extends CI_Model
      */
     private $cpContact = '';
     
+    /**
+     * @var int
+     */
+    private $telephoneContact = '';
     
+    
+    /**
+     * @return the $telephoneContact
+     */
+    public function getTelephoneContact()
+    {
+        return $this->telephoneContact;
+    }
+
+    /**
+     * @param number $telephoneContact
+     */
+    public function setTelephoneContact($telephoneContact)
+    {
+        $this->telephoneContact = $telephoneContact;
+    }
+
     /**
      * @return the $idEditeur
      */

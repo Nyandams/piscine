@@ -1,11 +1,13 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class ReservationDAO extends CI_Model
 {
+    private $table = 'reservation';
+    
     private $correlationTable = array(
-        'idReservation' => 'idReservation',
+        'idReservation'             => 'idReservation',
         'prixNegociationReservation'=> 'prixNegociationReservation',
         'idFestival'                => 'idFestival',
-        'idEditeur'  => 'idEditeur'
+        'idEditeur'                 => 'idEditeur'
     );
     
     public function __construct(){
@@ -56,7 +58,10 @@ class ReservationDAO extends CI_Model
         return $this->db->where('id', $id)->delete($this->table);
     }
     
-    
+    /**
+     * update
+     * @param ReservationDTO $dto
+     */
     public function updateReservation($dto){
         $bdd = hydrateFromDTO($dto);
         
@@ -83,8 +88,13 @@ class ReservationDAO extends CI_Model
        
     }    
 
-        // Retourne une ReservationCollection comprenant toutes les reservations correspondant a l'idEditeur passe en parametre.
-    public function getReservationByEditeur($idEditeur, $idFestival){
+    /**
+     * Retourne une ReservationCollection comprenant toutes les reservations correspondant a l'idEditeur et l'idFestival passe en parametre
+     * @param int $idEditeur
+     * @param int $idFestival
+     * @return ReservationCollection
+     */
+    public function getReservationByIdEditeurFestival($idEditeur, $idFestival){
         $resultat = $this->db->select()
                              ->from($this->table)
                              ->where('idEditeur', $idEditeur)
