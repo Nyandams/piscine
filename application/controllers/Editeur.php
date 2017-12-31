@@ -16,10 +16,10 @@ class Editeur extends CI_Controller {
 		    redirect('/welcome');
 		} else {
 		    // Récupération des données de l'Editeur
-		    $this->load->model("Editeur/EditeurFactory", "fact");
-		    $this->load->model("Editeur/DTO/EditeurDTO", "dto");
-		    $this->load->model("Editeur/DTO/EditeurCollection");
-		    $this->load->model("Editeur/DAO/EditeurDAO", "dao");
+		    $this->load->model("EditeurContact/EditeurContactFactory", "fact");
+		    $this->load->model("EditeurContact/DTO/EditeurContactDTO", "dto");
+		    $this->load->model("EditeurContact/DTO/EditeurContactCollection");
+		    $this->load->model("EditeurContact/EditeurContactService", "dao");
 		}
 	}
 	
@@ -31,6 +31,7 @@ class Editeur extends CI_Controller {
 	public function editeurListe() {
 		$data['page'] = $this->tableauEditeur();
 		$data['title']= 'Editeurs';
+		
 		$this->load->view("Theme/theme", $data);	
 	}
 
@@ -38,7 +39,7 @@ class Editeur extends CI_Controller {
 	// @return tableau des éditeurs prêt à être affiché dans une page.
 	public function tableauEditeur () {
 		$instanceDao = $this->fact->getInstance();
-		$data['editeursDto'] = $instanceDao->getEditeurs();
+		$data['editeursDTO'] = $instanceDao->getEditeurContactPrincipal();
 		return $this->load->view("Editeur/tabEditeur", $data, true);
 		
 	}

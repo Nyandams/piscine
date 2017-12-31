@@ -44,6 +44,7 @@ class EditeurContactService extends CI_Model
                 
             }
             
+            
             $editeurContactCollection->append($editeurContact);
         }
         return $editeurContactCollection;

@@ -113,16 +113,22 @@ class ContactDAO extends CI_Model
         return $dto;
     }
     
-    // Renvoie le contact principale sous forme de dto, de l'editeur passé en argument.
+    // Renvoie le contact principal, de l'editeur passé en argument.
     public function getContactEditeurPrincipal($idEditeur){
         $resultat = $this->db->select()
                              ->from($this->table)
                              ->where('idEditeur', $idEditeur)
                              ->where('estPrincipalContact', 1)
-                             ->get();
-        print_r($resultat);
-        $dto = $this->hydrateFromDatabase($resultat[0]);
-        return $dto;
+                             ->get()
+                             ->result();
+        
+                             
+        if (!empty($resultat)) {
+            return $this->hydrateFromDatabase($resultat[0]);
+        }
+        else {
+            throw new NotFoundContactException();
+        }
     }
 
     
@@ -174,8 +180,7 @@ class ContactDAO extends CI_Model
 
         foreach($this->correlationTable as $setterName => $getterName){
             $setter = 'set' .ucwords($setterName);
-            $dto->$setter(
-                $db->$getterName);
+            $dto->$setter($db->$getterName);
         }
         
         return $dto;
