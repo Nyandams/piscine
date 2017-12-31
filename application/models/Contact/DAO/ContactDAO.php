@@ -45,6 +45,26 @@ class ContactDAO extends CI_Model
     
         return $contactCollection;
     }
+    
+    /**
+     *  Renvoie tout les contacts d'un éditeur
+     */
+    public function getContactByIdEditeur($idEditeur) {
+        $resultat = $this->db->select()
+        ->from($this->table)
+        ->where('idEditeur', $idEditeur)
+        ->get()
+        ->result();
+        
+        $contactCollection = new ContactCollection();
+        
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $contactCollection->append($dto);
+        }   
+        
+        return $contactCollection;
+    }
 
 
     /**

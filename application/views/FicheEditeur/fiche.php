@@ -3,6 +3,7 @@
 	<div class = "col-sm-6">
 		<?php
 			echo $tabContact;
+			echo $suiviPerso;
 			echo $zoneCommentaire;
 		?>
 	</div>

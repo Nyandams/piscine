@@ -2,7 +2,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
-<!-- Modal 
+<!-- Modal -->
 <div class="modal fade" id="ajouterJeuModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -10,75 +10,35 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h5 class="modal-title" id="exampleModalLabel">Ajouter éditeur</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Ajouter un jeu</h5>
             </div>
 
-            <form method="POST" action="Contact/ajouterContact">
+            <form method="POST" action=<?php echo 'ficheEditeur/ajouterJeu?idFicheEditeur='.  $idFicheEditeur ?>>
                 <div class="container-fluid">
                     <div class="form-row">
+                        <div class="form-group col-sm-12">
+                            <label for="nomJeu">Nom</label>
+                            <input type="text" class="form-control" id="nomJeu" name="nomJeu" placeholder="Entrer le nom du jeu">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                    	<div class="form-group col-sm-6">
+                            <label for="nbMinJoueurJeu">Nombre minimum de joueur</label>
+                            <input type="number" class="form-control" id="nbMinJoueurJeu" name="nbMinJoueurJeu" placeholder="Nombre mini">
+                        </div>
+                        
                         <div class="form-group col-sm-6">
-                            <label for="nomContact">Nom</label>
-                            <input type="text" class="form-control" id="nomContact" name="nomContact" placeholder="Entrer le nom">
-                        </div>
-
-                        <div class="form-group col-sm-6">
-                            <label for="prenomContact">Prenom</label>
-                            <input type="text" class="form-control" id="prenomContact" name="prenomContact" placeholder="Entrer le prenom">
-                        </div>
+                            <label for="nbMaxJoueurJeu">Nombre maximum de joueur</label>
+                            <input type="number" class="form-control" id="nbMaxJoueurJeu" name="nbMaxJoueurJeu" placeholder="Nombre max">
+                        </div>                    
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group col-sm-8">
-                            <label for="adresseMail">Adresse email</label>
-                            <input type="mail" class="form-control" id="adresseMail" name="adresseMail" placeholder="Entrer l'email">
-                        </div>
-
-                        <div class="form-group col-sm-4">
-                            <label for="numTelephone">Numéro téléphone</label>
-                            <input type="text" class="input-medium bfh-phone form-control" data-format="+1 (ddd) ddd-dddd" id="numTelephone" name="numTelephone" placeholder="Entrer le numéro de téléphone">
-                        </div>
-                    </div>
-                  
-                    <div class="form-row">
-                        <div class="col-sm-6">
-                            <label for="adresse">Adresse</label>
-                            <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Entrer l'adresse">
-                        </div>
-
-                        <div class="col-sm-3">
-                            <label for="codePostal">Code postal</label>
-                            <input type="text" class="form-control" id="codePostal" name="codePostal" placeholder="Entrer le code postal">
-                        </div>
-
-                        <div class="col-sm-3">
-                            <label for="ville">Ville</label>
-                            <input type="text" class="form-control" id="ville" name="ville" placeholder="Entrer la ville">
-                        </div>
-                    </div>
 
                     <div class="form-row">
-                        <div class="col-sm-8">
-                            <label for="selectEditeur">Chez quel éditeur travail ce contact ?</label>
-                            <select class="selectEditeur" name="selectEditeur">
-
-                                <?php
-                                // Affichage des différents éditeurs.
-                                $selection = '';
-                                foreach ($EditeurDto as $key => $EditContact) {
-                                    $selection = $selection . "<option>";
-                                    $libEditeur = $EditContact->getLibelleEditeur();
-                                    $selection = $selection . $libEditeur . "</option>";
-                                }
-
-                                echo ($selection);
-                                ?>
-                            </select>
-                            <label for="selectEditeur">Contact principal ?</label>
-                            <select class="selectPrincipal" name="selectPrincipal">
-                                <option>Oui</option>
-                                <option>Non</option>  
-                            </select>
-
+                        <div class="form-group col-sm-12">
+                            <label for="noticeJeu">Notice du jeu</label>
+                            <input type="text" class="form-control" id="noticeJeu" name="noticeJeu" placeholder="Lien vers la notice du jeu">
                         </div>
                     </div>
                 </div>
@@ -91,7 +51,6 @@
         </div>
     </div>
 </div>
--->
 
 <!-- Table Jeu -->
 <h3><label class="label label-default">Jeux</label></h3>
@@ -118,13 +77,14 @@
                 
                 // Récupération des données
                 $ligne = ''; // Stocke une ligne le temps de la créer
+                
                 foreach ($jeux as $key => $jeu) {
                     $idJeu = $jeu->getIdJeu();
                     $nomJeu = $jeu->getLibelleJeu();
                     $typeJeu = $jeu->getIdTypeJeu();
                     $nbPlaceMax = $jeu->getNbMaxJoueurJeu();
 
-                    // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un contact.
+                    // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un Jeu.
                     $ligne = '<tr>';
 
                     $ligne = $ligne . '<td>' . $nomJeu . '</td>';
@@ -135,8 +95,8 @@
                     $ligne = $ligne . '<td class="row">
                         <label class="col-lg-6">' . $nomJeu . '</label>
                         <span class="pull-right">
-                        <a class="btn btn-primary" href="modifierContact?idContact='.$idJeu . '" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                        <a class="btn btn-primary" href="supprimerContact?idContact='.$idJeu .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" href="FicheEditeur/modifierJeu?idJeu='.$idJeu . '&idFicheEditeur=' . $idFicheEditeur .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" href="FicheEditeur/supprimerJeu?idJeu='.$idJeu . '&idFicheEditeur=' . $idFicheEditeur .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </span>
                         </td>';
                     $ligne = $ligne . '</tr>';

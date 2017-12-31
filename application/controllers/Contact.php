@@ -94,7 +94,7 @@ class Contact extends CI_Controller {
 		$dto->setRueContact($this->input->post('adresse'));
 		$dto->setVilleContact($this->input->post('ville'));
 		$dto->setCpContact($this->input->post('codePostal'));
-		$dto->setIdEditeur(18);
+		$dto->setIdEditeur($this->input->post('selectEditeur'));
 
 
 		// Envoie du dto

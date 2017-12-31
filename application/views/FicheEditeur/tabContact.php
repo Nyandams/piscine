@@ -13,7 +13,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Ajouter éditeur</h5>
             </div>
 
-            <form method="POST" action="Contact/ajouterContact">
+            <form method="POST" action=<?php echo 'ficheEditeur/ajouterContact?idFicheEditeur='.  $idFicheEditeur ?>>
                 <div class="container-fluid">
                     <div class="form-row">
                         <div class="form-group col-sm-6">
@@ -58,25 +58,10 @@
 
                     <div class="form-row">
                         <div class="col-sm-8">
-                            <label for="selectEditeur">Chez quel éditeur travail ce contact ?</label>
-                            <select class="selectEditeur" name="selectEditeur">
-
-                                <?php
-                                // Affichage des différents éditeurs.
-                                $selection = '';
-                                foreach ($EditeurDto as $key => $EditContact) {
-                                    $selection = $selection . "<option>";
-                                    $libEditeur = $EditContact->getLibelleEditeur();
-                                    $selection = $selection . $libEditeur . "</option>";
-                                }
-
-                                echo ($selection);
-                                ?>
-                            </select>
-                            <label for="selectEditeur">Contact principal ?</label>
+                            <label for="selectPrincipal">Contact principal ?</label>
                             <select class="selectPrincipal" name="selectPrincipal">
-                                <option>Oui</option>
-                                <option>Non</option>  
+                                <option value=1>Oui</option>
+                                <option value=0>Non</option>  
                             </select>
 
                         </div>
@@ -118,7 +103,7 @@
                 
                 // Récupération des données
                 $ligne = ''; // Stocke une ligne le temps de la créer
-                foreach ($ContactsEditeursDto as $key => $EditContact) {
+                foreach ($ContactDTO as $key => $EditContact) {
                     $idContact = $EditContact->getIdContact();
                     $estPrincipalContact = $EditContact->getEstPrincipalContact();
                     $nomContact = $EditContact->getNomContact();
@@ -137,8 +122,8 @@
                     $ligne = $ligne . '<td class="row">
                         <label class="col-lg-6">' . $mailContact . '</label>
                         <span class="pull-right">
-                        <a class="btn btn-primary" href="modifierContact?idContact='. $idContact . '" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                        <a class="btn btn-primary" href="supprimerContact?idContact='.$idContact .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" href="FicheEditeur/modifierContact?idContact='. $idContact . '&idFicheEditeur=' . $idFicheEditeur . '" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" href="FicheEditeur/supprimerContact?idContact='.$idContact . '&idFicheEditeur=' . $idFicheEditeur . '" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </span>
                         </td>';
                     $ligne = $ligne . '</tr>';

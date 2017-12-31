@@ -28,6 +28,5 @@ class EditeurContactService extends CI_Model
             $reservation = $this->reserverDAO->getReserverByIdJeu($jeu->getIdJeu());
             
         }
-        
     }
 }

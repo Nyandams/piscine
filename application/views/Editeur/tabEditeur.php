@@ -61,10 +61,10 @@
 
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
                     $ligne = $ligne . '<td class="row">
-                    <label class="col-lg-6 ">' . $editeur->getLibelleEditeur() . '</label>
+                    <a  href="ficheEditeur?idFicheEditeur=' . $idEditeur .'" <label class="col-lg-6 ">' . $editeur->getLibelleEditeur() . '</label>
                     <span class="pull-right">
-                    <a class="btn btn-primary" href="modifierEditeur?idEditeur='.$idEditeur . '" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                    <a class="btn btn-primary" href="supprimerEditeur?idEditeur='.$idEditeur .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                    <a class="btn btn-primary pull-right" href="modifierEditeur?idEditeur='. $idEditeur . '" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                    <a class="btn btn-primary pull-right" href="supprimerEditeur?idEditeur='. $idEditeur .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                     </span>
                     </td>';
                     $ligne = $ligne . '</tr>';
