@@ -65,6 +65,19 @@ class ContactDAO extends CI_Model
         
         return $contactCollection;
     }
+    
+    /**
+     *  Renvoie tout les contacts d'un éditeur
+     */
+    public function getJsonContactByIdEditeur($idEditeur) {
+        $resultat = $this->db->select()
+        ->from($this->table)
+        ->where('idEditeur', $idEditeur)
+        ->get()
+        ->result();
+        
+        return json_encode($resultat);
+    }
 
 
     /**
@@ -130,8 +143,7 @@ class ContactDAO extends CI_Model
             throw new NotFoundContactException();
         }
     }
-
-    
+       
     /**
      * retourne un contactCollection contenant les contact pouvant correspondre à $chaineCar
      * @param string $chaineCar

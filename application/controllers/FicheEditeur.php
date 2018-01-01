@@ -73,6 +73,7 @@ class FicheEditeur extends CI_Controller {
 		$contactDAO = $this->ContactFactory->getInstance();
 		$data['ContactDTO'] = $contactDAO->getContactByIdEditeur($idFicheEditeur);
 		$data['idFicheEditeur'] = $idFicheEditeur;
+		$data['ContactJson'] = $contactDAO->getJsonContactByIdEditeur($idFicheEditeur);
 		
 		return $this->load->view("FicheEditeur/tabContact", $data, true);
 	}
@@ -114,6 +115,16 @@ class FicheEditeur extends CI_Controller {
 	
 	// Ajoute un contact via une méthode post
 	public function ajouterContact() {
+	    $dto = $this->recuperationContact();
+	    
+	    // Envoie du dto
+	    $instanceDao = $this->ContactFactory->getInstance();
+	    $instanceDao->saveContact($dto);
+	    redirect('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur'));
+	}
+	
+	// Récupère un contact envoyé par methode post et renvoie un dto
+	private function recuperationContact() {
 	    // création du dto qu'on va envoyer
 	    $dto = new ContactDTO();
 	    $dto->setIdContact(null);
@@ -124,13 +135,10 @@ class FicheEditeur extends CI_Controller {
 	    $dto->setMailContact($this->input->post('adresseMail'));
 	    $dto->setRueContact($this->input->post('adresse'));
 	    $dto->setVilleContact($this->input->post('ville'));
+	    $dto->setCpContact($this->input->post('codePostal'));
 	    $dto->setIdEditeur($this->input->get('idFicheEditeur')); // Récupération dans l'url
 	    $dto->setEstPrincipalContact($this->input->post('selectPrincipal'));
-	    
-	    // Envoie du dto
-	    $instanceDao = $this->ContactFactory->getInstance();
-	    $instanceDao->saveContact($dto);
-	    redirect('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur'));
+	    return $dto;
 	}
 
 	/* Supprime un contact via une requete GET
@@ -145,7 +153,16 @@ class FicheEditeur extends CI_Controller {
 	}
     
 	public function modifierContact () {
-
+	    // Suppression
+	    $idContact = $this->input->get('idContact');
+	    $instanceDao = $this->ContactFactory->getInstance();
+	    $supp = $instanceDao->getContactById($idContact);
+	    
+	    $instanceDao->deleteContact($supp);
+	    $dto = $this->recuperationContact();
+	    $instanceDao->saveContact($dto);
+	   
+	    redirect('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur'));
 	}
 	
 	// Ajout un jeu via la méthode post 

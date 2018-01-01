@@ -13,7 +13,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Ajouter éditeur</h5>
             </div>
 
-            <form method="POST" action=<?php echo 'ficheEditeur/ajouterContact?idFicheEditeur='.  $idFicheEditeur ?>>
+            <form id="formContact" method="POST" action=<?php echo 'ficheEditeur/ajouterContact?idFicheEditeur='.  $idFicheEditeur ?>>
                 <div class="container-fluid">
                     <div class="form-row">
                         <div class="form-group col-sm-6">
@@ -122,7 +122,7 @@
                     $ligne = $ligne . '<td class="row">
                         <label class="col-lg-6">' . $mailContact . '</label>
                         <span class="pull-right">
-                        <a class="btn btn-primary" href="FicheEditeur/modifierContact?idContact='. $idContact . '&idFicheEditeur=' . $idFicheEditeur . '" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" id="modifContact_' . $idContact .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         <a class="btn btn-primary" href="FicheEditeur/supprimerContact?idContact='.$idContact . '&idFicheEditeur=' . $idFicheEditeur . '" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </span>
                         </td>';
@@ -135,13 +135,65 @@
         </tbody>
     </table>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterContactModal">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target='#ajouterContactModal'>
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>
    
-    <script type="text/javascript" >        
+    <script type="text/javascript" > 
+    	       
         $(document).ready(function() {
             // Javascript de la table de base
             $('#tabContact').DataTable();
+
+            // Récupération des boutons modifier
+            var btnsModifier = $('[id^="modifContact"]');
+
+            // Ajout a tout les boutons modifer le click sur le modal modifier
+            for (var i = 0; i < btnsModifier.length; i++) {
+                (function(){
+                	// Trans en objet jquery
+    				btn = $(btnsModifier[i]);
+    				var idStr = btn.attr("id");
+    				var id = idStr.substring(idStr.indexOf("_")+1);
+    				// Ajout du click pour ouvrir le modal avec les bonnes modifs
+    	            btn.click(function(){
+    	                remplirModalModifier(id);
+    	            });
+                }());
+                
+            }
+
+			// Récupère le contact ne json à partir de son id
+            function getContactById(contactArray, idContact) {
+                for (var i = 0; i <contactArray.length; i++) {
+                    if (contactArray[i].idContact == idContact) {
+                        return contactArray[i];
+                    }
+                }
+            }
+
+			// Pré rempli le modal avec les infos d'un contact
+            function remplirModalModifier(idContact) {
+                // Ouverture du modal
+                $('#ajouterContactModal').modal('show');
+
+               	// Récupération des contacts en json
+                var contactsJson = <?php echo($ContactJson);?>;
+                var contactJson = getContactById(contactsJson, idContact);
+
+                // Affichage du contact séléctionné dans le modal pour pouvoir le modifier
+                $('#nomContact').attr('value',  contactJson.nomContact);
+                $('#prenomContact').attr('value',  contactJson.prenomContact);
+                $('#adresseMail').attr('value',  contactJson.mailContact);
+                $('#numTelephone').attr('value',  contactJson.telephoneContact);
+                $('#adresse').attr('value',  contactJson.rueContact);
+                $('#codePostal').attr('value',  contactJson.cpContact);
+                $('#ville').attr('value',  contactJson.villeContact);
+                // Lien vers modif dans controller
+                $('#formContact').attr('action', <?php echo ('"ficheEditeur/modifierContact?idFicheEditeur='.  $idFicheEditeur . '&idContact="') ;?> + contactJson.idContact);
+                //$('#selectPrincipal').attr('value',  contactJson.nomContact);
+            }
         });
+
+        
     </script>
