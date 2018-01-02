@@ -105,7 +105,7 @@ class ContactDAO extends CI_Model
      * @param ContactDTO $editeurDTO
      */
     public function updateContact($dto){
-        $bdd = hydrateFromDTO($dto);
+        $bdd = $this->hydrateFromDTO($dto);
         
         $this->db->replace($this->table, $bdd);
     }

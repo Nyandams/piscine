@@ -155,12 +155,12 @@ class FicheEditeur extends CI_Controller {
 	public function modifierContact () {
 	    // Suppression
 	    $idContact = $this->input->get('idContact');
-	    $instanceDao = $this->ContactFactory->getInstance();
-	    $supp = $instanceDao->getContactById($idContact);
+	    $contactDao = $this->ContactFactory->getInstance();
+	    $supp = $contactDao->getContactById($idContact);
 	    
-	    $instanceDao->deleteContact($supp);
 	    $dto = $this->recuperationContact();
-	    $instanceDao->saveContact($dto);
+	    $dto->setIdContact($idContact);
+	    $contactDao->updateContact($dto);
 	   
 	    redirect('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur'));
 	}
