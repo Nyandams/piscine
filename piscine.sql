@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 02 Janvier 2018 à 16:29
+-- Généré le :  Mar 02 Janvier 2018 à 17:46
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -46,7 +46,7 @@ CREATE TABLE `contact` (
 INSERT INTO `contact` (`idContact`, `estPrincipalContact`, `nomContact`, `prenomContact`, `mailContact`, `telephoneContact`, `rueContact`, `villeContact`, `cpContact`, `idEditeur`) VALUES
 (1, 1, 'Zizou', 'Deuhb', 'deuhb.zizou@mali.faim', 0, 'nulle part', 'brazaville', '', 1),
 (2, 0, 'ioho', 'jiioj', 'iiohi', 0, 'jiojioji', 'jjiojiojio', 'jjioj', 1),
-(3, 1, 'Michel', 'Jean', 'jjksdqlk', 626817436, 'azazaeza', 'St jean de michel', '36520', 2);
+(3, 1, 'Michel', 'Jean', 'Jean@jean.fr', 626817436, 'azazaeza', 'St jean de michel', '36520', 2);
 
 -- --------------------------------------------------------
 
@@ -213,7 +213,8 @@ CREATE TABLE `suivi` (
   `secondContact` date NOT NULL,
   `presenceEditeur` int(11) NOT NULL,
   `idFestival` int(11) NOT NULL,
-  `idEditeur` int(11) NOT NULL
+  `idEditeur` int(11) NOT NULL,
+  `logementSuivi` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

@@ -33,6 +33,43 @@ class SuiviDTO extends CI_Model
     private $commentaireSuivi = "";
     
     /**
+     * @var int
+     */
+    private $logementSuivi = null;
+    
+    /**
+     * @return the $idEditeur
+     */
+    public function getIdEditeur()
+    {
+        return $this->idEditeur;
+    }
+
+    /**
+     * @return the $logementSuivi
+     */
+    public function getLogementSuivi()
+    {
+        return $this->logementSuivi;
+    }
+
+    /**
+     * @param number $idEditeur
+     */
+    public function setIdEditeur($idEditeur)
+    {
+        $this->idEditeur = $idEditeur;
+    }
+
+    /**
+     * @param number $logementSuivi
+     */
+    public function setLogementSuivi($logementSuivi)
+    {
+        $this->logementSuivi = $logementSuivi;
+    }
+
+    /**
      * @return the $idSuivi
      */
     public function getIdSuivi()
