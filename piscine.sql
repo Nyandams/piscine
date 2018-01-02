@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Sam 30 Décembre 2017 à 22:14
+-- Généré le :  Mar 02 Janvier 2018 à 16:29
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -45,7 +45,8 @@ CREATE TABLE `contact` (
 
 INSERT INTO `contact` (`idContact`, `estPrincipalContact`, `nomContact`, `prenomContact`, `mailContact`, `telephoneContact`, `rueContact`, `villeContact`, `cpContact`, `idEditeur`) VALUES
 (1, 1, 'Zizou', 'Deuhb', 'deuhb.zizou@mali.faim', 0, 'nulle part', 'brazaville', '', 1),
-(2, 0, 'ioho', 'jiioj', 'iiohi', 0, 'jiojioji', 'jjiojiojio', 'jjioj', 1);
+(2, 0, 'ioho', 'jiioj', 'iiohi', 0, 'jiojioji', 'jjiojiojio', 'jjioj', 1),
+(3, 1, 'Michel', 'Jean', 'jjksdqlk', 626817436, 'azazaeza', 'St jean de michel', '36520', 2);
 
 -- --------------------------------------------------------
 
@@ -207,12 +208,12 @@ CREATE TABLE `reserver` (
 --
 
 CREATE TABLE `suivi` (
-  `idSuivi` int(11) NOT NULL,
   `commentaireSuivi` varchar(500) NOT NULL,
   `premierContact` date NOT NULL,
   `secondContact` date NOT NULL,
   `presenceEditeur` int(11) NOT NULL,
-  `idFestival` int(11) NOT NULL
+  `idFestival` int(11) NOT NULL,
+  `idEditeur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -313,7 +314,7 @@ ALTER TABLE `reserver`
 -- Index pour la table `suivi`
 --
 ALTER TABLE `suivi`
-  ADD PRIMARY KEY (`idSuivi`);
+  ADD PRIMARY KEY (`idFestival`,`idEditeur`);
 
 --
 -- Index pour la table `typeJeu`
@@ -335,7 +336,7 @@ ALTER TABLE `zone`
 -- AUTO_INCREMENT pour la table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `idContact` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idContact` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `editeur`
 --
@@ -371,11 +372,6 @@ ALTER TABLE `organisateur`
 --
 ALTER TABLE `reservation`
   MODIFY `idReservation` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `suivi`
---
-ALTER TABLE `suivi`
-  MODIFY `idSuivi` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `typeJeu`
 --

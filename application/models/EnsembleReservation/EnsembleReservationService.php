@@ -26,6 +26,43 @@ class EnsembleReservationService extends CI_Model
     }
     
     /**
+     * Prend en argument l'id d'un éditeur et renvoie ensembleReserverDTO
+     * @param int $idEditeur
+     */
+    public function getReserverByIdEditeur($idEditeur){
+        $idFestival = $this->session->userdata('idFestival');
+        $reserverCollection = $this->ensembleReserverService->getEnsembleReserverByIdReservation($ensembleReservationDTO->getIdReservation());
+        
+        return $reserverCollection;
+    }
+    
+    /**
+     * sauvegarde un reserverDTO en bdd
+     * @param ReserverDTO $reserverDTO
+     */
+    public function setReserver($reserverDTO, $idEditeur){
+        $idFestival = $this->session->userdata('idFestival');
+        try{
+            $reservationDto = $this->reservationDao->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+            $reserverDTO->setIdReservation($reservationDto->getIdReservation());
+            return True;
+        }catch(Exception $e){
+            $reservationDto = new ReservationDTO();
+            $reservationDto->setIdEditeur($idEditeur);
+            $reservationDto->setIdFestival($idFestival);
+            $this->reservationDao->saveReservation($reservationDTO);
+            try{
+                $reservationDto = $this->reservationDao->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+                $reserverDTO->setIdReservation($reservationDto->getIdReservation());
+                return True;
+            }catch(Exception $e){
+                return False;
+            }
+            
+        }
+    }
+    
+    /**
      * renvoie sous forme d'ensembleReservation toutes les information liées à la réservation d'un éditeur
      * @param int $idEditeur
      * @return EnsembleReservationDTO

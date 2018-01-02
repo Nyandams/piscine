@@ -42,7 +42,7 @@ class ReserverDAO extends CI_Model
     }
     
     /**
-     * sauvegarde un type de jeu dans la BDD
+     * sauvegarde un reserver dans la BDD
      * @param ReserverDTO $reserverDTO
      */
     public function saveReserver($reserverDTO){
@@ -68,10 +68,10 @@ class ReserverDAO extends CI_Model
     // Renvoie le reserverDTO d'un jeu
     public function getReserverByIdJeu($idJeu){
         $resultat = $this->db->select()
-        ->from($this->table)
-        ->where('idJeu', $idJeu)
-        ->get()
-        ->result();
+                            ->from($this->table)
+                            ->where('idJeu', $idJeu)
+                            ->get()
+                            ->result();
         
         $reserverCollection = new ReserverCollection();
         

@@ -2,12 +2,14 @@
 
 class SuiviDAO extends CI_Model
 {
+    private $table = 'suivi';
+    
     private $correlationTable = array(
-        'idSuivi'           => 'idSuivi',
+        'idEditeur'         => 'idEditeur',
+        'idFestival'        => 'idFestival',
         'premierContact'    => 'premierContact',
         'secondContact'     => 'secondContact',
         'presenceEditeur'   => 'presenceEditeur',
-        'idFestival'        => 'idFestival',
         'commentaireSuivi'  => 'commentaireSuivi'
     );
     
@@ -18,7 +20,180 @@ class SuiviDAO extends CI_Model
         $this->load->model('Suivi/DTO/SuiviCollection');
     }
     
+    /**
+     * renvoie une collection de SuiviDTO
+     * @return SuiviCollection
+     */
+    public function getSuivi(){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->get()
+                             ->result();
+        
+        $suiviCollection = new SuiviCollection();
+        
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $reserverCollection->append($dto);
+        }
+        
+        return $suiviCollection;
+    }
     
+    /**
+     * sauvegarde un suivi dans la BDD
+     * @param suiviDTO $suiviDTO
+     */
+    public function saveSuivi($suiviDTO){
+        $bdd = hydrateFromDTO($suiviDTO);
+        $this->db->set($bdd)
+                 ->insert($this->table);
+    }
+    
+    /**
+     * Supprime le suiviDTO de la BDD
+     * @param SuiviDTO $suiviDTO
+     * @return Boolean
+     */
+    public function deleteSuivi($SuiviDTO){
+        $idEditeur  = $SuiviDTO->getIdEditeur();
+        $idFestival = $SuiviDTO->getIdFestival();
+        
+        return $this->db->where('idFestival', $idFestival)
+                        ->where('idEditeur', $idEditeur)
+                        ->delete($this->table);
+    }
+    
+    /**
+     * retourne le suivi correspondant à un editeur et à un festival
+     * @param unknown $idEditeur
+     * @param unknown $idFestival
+     * @return SuiviDTO
+     * @throws NotFoundSuiviException
+     */
+    public function getSuiviByIdEditeurFestival($idEditeur, $idFestival){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->where('idEditeur', $idEditeur)
+                             ->where('idFestival', $idFestival)
+                             ->get()
+                             ->result();
+        
+        if(!empty($resultat)){
+            $dto = hydrateFromDatabase($resultat[0]);
+            return $dto;
+        } else {
+            throw new NotFoundSuiviException();
+        }
+    }
+    
+    /**
+     * modifie dans la base de donnée
+     * @param ReserverDTO $dto
+     */
+    public function updateSuivi($dto){
+        $bdd = hydrateFromDTO($dto);
+        $this->db->replace($this->table, $bdd);
+    }
+    
+   
+    /**
+    * renvoie tous les idSuivi d'un festival
+    * @param int $idFestival
+    * @return SuiviCollection
+    */
+    public function getSuiviByIdFestival($idFestival){
+        $resultat = $this->db->select()  
+                             ->from($this->table)
+                             ->where('idFestival', $idFestival)
+                             ->get()
+                             ->result();
+        
+        $suiviCollection = new SuiviCollection();
+        
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $suiviCollection->append($dto);
+        }
+        return $suiviCollection;
+    }
+    
+    /***
+     * modifie le commentaire du suivi
+     * @param unknown $idFestival
+     * @param unknown $idEditeur
+     * @param unknown $commentaire
+     */
+    public function setCommentaire($idEditeur, $idFestival, $commentaire){
+        try{
+            $suiviDto = $this->getSuiviByIdEditeurFestival($idEditeur, $idFestival);
+            $suiviDto->setCommentaireSuivi($commentaire);
+            $this->updateSuivi($suiviDto);
+        }catch(Exception $e){
+            
+        }
+    }
+    
+    /**
+     * change la date de premierContact en la date Actuelle
+     * @param int $idEditeur
+     * @param int $idFestival
+     */
+    public function setPremierContact($idEditeur, $idFestival){
+        try{
+            $suiviDto = $this->getSuiviByIdEditeurFestival($idEditeur, $idFestival);
+            $suiviDto->setPremierContact(new \DateTime());
+            $this->updateSuivi($suiviDto);
+        }catch(Exception $e){
+            
+        } 
+    }
+    
+    /**
+     * change la date de secondContact en la date Actuelle
+     * @param int $idEditeur
+     * @param int $idFestival
+     */
+    public function setSecondContact($idEditeur, $idFestival){
+        try{
+            $suiviDto = $this->getSuiviByIdEditeurFestival($idEditeur, $idFestival);
+            $suiviDto->setSecondContact(new \DateTime());
+            $this->updateSuivi($suiviDto);
+        }catch(Exception $e){
+            
+        }
+    }
+    
+    /**
+     * supprime date de premierContact en la date Actuelle
+     * @param int $idEditeur
+     * @param int $idFestival
+     */
+    public function unsetPremierContact($idEditeur, $idFestival){
+        try{
+            $suiviDto = $this->getSuiviByIdEditeurFestival($idEditeur, $idFestival);
+            $suiviDto->setPremierContact(null);
+            $this->updateSuivi($suiviDto);
+        }catch(Exception $e){
+            
+        }
+    }
+    
+    
+    /**
+     * supprime date de secondContact en la date Actuelle
+     * @param int $idEditeur
+     * @param int $idFestival
+     */
+    public function unsetSecondContact($idEditeur, $idFestival){
+        try{
+            $suiviDto = $this->getSuiviByIdEditeurFestival($idEditeur, $idFestival);
+            $suiviDto->setSecondContact(null);
+            $this->updateSuivi($suiviDto);
+        }catch(Exception $e){
+            
+        }
+    }
     
     /**
      * passage d'un tableau récupéré en BDD à un dto

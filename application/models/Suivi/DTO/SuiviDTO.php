@@ -5,7 +5,7 @@ class SuiviDTO extends CI_Model
     /**
      * @var int
      */
-    private $idSuivi = null;
+    private $idEditeur = null;
     
     /**
      * @var DateTime
