@@ -37,6 +37,25 @@ class EditeurDAO extends CI_Model
     }
     
     /**
+     * retourne le dernier festival créée dans la BDD
+     * @return EditeurDTO
+     */
+    public function getLastIdEditeur(){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->order_by('idEditeur', 'desc')
+                             ->get()
+                             ->result();
+        
+        if (!empty($resultat)){
+            $dto = $this->hydrateFromDatabase($resultat[0]);
+            return $dto;
+        } else {
+            throw new NotFoundEditeurException();
+        }
+    }
+    
+    /**
      * sauvegarde un editeur dans la BDD
      * @param EditeurDTO $editeurDTO
      */

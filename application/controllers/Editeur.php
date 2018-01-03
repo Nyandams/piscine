@@ -20,6 +20,8 @@ class Editeur extends CI_Controller {
 		    $this->load->model("EditeurContact/DTO/EditeurContactDTO", "dto");
 		    $this->load->model("EditeurContact/DTO/EditeurContactCollection");
 		    $this->load->model("EditeurContact/EditeurContactService", "dao");
+		    $this->load->model("Suivi/SuiviFactory");
+		    $this->load->model("Festival/FestivalFactory");
 		}
 	}
 	
@@ -80,6 +82,7 @@ class Editeur extends CI_Controller {
 		// Envoie du dto
 		$instanceDao = $this->fact->getInstance();
 		$instanceDao->saveEditeur($dto);
+		$instanceDao->getLastIdEditeur();
 		redirect('/editeur/editeurliste');
 	}
 }

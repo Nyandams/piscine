@@ -42,6 +42,25 @@ class FestivalDAO extends CI_Model
     }
     
     /**
+     * retourne le dernier festival créée dans la BDD
+     * @return FestivalDTO
+     */
+    public function getLastFestivalId(){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->order_by('idFestival', 'desc')
+                             ->get()
+                             ->result();
+        
+        if (!empty($resultat)){
+            $dto = $this->hydrateFromDatabase($resultat[0]);
+            return $dto;
+        } else {
+            throw new NotFoundFestivalException();
+        }
+    }
+    
+    /**
      * renvoie le festival le plus récent
      * @return FestivalCollection
      * @throws NotFoundFestivalException
