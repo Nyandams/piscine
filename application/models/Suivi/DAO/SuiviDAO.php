@@ -46,7 +46,7 @@ class SuiviDAO extends CI_Model
      * @param suiviDTO $suiviDTO
      */
     public function saveSuivi($suiviDTO){
-        $bdd = hydrateFromDTO($suiviDTO);
+        $bdd = $this->hydrateFromDTO($suiviDTO);
         $this->db->set($bdd)
                  ->insert($this->table);
     }

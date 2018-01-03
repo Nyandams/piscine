@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 02 Janvier 2018 à 17:46
+-- Généré le :  Mer 03 Janvier 2018 à 14:26
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -29,14 +29,14 @@ SET time_zone = "+00:00";
 CREATE TABLE `contact` (
   `idContact` int(10) NOT NULL,
   `estPrincipalContact` int(10) NOT NULL,
-  `nomContact` varchar(50) NOT NULL,
-  `prenomContact` varchar(50) NOT NULL,
-  `mailContact` varchar(50) NOT NULL,
-  `telephoneContact` int(50) NOT NULL,
-  `rueContact` varchar(50) NOT NULL,
-  `villeContact` varchar(50) NOT NULL,
-  `cpContact` varchar(50) NOT NULL,
-  `idEditeur` int(11) NOT NULL
+  `nomContact` varchar(50) DEFAULT NULL,
+  `prenomContact` varchar(50) DEFAULT NULL,
+  `mailContact` varchar(50) DEFAULT NULL,
+  `telephoneContact` varchar(50) DEFAULT NULL,
+  `rueContact` varchar(50) DEFAULT NULL,
+  `villeContact` varchar(50) DEFAULT NULL,
+  `cpContact` varchar(50) DEFAULT NULL,
+  `idEditeur` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -44,9 +44,17 @@ CREATE TABLE `contact` (
 --
 
 INSERT INTO `contact` (`idContact`, `estPrincipalContact`, `nomContact`, `prenomContact`, `mailContact`, `telephoneContact`, `rueContact`, `villeContact`, `cpContact`, `idEditeur`) VALUES
-(1, 1, 'Zizou', 'Deuhb', 'deuhb.zizou@mali.faim', 0, 'nulle part', 'brazaville', '', 1),
-(2, 0, 'ioho', 'jiioj', 'iiohi', 0, 'jiojioji', 'jjiojiojio', 'jjioj', 1),
-(3, 1, 'Michel', 'Jean', 'Jean@jean.fr', 626817436, 'azazaeza', 'St jean de michel', '36520', 2);
+(4, 0, 'Bambelle', 'Larry', 'larry.bambelle@gmail.com', '0600000000', '6 rue de la loose', 'St Etienne', '25100', 1),
+(5, 1, 'Kan', 'Jerry', 'jerry.kan@hotmail.fr', '0606060606', '32 impasse de la fin', 'St Etienne', '25000', 1),
+(6, 0, 'Tabac', 'Bart', 'bartaba@yahoo.fr', '0707070707', '23 rue de la ruée', 'St Etienne', '25150', 1),
+(7, 0, 'Kollyck', 'Al', 'alkollyck@drunk.com', '0405256574', '25 rue du Vomitactik', 'Bordeaux', '26250', 2),
+(8, 1, 'Ouzy', 'Jacques', 'jacuzzi@jazz.fr', '0467253537', '45 impasse de la plage', 'Sigean', '85420', 3),
+(9, 0, 'lacour', 'Martial', 'lacourmartiale@gmail.com', '0468587456', '12 rue de la prison', 'Lille', '98600', 3),
+(10, 1, 'Roïd', 'Paula', 'polaroid@photo.com', '0458236745', '26 rue de l\'ambiance', 'St jean de Cuculles', '26800', 5),
+(11, 0, 'Masse', 'Sarah', 'çaramasse@gmail.com', '075823687', '32 rue de la liberté', 'Montpellier', '34000', 5),
+(12, 1, 'Golo', 'Thierry', 'tirigolo@gmail.com', '0478295842', '26 rue de la pluie', 'Quimper', '8500', 4),
+(13, 1, 'Ochon', 'Paul', 'polochon@hotmail.fr', '0685741258', '2 rue de la nuit', 'Grabels', '34700', 4),
+(14, 1, 'Enperte', 'Mélusine', 'metlusineenperte@gmail.com', '0458696985', '20 impasse de l\'industrie', 'Perpignan', '42000', 6);
 
 -- --------------------------------------------------------
 
@@ -56,7 +64,7 @@ INSERT INTO `contact` (`idContact`, `estPrincipalContact`, `nomContact`, `prenom
 
 CREATE TABLE `editeur` (
   `idEditeur` int(50) NOT NULL,
-  `libelleEditeur` varchar(50) NOT NULL
+  `libelleEditeur` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -64,7 +72,16 @@ CREATE TABLE `editeur` (
 --
 
 INSERT INTO `editeur` (`idEditeur`, `libelleEditeur`) VALUES
-(2, 'editeur2');
+(1, 'Ankama'),
+(2, 'Paille éditions'),
+(3, 'Asmodee'),
+(4, 'Blackrock Games'),
+(5, 'Funforge'),
+(6, 'Iello'),
+(7, 'Origames'),
+(8, 'Ludonaute'),
+(9, 'La Boite de Jeu'),
+(10, 'Pink Monkey Games');
 
 -- --------------------------------------------------------
 
@@ -74,9 +91,9 @@ INSERT INTO `editeur` (`idEditeur`, `libelleEditeur`) VALUES
 
 CREATE TABLE `facture` (
   `idFacture` int(11) NOT NULL,
-  `dateEmissionFacture` date NOT NULL,
-  `datePaiementFacture` date NOT NULL,
-  `idReservation` int(11) NOT NULL
+  `dateEmissionFacture` date DEFAULT NULL,
+  `datePaiementFacture` date DEFAULT NULL,
+  `idReservation` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -87,10 +104,17 @@ CREATE TABLE `facture` (
 
 CREATE TABLE `festival` (
   `idFestival` int(50) NOT NULL,
-  `anneeFestival` int(11) NOT NULL,
-  `nbEmplacementTotal` int(11) NOT NULL,
-  `prixEmplacementFestival` float NOT NULL
+  `anneeFestival` int(11) DEFAULT NULL,
+  `nbEmplacementTotal` int(11) DEFAULT NULL,
+  `prixEmplacementFestival` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `festival`
+--
+
+INSERT INTO `festival` (`idFestival`, `anneeFestival`, `nbEmplacementTotal`, `prixEmplacementFestival`) VALUES
+(8, 2018, 250, 25);
 
 -- --------------------------------------------------------
 
@@ -101,10 +125,10 @@ CREATE TABLE `festival` (
 CREATE TABLE `hebergement` (
   `idLogement` int(11) NOT NULL,
   `idEditeur` int(11) NOT NULL,
-  `nbNuitHebergement` int(11) NOT NULL,
-  `nbPersonneHebergement` int(11) NOT NULL,
-  `nomResponsable` varchar(50) NOT NULL,
-  `prenomResponsable` varchar(50) NOT NULL
+  `nbNuitHebergement` int(11) DEFAULT NULL,
+  `nbPersonneHebergement` int(11) DEFAULT NULL,
+  `nomResponsable` varchar(50) DEFAULT NULL,
+  `prenomResponsable` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -115,12 +139,12 @@ CREATE TABLE `hebergement` (
 
 CREATE TABLE `jeu` (
   `idJeu` int(11) NOT NULL,
-  `libelleJeu` varchar(50) NOT NULL,
-  `nbMinJoueurJeu` int(11) NOT NULL,
-  `nbMaxJoueurJeu` int(11) NOT NULL,
-  `noticeJeu` varchar(10000) NOT NULL,
-  `idEditeur` int(11) NOT NULL,
-  `idTypeJeu` int(11) NOT NULL
+  `libelleJeu` varchar(50) DEFAULT NULL,
+  `nbMinJoueurJeu` int(11) DEFAULT NULL,
+  `nbMaxJoueurJeu` int(11) DEFAULT NULL,
+  `noticeJeu` varchar(10000) DEFAULT NULL,
+  `idEditeur` int(11) DEFAULT NULL,
+  `idTypeJeu` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -132,7 +156,7 @@ CREATE TABLE `jeu` (
 CREATE TABLE `localiser` (
   `idZone` int(11) NOT NULL,
   `idReservation` int(11) NOT NULL,
-  `nbEmplacement` int(11) NOT NULL
+  `nbEmplacement` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -143,12 +167,12 @@ CREATE TABLE `localiser` (
 
 CREATE TABLE `logement` (
   `idLogement` int(11) NOT NULL,
-  `prixNuitLogement` float NOT NULL,
-  `nbMaxPlaceLogement` int(11) NOT NULL,
-  `rueLogement` varchar(50) NOT NULL,
-  `villeLogement` varchar(50) NOT NULL,
-  `cpLogement` varchar(50) NOT NULL,
-  `telLogement` int(11) NOT NULL
+  `prixNuitLogement` float DEFAULT NULL,
+  `nbMaxPlaceLogement` int(11) DEFAULT NULL,
+  `rueLogement` varchar(50) DEFAULT NULL,
+  `villeLogement` varchar(50) DEFAULT NULL,
+  `cpLogement` varchar(50) DEFAULT NULL,
+  `telLogement` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -161,8 +185,8 @@ CREATE TABLE `organisateur` (
   `idOrganisateur` int(50) NOT NULL,
   `loginOrganisateur` varchar(100) NOT NULL,
   `motDePasseOrganisateur` varchar(100) NOT NULL,
-  `nomOrganisateur` varchar(100) NOT NULL,
-  `prenomOrganisateur` varchar(100) NOT NULL
+  `nomOrganisateur` varchar(100) DEFAULT NULL,
+  `prenomOrganisateur` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -170,8 +194,7 @@ CREATE TABLE `organisateur` (
 --
 
 INSERT INTO `organisateur` (`idOrganisateur`, `loginOrganisateur`, `motDePasseOrganisateur`, `nomOrganisateur`, `prenomOrganisateur`) VALUES
-(2, 'piscine', '64f847250ae222f2fd892bc6810b294f', 'nomRandom', 'piscine'),
-(5, 'aaa', '47bce5c74f589f4867dbd57e9ca9f808', 'aaa', 'aaa');
+(2, 'piscine', '64f847250ae222f2fd892bc6810b294f', 'nomRandom', 'piscine');
 
 -- --------------------------------------------------------
 
@@ -209,13 +232,29 @@ CREATE TABLE `reserver` (
 
 CREATE TABLE `suivi` (
   `commentaireSuivi` varchar(500) NOT NULL,
-  `premierContact` date NOT NULL,
-  `secondContact` date NOT NULL,
-  `presenceEditeur` int(11) NOT NULL,
+  `premierContact` date DEFAULT NULL,
+  `secondContact` date DEFAULT NULL,
+  `presenceEditeur` int(11) DEFAULT NULL,
   `idFestival` int(11) NOT NULL,
   `idEditeur` int(11) NOT NULL,
-  `logementSuivi` int(11) NOT NULL
+  `logementSuivi` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `suivi`
+--
+
+INSERT INTO `suivi` (`commentaireSuivi`, `premierContact`, `secondContact`, `presenceEditeur`, `idFestival`, `idEditeur`, `logementSuivi`) VALUES
+('', NULL, NULL, 0, 8, 1, 0),
+('', NULL, NULL, 0, 8, 2, 0),
+('', NULL, NULL, 0, 8, 3, 0),
+('', NULL, NULL, 0, 8, 4, 0),
+('', NULL, NULL, 0, 8, 5, 0),
+('', NULL, NULL, 0, 8, 6, 0),
+('', NULL, NULL, 0, 8, 7, 0),
+('', NULL, NULL, 0, 8, 8, 0),
+('', NULL, NULL, 0, 8, 9, 0),
+('', NULL, NULL, 0, 8, 10, 0);
 
 -- --------------------------------------------------------
 
@@ -337,12 +376,12 @@ ALTER TABLE `zone`
 -- AUTO_INCREMENT pour la table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `idContact` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idContact` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT pour la table `editeur`
 --
 ALTER TABLE `editeur`
-  MODIFY `idEditeur` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idEditeur` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT pour la table `facture`
 --
@@ -352,7 +391,7 @@ ALTER TABLE `facture`
 -- AUTO_INCREMENT pour la table `festival`
 --
 ALTER TABLE `festival`
-  MODIFY `idFestival` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `idFestival` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT pour la table `jeu`
 --

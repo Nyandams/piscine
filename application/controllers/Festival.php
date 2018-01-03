@@ -15,6 +15,8 @@ class Festival extends CI_Controller {
             // Récupération des données de Contact
             $this->load->library('form_validation');
             $this->load->model("Festival/FestivalFactory", "fact");
+            $this->load->model("Suivi/SuiviFactory");
+            $this->load->model("Editeur/EditeurFactory");
         }
     }
     
@@ -36,15 +38,34 @@ class Festival extends CI_Controller {
         $dao = $this->fact->getInstance();
         $this->form_validation->set_rules('annee', '"Année"', 'trim|min_length[3]|required|max_length[52]|alpha_dash|encode_php_tags');
         $this->form_validation->set_rules('nbEmplacement', '"Nombre d\'emplacement"', 'required|max_length[52]|alpha_dash|encode_php_tags');
-        $this->form_validation->set_rules('prix', '"prix"', 'required|max_length[52]|alpha_dash|encode_php_tags');
+        $this->form_validation->set_rules('prix', '"prix"', 'required|max_length[52]|encode_php_tags');
         if($this->form_validation->run()) {
             $festivalDTO = new FestivalDTO();
                 $festivalDTO->setAnneeFestival($this->input->post('annee'));
                 $festivalDTO->setNbEmplacementTotal($this->input->post('nbEmplacement'));
                 $festivalDTO->setPrixEmplacementFestival($this->input->post('prix'));
                 $save = $dao->saveFestival($festivalDTO);
+                
+                // génération des suivis pour chaque éditeur
+                $suiviDao   = $this->SuiviFactory->getInstance();
+                $editeurDao = $this->EditeurFactory->getInstance();
+                
+                $editeurCollection = $editeurDao->getEditeurs();
+                foreach ($editeurCollection as $editeurDto){
+                    $suiviDto = new SuiviDTO();
+                    $suiviDto->setIdEditeur($editeurDto->getIdEditeur());
+                    $suiviDto->setPresenceEditeur(0);
+                    $suiviDto->setLogementSuivi(0);
+                    try{
+                        $suiviDto->setIdFestival($dao->getLastFestivalId()->getIdFestival());
+                    }catch(Exception $e){                        
+                    }
+                    $suiviDao->saveSuivi($suiviDto);
+                }
+                
+                //mise en session du festival le plus récent
                 try{
-                    $festivalDTO = $this->dao->getFestivalActuel();
+                    $festivalDTO = $dao->getFestivalActuel();
                     $this->session->set_userdata('idFestival', $festivalDTO->getIdFestival());
                 }catch(Exception $e){
                 }
