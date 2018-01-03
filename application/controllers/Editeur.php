@@ -17,6 +17,7 @@ class Editeur extends CI_Controller {
 		} else {
 		    // Récupération des données de l'Editeur
 		    $this->load->model("EditeurContact/EditeurContactFactory", "fact");
+		    $this->load->model("Editeur/EditeurFactory");
 		    $this->load->model("EditeurContact/DTO/EditeurContactDTO", "dto");
 		    $this->load->model("EditeurContact/DTO/EditeurContactCollection");
 		    $this->load->model("EditeurContact/EditeurContactService", "dao");
@@ -58,7 +59,7 @@ class Editeur extends CI_Controller {
 	*/
 	public function supprimerEditeur() {
 		$idEditeur = $this->input->get("idEditeur");
-		$instanceDao = $this->fact->getInstance();
+		$instanceDao = $this->EditeurFactory->getInstance();
 		try{
 		    $supp = $instanceDao->getEditeurById($idEditeur);
 		    $instanceDao->deleteEditeur($supp);
@@ -80,9 +81,26 @@ class Editeur extends CI_Controller {
 		$dto->setLibelleEditeur($nomEditeur);
 
 		// Envoie du dto
-		$instanceDao = $this->fact->getInstance();
+		$instanceDao = $this->EditeurFactory->getInstance();
 		$instanceDao->saveEditeur($dto);
-		$instanceDao->getLastIdEditeur();
-		redirect('/editeur/editeurliste');
+		
+		$suiviDao    = $this->SuiviFactory->getInstance();
+		$festivalDao = $this->FestivalFactory->getInstance();
+		try{
+		    $editeurDto = $instanceDao->getLastIdEditeur();
+		    $suiviDto = new SuiviDTO();
+		    $suiviDto->setIdEditeur($editeurDto->getIdEditeur());
+		    $suiviDto->setPresenceEditeur(0);
+		    $suiviDto->setLogementSuivi(0);
+		    
+		    $festivalCollection = $festivalDao->getFestivals();
+		    foreach ($festivalCollection as $festivalDto){
+		        $suiviDto->setIdFestival($festivalDto->getIdFestival());
+		        $suiviDao->saveSuivi($suiviDto);
+		    }
+		}catch(Exception $e){
+		    
+		}
+		redirect(site_url('/editeur'));
 	}
 }

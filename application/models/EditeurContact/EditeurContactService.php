@@ -18,6 +18,7 @@ class EditeurContactService extends CI_Model
         
         return $this;
     }
+
     
     // Renvoie tout les éditeurs avec leur contact principal
     public function getEditeurContactPrincipal(){
