@@ -81,7 +81,7 @@ class SuiviDAO extends CI_Model
                              ->result();
         
         if(!empty($resultat)){
-            $dto = hydrateFromDatabase($resultat[0]);
+            $dto = $this->hydrateFromDatabase($resultat[0]);
             return $dto;
         } else {
             throw new NotFoundSuiviException();
@@ -93,7 +93,8 @@ class SuiviDAO extends CI_Model
      * @param ReserverDTO $dto
      */
     public function updateSuivi($dto){
-        $bdd = hydrateFromDTO($dto);
+        $bdd = $this->hydrateFromDTO($dto);
+        print_r ($bdd);
         $this->db->replace($this->table, $bdd);
     }
     

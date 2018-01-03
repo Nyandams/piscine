@@ -111,34 +111,79 @@ class FicheEditeur extends CI_Controller {
 
 	// Renvoie la zone de commentaire
 	public function commentairePerso ($idFicheEditeur) {
-	    $dto = $this->getCommentaire();
+	    $dto = $this->getSuivi();
 	    
 	    $data["commentaire"] = $dto->getCommentaireSuivi();
 		return $this->load->view("FicheEditeur/commentairePerso", $data, true);
 	}
 	
-	public function modifierCommentaire () {
-	    $dto = $this->getCommentaire();
+	public function sauvegarderCommentaire () {
+	    $dto = $this->getSuivi();
+	    $commentaire = $this->input->post ("commentaire");
+	    $dto->setCommentaireSuivi($commentaire);
+	    $suiviDAO = $this->SuiviFactory->getInstance();
+	    $suiviDAO->updateSuivi($dto);
 	    
+	    $this->redirection();
+	}
+	
+	// Permet de la redirection vers cette page après un ajout ou autre.
+	private function redirection() {
+	    redirect(site_url('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur')));
 	}
 	    
-	private function getCommentaire() {
+	private function getSuivi() {
 	    $suiviDAO = $this->SuiviFactory->getInstance();
 	    
 	    //L'id du festival est mis en session
 	    $idFestival = $this->session->userdata("idFestival");
 	    $idEditeur = $this->input->get("idFicheEditeur");
-	    $dto = $this->SuiviDAO->getSuiviByIdEditeurFestival($idEditeur, $idFestival);
-	    
-	    return $dto;
+	    $suivi = $this->SuiviDAO->getSuiviByIdEditeurFestival($idEditeur, $idFestival);
+	    return $suivi;
 	    
 	}
 	
 	// Renvoie la zone de suivi
 	public function suiviPerso ($idFicheEditeur) {
+	    $suivi = $this->getSuivi();
 	    return $this->load->view("FicheEditeur/suiviPerso", "", true);
 	}
 	
+	public function sauvegarderSuivi() {
+	    $suivi = $this->getSuivi();
+	    $suiviDAO =  $this->SuiviFactory->getInstance();
+	    
+	    $idFestival = $this->session->userdata("idFestival");
+	    $idEditeur = $this->input->get("idFicheEditeur");
+	    
+	    // Utilise directement le dao sans passer par le dto
+	    if (null !== $this->input->post("premierContact") ){
+	        $suiviDAO->setPremierContact($idEditeur, $idFestival);
+	    } 
+	    
+	    if (null !== $this->input->post("deuxiemeContact") and ($suivi->getSecondContact() == null)){
+	        $suivi->setSecondContact(date('d/m/Y'));
+	    } else {
+	        $suivi->setSecondContact(null);
+	    }
+	    
+	    if (null !== $this->input->post("presentContact")){
+	        $suivi->setPresenceEditeur(1);
+	    } else {
+	        $suivi->setPresenceEditeur(0);
+	    }
+	    
+	    if (null !== $this->input->post("hebergementContact") ){
+	        $suivi->setLogementSuivi(1);
+	    } else {
+	        $suivi->setLogementSuivi(0);
+	    }
+	    echo ($suivi->getPremierContact());
+	    
+	    $suiviDAO->updateSuivi($suivi);
+	    
+	    //$this->redirection();
+	}
 	// Ajoute un contact via une méthode post
 	public function ajouterContact() {
 	    $dto = $this->recuperationContact();
@@ -146,7 +191,7 @@ class FicheEditeur extends CI_Controller {
 	    // Envoie du dto
 	    $instanceDao = $this->ContactFactory->getInstance();
 	    $instanceDao->saveContact($dto);
-	    redirect('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur'));
+	    $this->redirection();
 	}
 	
 	// Récupère un contact envoyé par methode post et renvoie un dto
@@ -175,7 +220,7 @@ class FicheEditeur extends CI_Controller {
 	    $instanceDao = $this->ContactFactory->getInstance();
 	    $supp = $instanceDao->getContactById($idContact);
 	    $instanceDao->deleteContact($supp);
-	    redirect('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur'));
+	    $this->redirection();
 	}
     
 	public function modifierContact () {
@@ -183,7 +228,7 @@ class FicheEditeur extends CI_Controller {
 	    $dto = $this->recuperationContact();
 	    $contactDao->updateContact($dto);
 	   
-	    redirect('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur'));
+	    $this->redirection();
 	}
 	
 	private function recuperationJeu() {
@@ -206,7 +251,7 @@ class FicheEditeur extends CI_Controller {
 	    // Envoie du dto
 	    $instanceDao = $this->JeuFactory->getInstance();
 	    $instanceDao->saveJeu($dto);
-	    redirect('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur'));
+	    $this->redirection();
 	}
 	
 	// Supprimer un jeu via la méthode post
@@ -216,7 +261,7 @@ class FicheEditeur extends CI_Controller {
 	    $instanceDao = $this->JeuFactory->getInstance();
 	    $dto = $instanceDao->getJeuById($idJeu);
 	    $instanceDao->deleteJeu($dto);
-	    redirect('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur'));
+	    $this->redirection();
 	    
 	}
 	
@@ -224,7 +269,7 @@ class FicheEditeur extends CI_Controller {
 	    $jeuDao = $this->JeuFactory->getInstance();
 	    $dto = $this->recuperationJeu();
 	    $jeuDao->updateJeu($dto);
-	    redirect('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur'));
+	    $this->redirection();
 	}
 	
 
