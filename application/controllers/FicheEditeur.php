@@ -42,6 +42,12 @@ class FicheEditeur extends CI_Controller {
 		    $this->load->model("Reserver/DTO/ReserverDTO");
 		    $this->load->model("Reserver/DAO/ReserverDAO");
 		    $this->load->model("Reserver/DTO/ReserverCollection");
+		    
+		    // Récupération des données pour les commentaires de l'éditeur
+		    $this->load->model("Suivi/SuiviFactory");
+		    $this->load->model("Suivi/DTO/SuiviDTO");
+		    $this->load->model("Suivi/DAO/SuiviDAO");
+		    $this->load->model("Suivi/DTO/SuiviCollection");
 		}
 	}
 	
@@ -105,7 +111,27 @@ class FicheEditeur extends CI_Controller {
 
 	// Renvoie la zone de commentaire
 	public function commentairePerso ($idFicheEditeur) {
-		return $this->load->view("FicheEditeur/commentairePerso", "", true);
+	    $dto = $this->getCommentaire();
+	    
+	    $data["commentaire"] = $dto->getCommentaireSuivi();
+		return $this->load->view("FicheEditeur/commentairePerso", $data, true);
+	}
+	
+	public function modifierCommentaire () {
+	    $dto = $this->getCommentaire();
+	    
+	}
+	    
+	private function getCommentaire() {
+	    $suiviDAO = $this->SuiviFactory->getInstance();
+	    
+	    //L'id du festival est mis en session
+	    $idFestival = $this->session->userdata("idFestival");
+	    $idEditeur = $this->input->get("idFicheEditeur");
+	    $dto = $this->SuiviDAO->getSuiviByIdEditeurFestival($idEditeur, $idFestival);
+	    
+	    return $dto;
+	    
 	}
 	
 	// Renvoie la zone de suivi
@@ -193,10 +219,13 @@ class FicheEditeur extends CI_Controller {
 	    redirect('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur'));
 	    
 	}
+	
 	public function modifierJeu () {
 	    $jeuDao = $this->JeuFactory->getInstance();
 	    $dto = $this->recuperationJeu();
 	    $jeuDao->updateJeu($dto);
 	    redirect('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur'));
 	}
+	
+
 }

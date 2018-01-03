@@ -1,7 +1,7 @@
 <h3><label class="label label-default">Commentaires</label></h3>
-<form method="POST" action="ajouterEditeur">
+<form method="POST" action=<?php echo('FicheEditeur/modifierCommentaire?idFicheEditeur=' . $ficheEditeur)?>>
 	<div class="form-row">
-		<textarea class="form-control" row="3"></textarea>
+		<textarea class="form-control" value="<?php echo $commentaire ?>" row="3"></textarea>
 	</div>
 
 	<div class="form-row">
