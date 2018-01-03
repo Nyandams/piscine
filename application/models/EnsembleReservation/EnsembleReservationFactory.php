@@ -7,7 +7,7 @@ class EnsembleReservationFactory extends CI_Model
         $this->load->model('Reservation/ReservationFactory');
         $this->load->model('EnsembleReservation/EnsembleReserverFactory');
         $this->load->model('Facture/FactureFactory');
-        $this->load->model('EnsembleLocaliser/EnsembleLocaliserFactory');
+        $this->load->model('EnsembleReservation/EnsembleLocaliser/EnsembleLocaliserFactory');
     }
     
     

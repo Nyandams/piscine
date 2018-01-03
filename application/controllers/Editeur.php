@@ -82,22 +82,24 @@ class Editeur extends CI_Controller {
 		// Envoie du dto
 		$instanceDao = $this->EditeurFactory->getInstance();
 		$instanceDao->saveEditeur($dto);
-		$instanceDao->getLastIdEditeur();
-		redirect(site_url('/editeur/editeurliste'));
-	}
-	
-	
-	public function modifierEditeur () {
-	    // Récupération des valeurs
-	    $nomEditeur = $this->input->post('nomEditeur');
-	    
-	    // création du dto qu'on va envoyer
-	    $dto = new EditeurDTO();
-	    $dto->setIdEditeur($this->input->get("idEditeur"));
-	    $dto->setLibelleEditeur($nomEditeur);
-	    // Envoie du dto
-	    $instanceDao = $this->EditeurFactory->getInstance();
-	    $instanceDao->updateEditeur($dto);
-	    redirect(site_url('/editeur/editeurliste'));
+		$suiviDao    = $this->SuiviFactory->getInstance();
+		$festivalDao = $this->FestivalFactory->getInstance();
+		try{
+		    $editeurDto = $instanceDao->getLastIdEditeur();
+		    $suiviDto = new SuiviDTO();
+		    $suiviDto->setIdEditeur($editeurDto->getIdEditeur());
+		    $suiviDto->setPresenceEditeur(0);
+		    $suiviDto->setLogementSuivi(0);
+		    
+		    $festivalCollection = $festivalDao->getFestivals();
+		    foreach ($festivalCollection as $festivalDto){
+		        $suiviDto->setIdFestival($festivalDto->getIdFestival());
+		        $suiviDao->saveSuivi($suiviDto);
+		    }
+		}catch(Exception $e){
+		    
+		}
+		redirect(site_url('/editeur'));
+
 	}
 }

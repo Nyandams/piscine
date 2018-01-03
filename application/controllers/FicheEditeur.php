@@ -48,6 +48,14 @@ class FicheEditeur extends CI_Controller {
 		    $this->load->model("Suivi/DTO/SuiviDTO");
 		    $this->load->model("Suivi/DAO/SuiviDAO");
 		    $this->load->model("Suivi/DTO/SuiviCollection");
+		    
+		    // Récupération de l'enssembleReservation de chaque editeur
+		    $this->load->model("EnsembleReservation/EnsembleReserver/EnsembleReserverFactory");
+		    $this->load->model("EnsembleReservation/EnsembleReserver/DTO/EnsembleReserverDTO");
+		    $this->load->model("EnsembleReservation/EnsembleReserver/EnsembleReserverService");
+		    $this->load->model("EnsembleReservation/EnsembleReserver/DTO/EnsembleReserverCollection");
+		    $this->load->model("EnsembleReservation/EnsembleReservationService");
+		    $this->load->model("EnsembleReservation/EnsembleReservationFactory");
 		}
 	}
 	
@@ -87,10 +95,11 @@ class FicheEditeur extends CI_Controller {
 	// Renvoie la tableau des réservations
 	public function tabReserver ($idFicheEditeur) {
 		// Récupération du service
-		$reserverDAO = $this->ReserverFactory->getInstance();
+		$reserverDAO = $this->EnsembleReservationFactory->getInstance();
+	    $ensembleReserverDTO = $reserverDAO->getReserverByIdEditeur($this->input->get("idFicheEditeur"));
 	
 		// Récupération de tout les contacts et éditeur associés
-		$data['reservers'] = $reserverDAO->getReserver();
+	    $data['reservations'] = $ensembleReserverDTO;
 		
 		return $this->load->view("FicheEditeur/tabReservation", $data, true);
 
@@ -123,6 +132,7 @@ class FicheEditeur extends CI_Controller {
 	    $dto->setCommentaireSuivi($commentaire);
 	    $suiviDAO = $this->SuiviFactory->getInstance();
 	    $suiviDAO->updateSuivi($dto);
+	    echo ($commentaire);
 	    
 	    $this->redirection();
 	}

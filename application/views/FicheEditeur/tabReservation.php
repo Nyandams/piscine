@@ -100,13 +100,17 @@
         <thead>
             <tr>
                 <th>Jeu</th>
-                <th>Quantite</th>  
+                <th>Quantite</th> 
+                <th>Recu ?</th>
+                <th>Type Jeu</th> 
             </tr>
         </thead>
         <tfoot>
             <tr>
-                <th>Jeu</th>
+               <th>Jeu</th>
                 <th>Quantite</th> 
+                <th>Recu ?</th>
+                <th>Type Jeu</th> 
             </tr>
         </tfoot>
         <tbody>
@@ -116,21 +120,32 @@
                 
                 // Récupération des données
                 $ligne = ''; // Stocke une ligne le temps de la créer
-                foreach ($reservers as $key => $reserver) {
-                    $idJeu = $reserver->getIdJeu();
-                    $idReservation = $reserver->getIdReservation();
+                foreach ($reservations as $key => $reservation) {
+                    $jeuDTO = $reservation->getJeuDTO();
+                    $reserverDTO = $reservation->getReserverDTO();
+                    $typeJeuDTO = $reservation->getTypeJeu();
+                    
+                    
+                    $idJeu = $jeuDTO->getIdJeu();
+                    $nomJeu = $jeuDTO->getLibelleJeu();
+                    $qteJeu = $reserverDTO->getQuantiteJeuReserver();
+                    $recu = $reserverDTO->getReceptionJeuReserver();
+                    $typeJeu = $typeJeuDTO->getLibelleTypeJeu();
+                    
+                    
                     $quantiteJeu = $reserver->getQuantiteJeuReserver();
 
                     // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un contact.
                     $ligne = '<tr>';
   
-                    $ligne = $ligne . '<td>' . $nomContact . '</td>';
-                    $ligne = $ligne . '<td>' . $prenomContact . '</td>';
+                    $ligne = $ligne . '<td>' . $nomJeu . '</td>';
+                    $ligne = $ligne . '<td>' . $qteJeu . '</td>';
+                    $ligne = $ligne . '<td>' . $recu . '</td>';
                     
 
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
                     $ligne = $ligne . '<td class="row">
-                        <label class="col-lg-6">' . $mailContact . '</label>
+                        <label class="col-lg-6">' . $typeJeu . '</label>
                         <span class="pull-right">
                         <a class="btn btn-primary" href="modifierContact?idContact='. $idContact . '" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         <a class="btn btn-primary" href="supprimerContact?idContact='.$idContact .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
@@ -152,6 +167,6 @@
     <script type="text/javascript" >        
         $(document).ready(function() {
             // Javascript de la table de base
-            $('#tabContact').DataTable();
+            $('#tabReserver').DataTable();
         });
     </script>

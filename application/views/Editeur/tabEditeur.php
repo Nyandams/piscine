@@ -13,7 +13,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Ajouter éditeur</h5>
             </div>
 
-            <form method="POST" action="Editeur/ajouterEditeur">
+            <form method="POST" action= <?php echo site_url('Editeur/ajouterEditeur')?>>
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="nomEditeur">Nom de l'éditeur</label>
