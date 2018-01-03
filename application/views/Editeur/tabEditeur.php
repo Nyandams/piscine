@@ -87,8 +87,13 @@
                     $ligne = $ligne . '<td class="row">
                     <label class="col-lg-6 ">' . $mailContact . '</label>
                     <span class="pull-right">
+<<<<<<< HEAD
                     <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#modifierEditeurModal_' . $idEditeur .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                     <a class="btn btn-primary pull-right" href="supprimerEditeur?idEditeur='. $idEditeur .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+=======
+                    <a class="btn btn-primary pull-right" href="'. site_url('editeur/modifierEditeur?idEditeur=') . $idEditeur . '" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                    <a class="btn btn-primary pull-right" href="'. site_url('editeur/supprimerEditeur?idEditeur='). $idEditeur .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+>>>>>>> 002733f551f379feda94fe82a7751be059b31bc0
                     </span>
                     </td>';
                     $ligne = $ligne . '</tr>';
