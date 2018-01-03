@@ -78,7 +78,7 @@
                     // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un éditeur.
                     $ligne = '<tr>';
 
-                    $ligne = $ligne . '<td><a  href="ficheEditeur?idFicheEditeur=' . $idEditeur .'" <label class="col-lg-6 ">' . $nomEditeur . '</label></a></td>';
+                    $ligne = $ligne . '<td><a  href="' . site_url('ficheEditeur?idFicheEditeur='. $idEditeur ) . '" <label class="col-lg-6 ">' . $nomEditeur . '</label></a></td>';
                     $ligne = $ligne . '<td><a  href="contact" <label class="col-lg-6 ">' . $nomContact . '</label></a></td>';
                     $ligne = $ligne . '<td>' . $numContact . '</td>';
               
