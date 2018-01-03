@@ -73,7 +73,7 @@ class FicheEditeur extends CI_Controller {
 		$contactDAO = $this->ContactFactory->getInstance();
 		$data['ContactDTO'] = $contactDAO->getContactByIdEditeur($idFicheEditeur);
 		$data['idFicheEditeur'] = $idFicheEditeur;
-		$data['ContactJson'] = $contactDAO->getJsonContactByIdEditeur($idFicheEditeur);
+		
 		
 		return $this->load->view("FicheEditeur/tabContact", $data, true);
 	}
@@ -127,7 +127,7 @@ class FicheEditeur extends CI_Controller {
 	private function recuperationContact() {
 	    // création du dto qu'on va envoyer
 	    $dto = new ContactDTO();
-	    $dto->setIdContact(null);
+	    $dto->setIdContact($this->input->get('idContact'));
 	    $dto->setEstPrincipalContact(0);
 	    $dto->setNomContact($this->input->post('nomContact'));
 	    $dto->setPrenomContact($this->input->post('prenomContact'));
@@ -153,29 +153,29 @@ class FicheEditeur extends CI_Controller {
 	}
     
 	public function modifierContact () {
-	    // Suppression
-	    $idContact = $this->input->get('idContact');
 	    $contactDao = $this->ContactFactory->getInstance();
-	    $supp = $contactDao->getContactById($idContact);
-	    
 	    $dto = $this->recuperationContact();
-	    $dto->setIdContact($idContact);
 	    $contactDao->updateContact($dto);
 	   
 	    redirect('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur'));
 	}
 	
-	// Ajout un jeu via la méthode post 
-	public function ajouterJeu () {
+	private function recuperationJeu() {
 	    // création du dto qu'on va envoyer
 	    $dto = new JeuDTO();
 	    $dto->setIdEditeur($this->input->get("idFicheEditeur"));
-	    $dto->setIdJeu(null);
+	    $dto->setIdJeu($this->input->get("idJeu"));
 	    $dto->setIdTypeJeu(0);
 	    $dto->setLibelleJeu($this->input->post("nomJeu"));
 	    $dto->setNbMaxJoueurJeu($this->input->post("nbMaxJoueurJeu"));
 	    $dto->setNbMinJoueurJeu($this->input->post("nbMinJoueurJeu"));
 	    $dto->setNoticeJeu($this->input->post("noticeJeu"));
+	    return $dto;
+	}
+	
+	// Ajout un jeu via la méthode post 
+	public function ajouterJeu () {
+	    $dto = $this->recuperationJeu();
 	    
 	    // Envoie du dto
 	    $instanceDao = $this->JeuFactory->getInstance();
@@ -186,10 +186,17 @@ class FicheEditeur extends CI_Controller {
 	// Supprimer un jeu via la méthode post
 	public function supprimerJeu () {
 	    $idJeu = $this->input->get('idJeu');
+	    
 	    $instanceDao = $this->JeuFactory->getInstance();
-	    $supp = $instanceDao->getJeuById($idJeu);
-	    $instanceDao->deleteJeu($supp);
+	    $dto = $instanceDao->getJeuById($idJeu);
+	    $instanceDao->deleteJeu($dto);
 	    redirect('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur'));
 	    
+	}
+	public function modifierJeu () {
+	    $jeuDao = $this->JeuFactory->getInstance();
+	    $dto = $this->recuperationJeu();
+	    $jeuDao->updateJeu($dto);
+	    redirect('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur'));
 	}
 }

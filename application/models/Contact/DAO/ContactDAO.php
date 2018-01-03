@@ -66,18 +66,7 @@ class ContactDAO extends CI_Model
         return $contactCollection;
     }
     
-    /**
-     *  Renvoie tout les contacts d'un éditeur
-     */
-    public function getJsonContactByIdEditeur($idEditeur) {
-        $resultat = $this->db->select()
-        ->from($this->table)
-        ->where('idEditeur', $idEditeur)
-        ->get()
-        ->result();
-        
-        return json_encode($resultat);
-    }
+   
 
 
     /**
@@ -122,8 +111,13 @@ class ContactDAO extends CI_Model
                              ->result();
                              
         
-        $dto = $this->hydrateFromDatabase($resultat[0]);
-        return $dto;
+                             if (!empty($resultat)) {
+                                 return $this->hydrateFromDatabase($resultat[0]);
+                             }
+                             else {
+                                 throw new NotFoundContactException();
+                             }
+       
     }
     
     // Renvoie le contact principal, de l'editeur passé en argument.

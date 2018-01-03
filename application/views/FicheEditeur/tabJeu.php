@@ -60,14 +60,14 @@
             <tr>
                 <th>Jeu</th>
                 <th>Type</th>
-                <th>Table</th>
+                <th>Joueur max</th>
             </tr>
         </thead>
         <tfoot>
             <tr>
                 <th>Jeu</th>
                 <th>Type</th>
-                <th>Table</th>
+                <th>Joueur max</th>
             </tr>
         </tfoot>
         <tbody>
@@ -83,6 +83,8 @@
                     $nomJeu = $jeu->getLibelleJeu();
                     $typeJeu = $jeu->getIdTypeJeu();
                     $nbPlaceMax = $jeu->getNbMaxJoueurJeu();
+                    $nbPlaceMin = $jeu->getNbMinJoueurJeu();
+                    $noticeJeu = $jeu->getNoticeJeu();
 
                     // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un Jeu.
                     $ligne = '<tr>';
@@ -93,15 +95,66 @@
 
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
                     $ligne = $ligne . '<td class="row">
-                        <label class="col-lg-6">' . $nomJeu . '</label>
+                        <label class="col-lg-6">' . $nbPlaceMax . '</label>
                         <span class="pull-right">
-                        <a class="btn btn-primary" href="FicheEditeur/modifierJeu?idJeu='.$idJeu . '&idFicheEditeur=' . $idFicheEditeur .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" data-toggle="modal" data-target="#modifierJeuModal_' . $idJeu . '" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         <a class="btn btn-primary" href="FicheEditeur/supprimerJeu?idJeu='.$idJeu . '&idFicheEditeur=' . $idFicheEditeur .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </span>
                         </td>';
                     $ligne = $ligne . '</tr>';
                     
                     echo  $ligne;
+                    
+                    $modalModifJeu =' 
+                    <div class="modal fade" id="modifierJeuModal_' . $idJeu . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                         <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5 class="modal-title" id="exampleModalLabel">Ajouter un jeu</h5>
+                                </div>
+                                
+                                <form method="POST" action="ficheEditeur/modifierJeu?idFicheEditeur='.  $idFicheEditeur . '&idJeu=' . $idJeu . '">
+                                    <div class="container-fluid">
+                                        <div class="form-row">
+                                            <div class="form-group col-sm-12">
+                                                <label for="nomJeu">Nom</label>
+                                                <input type="text" value="' . $nomJeu . '" class="form-control" id="nomJeu" name="nomJeu" placeholder="Entrer le nom du jeu">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-row">
+                                        	<div class="form-group col-sm-6">
+                                                <label for="nbMinJoueurJeu">Nombre minimum de joueur</label>
+                                                <input type="number" value="' . $nbPlaceMin . '" class="form-control" id="nbMinJoueurJeu" name="nbMinJoueurJeu" placeholder="Nombre mini">
+                                            </div>
+                                            
+                                            <div class="form-group col-sm-6">
+                                                <label for="nbMaxJoueurJeu">Nombre maximum de joueur</label>
+                                                <input type="number" value="' . $nbPlaceMax . '" class="form-control" id="nbMaxJoueurJeu" name="nbMaxJoueurJeu" placeholder="Nombre max">
+                                            </div>                    
+                                        </div>
+                    
+                    
+                                        <div class="form-row">
+                                            <div class="form-group col-sm-12">
+                                                <label for="noticeJeu">Notice du jeu</label>
+                                                <input type="text" value="' . $noticeJeu . '" class="form-control" id="noticeJeu" name="noticeJeu" placeholder="Lien vers la notice du jeu">
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                        <button type="submit" class="btn btn-secondary">Sauvegarder</button>
+                                    </div> 
+                                </form>
+                            </div>
+                        </div>
+                    </div>';
+                    echo ($modalModifJeu);
                 }
 
             ?>

@@ -66,7 +66,7 @@ class JeuDAO extends CI_Model
     
     
     public function updateJeu($dto){
-        $bdd = hydrateFromDTO($dto);
+        $bdd = $this->hydrateFromDTO($dto);
         
         $this->db->replace($this->table, $bdd);
     }
@@ -78,14 +78,18 @@ class JeuDAO extends CI_Model
     public function getJeuById($id){
         $resultat = $this->db->select()
                              ->from($this->table)
-                             ->where('idEditeur', $id)
+                             ->where('idJeu', $id)
                              ->get()
                              ->result();
-                             $jeuCollection = new JeuCollection();
-        foreach($resultat as $element){
-            $dto = $this->hydrateFromDatabase($element);
-            $jeuCollection->append($dto);
+        
+        
+        if (!empty($resultat)) {
+            return $this->hydrateFromDatabase($resultat[0]);
         }
+        else {
+            throw new NotFoundJeuException();
+        }
+        
        
     }
     
