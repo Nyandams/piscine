@@ -79,7 +79,7 @@ class EditeurDAO extends CI_Model
      * @param EditeurDTO $editeurDTO
      */
     public function updateEditeur($dto){
-        $bdd = hydrateFromDTO($dto);
+        $bdd = $this->hydrateFromDTO($dto);
         
         $this->db->replace($this->table, $bdd);
     }

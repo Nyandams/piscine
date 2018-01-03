@@ -22,6 +22,12 @@ class Editeur extends CI_Controller {
 		    $this->load->model("EditeurContact/EditeurContactService", "dao");
 		    $this->load->model("Suivi/SuiviFactory");
 		    $this->load->model("Festival/FestivalFactory");
+		    
+		    // Récupération des données de l'Editeur
+		    $this->load->model("Editeur/EditeurFactory");
+		    $this->load->model("Editeur/DTO/EditeurDTO");
+		    $this->load->model("Editeur/DTO/EditeurCollection");
+		    $this->load->model("Editeur/DAO/EditeurDAO");
 		}
 	}
 	
@@ -44,13 +50,6 @@ class Editeur extends CI_Controller {
 		$data['editeursDTO'] = $instanceDao->getEditeurContactPrincipal();
 		return $this->load->view("Editeur/tabEditeur", $data, true);
 		
-	}
-
-	/* Modifie un éditeur via une requete
-	@param : idEditeur : int
-	*/
-	public function modifierEditeur() {
-
 	}
 
 	/* Supprime un éditeur via une requete
@@ -83,6 +82,24 @@ class Editeur extends CI_Controller {
 		$instanceDao = $this->fact->getInstance();
 		$instanceDao->saveEditeur($dto);
 		$instanceDao->getLastIdEditeur();
-		redirect('/editeur/editeurliste');
+		redirect(site_url('/editeur/editeurliste'));
+	}
+	
+	
+	public function modifierEditeur () {
+	    // Récupération des valeurs
+	    $nomEditeur = $this->input->post('nomEditeur');
+	    
+	    // création du dto qu'on va envoyer
+	    $dto = new EditeurDTO();
+	    $dto->setIdEditeur($this->input->get("idEditeur"));
+	    $dto->setLibelleEditeur($nomEditeur);
+	    // Envoie du dto
+	    $instanceDao = $this->EditeurFactory->getInstance();
+	    $instanceDao->updateEditeur($dto);
+	    redirect(site_url('/editeur/editeurliste'));
+	    
+	    
+	    
 	}
 }

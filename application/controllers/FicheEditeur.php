@@ -150,7 +150,7 @@ class FicheEditeur extends CI_Controller {
 	}
 	
 	public function sauvegarderSuivi() {
-	    $suivi = $this->getSuivi();
+	    /*$suivi = $this->getSuivi();
 	    $suiviDAO =  $this->SuiviFactory->getInstance();
 	    
 	    $idFestival = $this->session->userdata("idFestival");
@@ -180,7 +180,7 @@ class FicheEditeur extends CI_Controller {
 	    }
 	    echo ($suivi->getPremierContact());
 	    
-	    $suiviDAO->updateSuivi($suivi);
+	    $suiviDAO->updateSuivi($suivi);*/
 	    
 	    //$this->redirection();
 	}
