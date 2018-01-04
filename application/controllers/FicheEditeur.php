@@ -270,10 +270,10 @@ class FicheEditeur extends CI_Controller {
 	    $idFestival = $this->session->userdata("idFestival");
 	    $idEditeur = 1;
 	    
+	  
+	    $suiviDAO->setPremierContact($idEditeur, $idFestival);	    
 	    $suiviDto = $suiviDAO->getSuiviByIdEditeurFestival($idEditeur,$idFestival);
-	    $suiviDAO->setPremierContact($idEditeur, $idFestival);
-	    
-	    $suiviDAO->unsetPremierContact($idEditeur, $idFestival);
+
 	}
 	
 
