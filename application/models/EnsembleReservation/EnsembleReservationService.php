@@ -31,7 +31,13 @@ class EnsembleReservationService extends CI_Model
      */
     public function getReserverByIdEditeur($idEditeur){
         $idFestival = $this->session->userdata('idFestival');
-        $reserverCollection = $this->ensembleReserverService->getEnsembleReserverByIdReservation($ensembleReservationDTO->getIdReservation());
+        try{
+            $reservationDto = $this->reservationDao->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+            $reserverCollection = $this->ensembleReserverService->getEnsembleReserverByIdReservation($reservationDto->getIdReservation());
+            
+        }catch(Exception $e){
+            $reserverCollection = new ReserverCollection();
+        }
         
         return $reserverCollection;
     }

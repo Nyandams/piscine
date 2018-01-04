@@ -6,6 +6,7 @@ class EnsembleLocaliserFactory extends CI_Model
         parent::__construct();
         $this->load->model('Zone/ZoneFactory');
         $this->load->model('Localiser/LocaliserFactory');
+        $this->load->model('EnsembleReservation/EnsembleLocaliser/EnsembleLocaliserService');
     }
  
     static public function getInstance() {

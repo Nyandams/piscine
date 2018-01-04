@@ -89,7 +89,7 @@ class ReservationDAO extends CI_Model
     }    
 
     /**
-     * Retourne une ReservationCollection comprenant toutes les reservations correspondant a l'idEditeur et l'idFestival passe en parametre
+     * Retourne un ReservationDto comprenant toutes les reservations correspondant a l'idEditeur et l'idFestival passe en parametre
      * @param int $idEditeur
      * @param int $idFestival
      * @return ReservationCollection
@@ -102,14 +102,12 @@ class ReservationDAO extends CI_Model
                              ->get()
                              ->result();
         
-        $reservationCollection = new ReservationCollection();
-
-        foreach($resultat as $element){
-            $dto = $this->hydrateFromDatabase($element);
-            $reservationCollection->append($dto);
-        }
-
-        return $reservationCollection;
+        if(!empty($resultat)){
+            $dto = hydrateFromDatabase($resultat[0]);
+            return $dto;
+        } else {
+            throw new NotFoundReservationException();
+        }                             
     }
 
     /**
