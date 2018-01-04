@@ -17,43 +17,25 @@ class FicheEditeur extends CI_Controller {
 		} else {
 		    // Récupération des données de l'Editeur
 		    $this->load->model("Editeur/EditeurFactory");
-		    $this->load->model("Editeur/DTO/EditeurDTO");
-		    $this->load->model("Editeur/DTO/EditeurCollection");
-		    $this->load->model("Editeur/DAO/EditeurDAO");
 
 		    // Récupération des données pour l'editeur associé au contact
 		    $this->load->model("EditeurContact/EditeurContactFactory");
-		    $this->load->model("EditeurContact/DTO/EditeurContactDTO");
-		    $this->load->model("EditeurContact/DTO/EditeurContactCollection");
 
 		    // Récupération des données pour les réservations de l'éditeur
 		    $this->load->model("Reservation/ReservationFactory");
-		    $this->load->model("EditeurContact/DTO/EditeurContactDTO");
-		    $this->load->model("EditeurContact/DTO/EditeurContactCollection");
 
 		    // Récupération des données pour les jeux de l'éditeur
 		    $this->load->model("Jeu/JeuFactory");
-		    $this->load->model("Jeu/DTO/JeuDTO");
-		    $this->load->model("Jeu/DAO/JeuDAO");
-		    $this->load->model("Jeu/DTO/JeuCollection");
 
 		    // Récupération des données pour les réservations de l'éditeur
 		    $this->load->model("Reserver/ReserverFactory");
-		    $this->load->model("Reserver/DTO/ReserverDTO");
-		    $this->load->model("Reserver/DAO/ReserverDAO");
-		    $this->load->model("Reserver/DTO/ReserverCollection");
 		    
 		    // Récupération des données pour les commentaires de l'éditeur
 		    $this->load->model("Suivi/SuiviFactory");
-		    $this->load->model("Suivi/DTO/SuiviDTO");
-		    $this->load->model("Suivi/DAO/SuiviDAO");
-		    $this->load->model("Suivi/DTO/SuiviCollection");
 		    
 		    // Récupération de l'enssembleReservation de chaque editeur
 		    $this->load->model("EnsembleReservation/EnsembleReserver/EnsembleReserverFactory");
-		    $this->load->model("EnsembleReservation/EnsembleReserver/DTO/EnsembleReserverDTO");
 		    $this->load->model("EnsembleReservation/EnsembleReserver/EnsembleReserverService");
-		    $this->load->model("EnsembleReservation/EnsembleReserver/DTO/EnsembleReserverCollection");
 		    $this->load->model("EnsembleReservation/EnsembleReservationService");
 		    $this->load->model("EnsembleReservation/EnsembleReservationFactory");
 		}
