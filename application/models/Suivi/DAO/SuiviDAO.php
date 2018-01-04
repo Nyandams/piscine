@@ -144,7 +144,7 @@ class SuiviDAO extends CI_Model
     public function setPremierContact($idEditeur, $idFestival){
         try{
             $suiviDto = $this->getSuiviByIdEditeurFestival($idEditeur, $idFestival);
-            $suiviDto->setPremierContact(new \DateTime());
+            $suiviDto->setPremierContact((new \DateTime())->format('Y-m-d H:i:s'));
             $this->updateSuivi($suiviDto);
         }catch(Exception $e){
             
@@ -159,7 +159,7 @@ class SuiviDAO extends CI_Model
     public function setSecondContact($idEditeur, $idFestival){
         try{
             $suiviDto = $this->getSuiviByIdEditeurFestival($idEditeur, $idFestival);
-            $suiviDto->setSecondContact(new \DateTime());
+            $suiviDto->setSecondContact((new \DateTime())->format('Y-m-d H:i:s'));
             $this->updateSuivi($suiviDto);
         }catch(Exception $e){
             

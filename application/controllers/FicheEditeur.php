@@ -282,5 +282,17 @@ class FicheEditeur extends CI_Controller {
 	    $this->redirection();
 	}
 	
+	// fonction utilisé pour le débuggage
+	public function testDate(){
+	    $suiviDAO =  $this->SuiviFactory->getInstance();
+	    $idFestival = $this->session->userdata("idFestival");
+	    $idEditeur = 1;
+	    
+	    $suiviDto = $suiviDAO->getSuiviByIdEditeurFestival($idEditeur,$idFestival);
+	    $suiviDAO->setPremierContact($idEditeur, $idFestival);
+	    
+	    $suiviDAO->unsetPremierContact($idEditeur, $idFestival);
+	}
+	
 
 }
