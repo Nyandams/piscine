@@ -39,12 +39,11 @@ class FicheEditeur extends CI_Controller {
 		    // Récupération des données pour les commentaires de l'éditeur
 		    $this->load->model("Suivi/SuiviFactory");
 		    
+
 		    
 		    // Récupération de l'enssembleReservation de chaque editeur
 		    $this->load->model("EnsembleReservation/EnsembleReserver/EnsembleReserverFactory");
-		    $this->load->model("EnsembleReservation/EnsembleReserver/DTO/EnsembleReserverDTO");
 		    $this->load->model("EnsembleReservation/EnsembleReserver/EnsembleReserverService");
-		    $this->load->model("EnsembleReservation/EnsembleReserver/DTO/EnsembleReserverCollection");
 		    $this->load->model("EnsembleReservation/EnsembleReservationService");
 		    $this->load->model("EnsembleReservation/EnsembleReservationFactory");
 		    
@@ -339,10 +338,16 @@ class FicheEditeur extends CI_Controller {
 	    $idFestival = $this->session->userdata("idFestival");
 	    $idEditeur = 1;
 	    
+	  
+	    $suiviDAO->setPremierContact($idEditeur, $idFestival);	    
 	    $suiviDto = $suiviDAO->getSuiviByIdEditeurFestival($idEditeur,$idFestival);
+<<<<<<< HEAD
 	    $suiviDAO->setPremierContact($idEditeur, $idFestival);
 	    
 	   
+=======
+
+>>>>>>> 7798a7bec3128b09dace34198a14b3ffd1d792a5
 	}
 	
 

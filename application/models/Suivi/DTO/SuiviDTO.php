@@ -37,6 +37,18 @@ class SuiviDTO extends CI_Model
      */
     private $logementSuivi = null;
     
+    
+    public function premierContactToString(){
+        $string = $this->premierContact;
+        
+    }
+    
+    public function secondContactToString(){
+        
+    }
+    
+    
+    
     /**
      * @return the $idEditeur
      */
@@ -82,15 +94,22 @@ class SuiviDTO extends CI_Model
      */
     public function getPremierContact()
     {
-        return $this->premierContact;
-    }
+        if($this->premierContact == null){
+            return null;
+        }else{
+            return new \DateTime($this->premierContact);
+        }}
 
     /**
      * @return the $secondContact
      */
     public function getSecondContact()
     {
-        return $this->secondContact;
+        if($this->secondContact == null){
+            return null;
+        }else{
+            return new \DateTime($this->secondContact);
+        }
     }
 
     /**
@@ -130,7 +149,11 @@ class SuiviDTO extends CI_Model
      */
     public function setPremierContact($premierContact)
     {
-        $this->premierContact = $premierContact;
+        if ($premierContact instanceof \DateTime){
+            $this->premierContact = $premierContact->format('Y-m-d H:i:s');
+        } else {
+            $this->premierContact = $premierContact;
+        }
     }
 
     /**
@@ -138,8 +161,11 @@ class SuiviDTO extends CI_Model
      */
     public function setSecondContact($secondContact)
     {
-        $this->secondContact = $secondContact;
-    }
+        if ($secondContact instanceof \DateTime){
+            $this->secondContact = $secondContact->format('Y-m-d H:i:s');
+        } else {
+            $this->secondContact = $secondContact;
+        }}
 
     /**
      * @param number $presenceEditeur
@@ -165,6 +191,5 @@ class SuiviDTO extends CI_Model
         $this->commentaireSuivi = $commentaireSuivi;
     }
 
-    
     
 }

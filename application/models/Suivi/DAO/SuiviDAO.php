@@ -94,7 +94,6 @@ class SuiviDAO extends CI_Model
      */
     public function updateSuivi($dto){
         $bdd = $this->hydrateFromDTO($dto);
-        print_r ($bdd);
         $this->db->replace($this->table, $bdd);
     }
     
@@ -144,7 +143,7 @@ class SuiviDAO extends CI_Model
     public function setPremierContact($idEditeur, $idFestival){
         try{
             $suiviDto = $this->getSuiviByIdEditeurFestival($idEditeur, $idFestival);
-            $suiviDto->setPremierContact((new \DateTime())->format('Y-m-d H:i:s'));
+            $suiviDto->setPremierContact(new \DateTime());
             $this->updateSuivi($suiviDto);
         }catch(Exception $e){
             
@@ -159,7 +158,7 @@ class SuiviDAO extends CI_Model
     public function setSecondContact($idEditeur, $idFestival){
         try{
             $suiviDto = $this->getSuiviByIdEditeurFestival($idEditeur, $idFestival);
-            $suiviDto->setSecondContact((new \DateTime())->format('Y-m-d H:i:s'));
+            $suiviDto->setSecondContact(new \DateTime());
             $this->updateSuivi($suiviDto);
         }catch(Exception $e){
             
@@ -204,9 +203,10 @@ class SuiviDAO extends CI_Model
      */
     private function hydrateFromDatabase($db){
         $dto = new SuiviDTO();
+        
         foreach($this->correlationTable as $setterName => $getterName){
-            $setter = 'set' .ucwords($setterName);
-            $dto->$setter($db->$getterName);
+                $setter = 'set' .ucwords($setterName);
+                $dto->$setter($db->$getterName);
         }
         return $dto;
     }
@@ -218,8 +218,20 @@ class SuiviDAO extends CI_Model
     private function hydrateFromDTO($dto){
         $bdd = array();
         foreach($this->correlationTable as $getterName => $setterName){
-            $getter = 'get'.ucwords($getterName);
-            $bdd[$setterName] = $dto->$getter();
+           
+            if ($setterName == "premierContact" || $setterName == "secondContact"){
+                $getter = 'get'.ucwords($getterName);
+                if($dto->$getter() != null){
+                    $bdd[$setterName] = $dto->$getter()->format('Y-m-d H:i:s');
+                } else {
+                    $bdd[$setterName] = $dto->$getter();
+                }
+                
+            }else{
+                $getter = 'get'.ucwords($getterName);
+                $bdd[$setterName] = $dto->$getter();
+            }
+            
         }
         return $bdd;
     }
