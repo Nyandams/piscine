@@ -46,9 +46,10 @@ class ReserverDAO extends CI_Model
      * @param ReserverDTO $reserverDTO
      */
     public function saveReserver($reserverDTO){
-        $bdd = hydrateFromDTO($reserverDTO);
+        $bdd = $this->hydrateFromDTO($reserverDTO);
         $this->db->set($bdd)
         ->insert($this->table);
+        echo ("salut");
     }
     
     /**

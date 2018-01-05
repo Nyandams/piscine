@@ -46,7 +46,7 @@ class EnsembleReserverService extends CI_Model
             
             //récupération à partir de JeuDTO
             try{
-                $jeuDto = $this->jeuDAO->getJeuById($ensembleReserverTmp->getReserverDTO()->getIdJeu());
+                $jeuDTO = $this->jeuDAO->getJeuById($ensembleReserverTmp->getReserverDTO()->getIdJeu());
                 $ensembleReserverTmp->setJeuDTO($jeuDTO);
             }catch (exception $e){
                 

@@ -17,37 +17,28 @@ class FicheEditeur extends CI_Controller {
 		} else {
 		    // Récupération des données de l'Editeur
 		    $this->load->model("Editeur/EditeurFactory");
-		    $this->load->model("Editeur/DTO/EditeurDTO");
-		    $this->load->model("Editeur/DTO/EditeurCollection");
-		    $this->load->model("Editeur/DAO/EditeurDAO");
+		    
 
 		    // Récupération des données pour l'editeur associé au contact
 		    $this->load->model("EditeurContact/EditeurContactFactory");
-		    $this->load->model("EditeurContact/DTO/EditeurContactDTO");
-		    $this->load->model("EditeurContact/DTO/EditeurContactCollection");
+		  
 
 		    // Récupération des données pour les réservations de l'éditeur
 		    $this->load->model("Reservation/ReservationFactory");
-		    $this->load->model("EditeurContact/DTO/EditeurContactDTO");
-		    $this->load->model("EditeurContact/DTO/EditeurContactCollection");
+		    
 
 		    // Récupération des données pour les jeux de l'éditeur
 		    $this->load->model("Jeu/JeuFactory");
 		    $this->load->model("Jeu/DTO/JeuDTO");
-		    $this->load->model("Jeu/DAO/JeuDAO");
-		    $this->load->model("Jeu/DTO/JeuCollection");
+		    
 
 		    // Récupération des données pour les réservations de l'éditeur
 		    $this->load->model("Reserver/ReserverFactory");
-		    $this->load->model("Reserver/DTO/ReserverDTO");
-		    $this->load->model("Reserver/DAO/ReserverDAO");
-		    $this->load->model("Reserver/DTO/ReserverCollection");
+		    
 		    
 		    // Récupération des données pour les commentaires de l'éditeur
 		    $this->load->model("Suivi/SuiviFactory");
-		    $this->load->model("Suivi/DTO/SuiviDTO");
-		    $this->load->model("Suivi/DAO/SuiviDAO");
-		    $this->load->model("Suivi/DTO/SuiviCollection");
+		    
 		    
 		    // Récupération de l'enssembleReservation de chaque editeur
 		    $this->load->model("EnsembleReservation/EnsembleReserver/EnsembleReserverFactory");
@@ -56,6 +47,13 @@ class FicheEditeur extends CI_Controller {
 		    $this->load->model("EnsembleReservation/EnsembleReserver/DTO/EnsembleReserverCollection");
 		    $this->load->model("EnsembleReservation/EnsembleReservationService");
 		    $this->load->model("EnsembleReservation/EnsembleReservationFactory");
+		    
+		    // pour les reserver
+		    $this->load->model("Reserver/ReserverFactory");
+		    $this->load->model("Reserver/DTO/ReserverDTO");
+		    
+		    // pour les reservations
+		    $this->load->model("Reservation/ReservationFactory");
 		}
 	}
 	
@@ -77,6 +75,7 @@ class FicheEditeur extends CI_Controller {
 	    $data["zoneCommentaire"] = $this->commentairePerso($idFicheEditeur);
 	    $data["tabReserver"] = $this->tabReserver($idFicheEditeur);
 	    $data["suiviPerso"] = $this->suiviPerso($idFicheEditeur);
+	    $data["title"] = "Fiche Editeur";
 		
 		return $this->load->view("FicheEditeur/fiche", $data,  true);
 	}
@@ -97,12 +96,53 @@ class FicheEditeur extends CI_Controller {
 		// Récupération du service
 		$reserverDAO = $this->EnsembleReservationFactory->getInstance();
 	    $ensembleReserverDTO = $reserverDAO->getReserverByIdEditeur($this->input->get("idFicheEditeur"));
-	
+	    // Recupération des jeux
+	    $jeuDAO = $this->JeuFactory->getInstance();
+	    $data['jeux'] = $jeuDAO->getJeuByIdEditeur($idFicheEditeur);
 		// Récupération de tout les contacts et éditeur associés
 	    $data['reservations'] = $ensembleReserverDTO;
 		
 		return $this->load->view("FicheEditeur/tabReservation", $data, true);
 
+	}
+	
+	// Supprimer un reserver pour un jeu
+	public function supprimerReserver() {
+	    $idJeu = $this->input->get("idJeu");
+	    
+	    $reserverDAO = $this->ReserverFactory->getInstance();
+	    $reserverDTO = $reserverDAO->getReserverByIdJeu($idJeu);
+	    $reserverDAO->deleteReserver($reserverDTO);
+	    $this->redirection();
+	}
+	
+	// Ajoute une nouvelle reserver pour un jeu
+	public function ajouterReserver() {
+	    $reserverDAO = $this->ReserverFactory->getInstance();
+	    $idFestival = $this->session->userdata("idFestival");
+	    $idEditeur = $this->input->get("idFicheEditeur");
+	    
+	    // Pour obtenir l'id de reservation attaché à l'éditeur 
+	    $reservationDAO = $this->ReservationFactory->getInstance();
+	    $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	    $idReservation = $reservationDTO->getIdReservation();
+	    
+	    // Pour obtenir l'id du jeu
+	    $idJeu = $this->input->post("selectJeu");
+	    $quantiteJeu = $this->input->post("selectQuantite");
+	    $dotationJeu = $this->input->post("selectDotation");
+	    
+	    // Création du dto
+	    $reserverDTO = new ReserverDTO();
+	    $reserverDTO->setIdJeu($idJeu);
+	    $reserverDTO->setIdReservation($idReservation);
+	    $reserverDTO->setQuantiteJeuReserver($quantiteJeu);
+	    $reserverDTO->setReceptionJeuReserver(0);
+	    $reserverDTO->setRenvoiJeuReserver(0);
+	    $reserverDTO->setDotationJeuReserver($dotationJeu);
+	    
+	    $reserverDAO->saveReserver($reserverDTO);
+	    $this->redirection();
 	}
 
 	// Renvoie la tableau des jeu
@@ -132,7 +172,7 @@ class FicheEditeur extends CI_Controller {
 	    $dto->setCommentaireSuivi($commentaire);
 	    $suiviDAO = $this->SuiviFactory->getInstance();
 	    $suiviDAO->updateSuivi($dto);
-	    echo ($commentaire);
+	    
 	    
 	    $this->redirection();
 	}
@@ -141,7 +181,8 @@ class FicheEditeur extends CI_Controller {
 	private function redirection() {
 	    redirect(site_url('ficheEditeur?idFicheEditeur=' . $this->input->get('idFicheEditeur')));
 	}
-	    
+	
+	// Renvoie le DTO du suivi de l'éditeur qu'on est en train de traiter
 	private function getSuivi() {
 	    $suiviDAO = $this->SuiviFactory->getInstance();
 	    
@@ -155,45 +196,55 @@ class FicheEditeur extends CI_Controller {
 	
 	// Renvoie la zone de suivi
 	public function suiviPerso ($idFicheEditeur) {
-	    $suivi = $this->getSuivi();
-	    return $this->load->view("FicheEditeur/suiviPerso", "", true);
+	    $suiviDTO = $this->getSuivi();
+	    $data['suivi'] = $suiviDTO;
+	    return $this->load->view("FicheEditeur/suiviPerso", $data, true);
 	}
 	
+	// Sauvegarde le suivi de l'editeur qu'on est en train de traiter
 	public function sauvegarderSuivi() {
-	    /*$suivi = $this->getSuivi();
+	    // obtention du suivi de l'edtieur actuel
 	    $suiviDAO =  $this->SuiviFactory->getInstance();
-	    
+	    $suiviDTO = $this->getSuivi();
+	   
 	    $idFestival = $this->session->userdata("idFestival");
 	    $idEditeur = $this->input->get("idFicheEditeur");
 	    
+	    
+	    
 	    // Utilise directement le dao sans passer par le dto
-	    if (null !== $this->input->post("premierContact") ){
-	        $suiviDAO->setPremierContact($idEditeur, $idFestival);
-	    } 
-	    
-	    if (null !== $this->input->post("deuxiemeContact") and ($suivi->getSecondContact() == null)){
-	        $suivi->setSecondContact(date('d/m/Y'));
-	    } else {
-	        $suivi->setSecondContact(null);
-	    }
-	    
+	    // Si on coche et que c'etait pas coché avant	    
 	    if (null !== $this->input->post("presentContact")){
-	        $suivi->setPresenceEditeur(1);
+	        $suiviDTO->setPresenceEditeur(1);
 	    } else {
-	        $suivi->setPresenceEditeur(0);
+	        $suiviDTO->setPresenceEditeur(0);
 	    }
 	    
 	    if (null !== $this->input->post("hebergementContact") ){
-	        $suivi->setLogementSuivi(1);
+	        $suiviDTO->setLogementSuivi(1);
 	    } else {
-	        $suivi->setLogementSuivi(0);
+	        $suiviDTO->setLogementSuivi(0);
 	    }
-	    echo ($suivi->getPremierContact());
 	    
-	    $suiviDAO->updateSuivi($suivi);*/
+	    $suiviDAO->updateSuivi($suiviDTO);
 	    
-	    //$this->redirection();
+	    if (null !== $this->input->post("premierContact") and $suiviDTO->getPremierContact() == NULL){
+	        $suiviDAO->setPremierContact($idEditeur, $idFestival);
+	        // Si décoché et que c'était coché avant
+	    } else if ($this->input->post("premierContact") == null and $suiviDTO->getPremierContact() !== NULL) {
+	        $suiviDAO->unsetPremierContact($idEditeur, $idFestival);
+	    }
+	    
+	    if (null !== $this->input->post("deuxiemeContact") and $suiviDTO->getSecondContact() == NULL){
+	        $suiviDAO->setSecondContact($idEditeur, $idFestival);
+	        // Si décoché et que c'était coché avant
+	    } else if ($this->input->post("deuxiemeContact") == null and $suiviDTO->getSecondContact() !== NULL) {
+	        $suiviDAO->unsetSecondContact($idEditeur, $idFestival);
+	    }
+	    
+	    $this->redirection();
 	}
+	
 	// Ajoute un contact via une méthode post
 	public function ajouterContact() {
 	    $dto = $this->recuperationContact();
@@ -291,7 +342,7 @@ class FicheEditeur extends CI_Controller {
 	    $suiviDto = $suiviDAO->getSuiviByIdEditeurFestival($idEditeur,$idFestival);
 	    $suiviDAO->setPremierContact($idEditeur, $idFestival);
 	    
-	    $suiviDAO->unsetPremierContact($idEditeur, $idFestival);
+	   
 	}
 	
 
