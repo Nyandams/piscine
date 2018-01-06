@@ -67,6 +67,10 @@ class FicheEditeur extends CI_Controller {
 	public function creationPage() {
 	    // Récupération de l'id de l'éditeur à afficher
 	    $idFicheEditeur = $this->input->get("idFicheEditeur");
+	    // Récupératio du nom de l'éditeur à afficher
+	    $editeurDAO = $this->EditeurFactory->getInstance();
+	    $editeurDTO= $editeurDAO->getEditeurById($idFicheEditeur);
+	    $data["nomEditeur"] = $editeurDTO->getLibelleEditeur();
 	    
 	    // Création de tout les morceaux de la page
 	    $data["tabContact"] = $this->tabContact($idFicheEditeur);
@@ -107,12 +111,17 @@ class FicheEditeur extends CI_Controller {
 	
 	// Supprimer un reserver pour un jeu
 	public function supprimerReserver() {
-	    $idJeu = $this->input->get("idJeu");
+	    /*$idJeu = $this->input->get("idJeu");
 	    
 	    $reserverDAO = $this->ReserverFactory->getInstance();
 	    $reserverDTO = $reserverDAO->getReserverByIdJeu($idJeu);
 	    $reserverDAO->deleteReserver($reserverDTO);
-	    $this->redirection();
+	    $this->redirection();*/
+	    $idJeu = 1;
+	    $reserverDAO = $this->ReserverFactory->getInstance();
+	    $reserverDTO = $reserverDAO->getReserverByIdJeu($idJeu);
+	    echo $reserverDTO->getQuantitJeuReserver();
+	    
 	}
 	
 	// Ajoute une nouvelle reserver pour un jeu
@@ -337,17 +346,9 @@ class FicheEditeur extends CI_Controller {
 	    $suiviDAO =  $this->SuiviFactory->getInstance();
 	    $idFestival = $this->session->userdata("idFestival");
 	    $idEditeur = 1;
-	    
-	  
 	    $suiviDAO->setPremierContact($idEditeur, $idFestival);	    
 	    $suiviDto = $suiviDAO->getSuiviByIdEditeurFestival($idEditeur,$idFestival);
-<<<<<<< HEAD
 	    $suiviDAO->setPremierContact($idEditeur, $idFestival);
-	    
-	   
-=======
-
->>>>>>> 7798a7bec3128b09dace34198a14b3ffd1d792a5
 	}
 	
 

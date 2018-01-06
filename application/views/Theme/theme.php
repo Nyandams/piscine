@@ -70,8 +70,8 @@
    
     </div>
     
-    
-    <div class="col-sm-10 text-left" id="contenuPage">
+    <!-- Presque pas de css donc mis dans balise html -->
+    <div class="col-sm-10 text-left" id="contenuPage" style="padding-left:30px; padding-right:30px;" >
 
 
       <?php echo $page; ?>

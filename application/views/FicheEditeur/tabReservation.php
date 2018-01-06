@@ -96,9 +96,8 @@
                     $nomJeu = $jeuDTO->getLibelleJeu();
                     $qteJeu = $reserverDTO->getQuantiteJeuReserver();
                     $recu = $reserverDTO->getReceptionJeuReserver();
-                    $typeJeu = $typeJeuDTO->getLibelleTypeJeu();
-                    
-                    
+                    $typeJeu = $jeuDTO->getIdTypeJeu();
+
                     $quantiteJeu = $reserverDTO->getQuantiteJeuReserver();
 
                     // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un contact.
@@ -111,10 +110,10 @@
 
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
                     $ligne = $ligne . '<td class="row">
-                        <label class="col-lg-6">' . $typeJeu . '</label>
+                        <label class="col-lg-6">' . '0' . '</label>
                         <span class="pull-right">
                         <a class="btn btn-primary" href="modifierRes?idContact=' . '" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                        <a class="btn btn-primary" href="supprimerReserver?idJEu=' . $idJeu . '" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" href="' . site_url("FicheEditeur/SupprimerJeu?idJeu=" . $idJeu . "&idFicheEditeur=" . $idFicheEditeur) . '" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </span>
                         </td>';
                     $ligne = $ligne . '</tr>';

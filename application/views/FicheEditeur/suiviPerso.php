@@ -1,5 +1,4 @@
 <h3><label class="label label-default">Suivi</label></h3>
-<?php echo ($suivi->getPremierContact()); ?>
 <section class="row">
     <form action="<?php echo site_url('FicheEditeur/sauvegarderSuivi?idFicheEditeur=' . $idFicheEditeur); ?>" method="POST">
         <div class="col-lg-6 well">

@@ -13,7 +13,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Ajouter un jeu</h5>
             </div>
 
-            <form method="POST" action=<?php echo 'ficheEditeur/ajouterJeu?idFicheEditeur='.  $idFicheEditeur ?>>
+            <form method="POST" action="<?php echo 'ficheEditeur/ajouterJeu?idFicheEditeur='.  $idFicheEditeur ?>">
                 <div class="container-fluid">
                     <div class="form-row">
                         <div class="form-group col-sm-12">
