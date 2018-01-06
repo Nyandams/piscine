@@ -132,8 +132,19 @@ class FicheEditeur extends CI_Controller {
 	    
 	    // Pour obtenir l'id de reservation attaché à l'éditeur 
 	    $reservationDAO = $this->ReservationFactory->getInstance();
-	    $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
-	    $idReservation = $reservationDTO->getIdReservation();
+	    try{
+	        $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	    }catch(Exception $e){
+	        $reservationDTO = new ReservationDTO();
+	        $reservationDTO->setIdEditeur($idEditeur);
+	        $reservationDTO->setIdFestival($idFestival);
+	        $reservationDTO->setPrixNegociationReservation(0);
+	        $reservationDAO->saveReservation($reservationDTO);
+	        
+	        $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	    }
+	    
+	    $idReservation  = $reservationDTO->getIdReservation();
 	    
 	    // Pour obtenir l'id du jeu
 	    $idJeu = $this->input->post("selectJeu");
