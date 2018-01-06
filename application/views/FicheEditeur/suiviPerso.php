@@ -7,7 +7,7 @@
             	if ($suivi->getPremierContact() !== null) {
             	    echo ('checked="checked"');
             	}
-            	?>name="premierContact" id="premierContact" type="checkbox">1er contact <?php if($suivi->getPremierContact() !== null){echo($suivi->getPremierContact());}?></label>
+            	?>name="premierContact" id="premierContact" type="checkbox">1er contact <?php if($suivi->getPremierContact() != null){echo($suivi->premierContactToString());}?></label>
             </div>
             <div class="checkbox">
             	<label><input <?php 
