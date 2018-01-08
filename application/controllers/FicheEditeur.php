@@ -110,6 +110,15 @@ class FicheEditeur extends CI_Controller {
 	    $data['jeux'] = $jeuDAO->getJeuByIdEditeur($idFicheEditeur);
 		// Récupération de tout les contacts et éditeur associés
 	    $data['reservations'] = $ensembleReserverDTO;
+	    
+	    // Récupération du prix de la négo de réservation
+	    $idFestival = $this->session->userdata("idFestival");
+	    $idEditeur = $this->input->get("idFicheEditeur");
+	    
+	    $reservationDAO = $this->ReservationFactory->getInstance();
+	    $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	    
+	    $data['prixNego'] = $reservationDTO->getPrixNegociationReservation();
 		
 		return $this->load->view("FicheEditeur/tabReservation", $data, true);
 
@@ -193,6 +202,19 @@ class FicheEditeur extends CI_Controller {
 	    
 	    $reserverDAO->updateReserver($reserverDTO);
 	    
+	    $this->redirection();
+	}
+	
+	public function sauvegarderReservation() {
+	    //L'id du festival est mis en session
+	    $idFestival = $this->session->userdata("idFestival");
+	    $idEditeur = $this->input->get("idFicheEditeur");
+	    
+	    $reservationDAO = $this->ReservationFactory->getInstance();
+	    $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	    $reservationDTO->setPrixNegociationReservation($this->input->post("prixTotReservation"));
+	    
+	    $reservationDAO->updateReservation($reservationDTO);
 	    $this->redirection();
 	}
 

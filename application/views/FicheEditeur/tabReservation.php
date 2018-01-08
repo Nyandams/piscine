@@ -241,10 +241,25 @@
 
         </tbody>
     </table>
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterReserverModal">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    </button>
+	
+	<div class="OptionSupplementaire">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterReserverModal">
+        	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    	</button>
+    	
+    	<div class="pull-right">
+    		<form method="POST" action="<?php echo site_url ("FicheEditeur/sauvegarderReservation?idFicheEditeur=" . $idFicheEditeur)?>">
+    			<label for="prixTotReservation">Prix total négotié</label>
+        		<input type="number" value= "<?php echo $prixNego; ?>" id="prixTotReservation" name="prixTotReservation">
+        		<label>€</label>
+        		<button type="submit" class="btn btn-primary">
+            		<span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+        		</button>
+    		</form>
+    		
+    	</div>
+	</div>
+    
    
     <script type="text/javascript" >        
         $(document).ready(function() {

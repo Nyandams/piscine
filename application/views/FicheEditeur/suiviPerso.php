@@ -7,14 +7,16 @@
             	if ($suivi->getPremierContact() !== null) {
             	    echo ('checked="checked"');
             	}
-            	?>name="premierContact" id="premierContact" type="checkbox">1er contact <?php if($suivi->getPremierContact() != null){echo($suivi->premierContactToString());}?></label>
+            	?>name="premierContact" id="premierContact" type="checkbox">1er contact</label>
+            	 <?php if($suivi->getPremierContact() != null){echo('<label class="pull-right">'. $suivi->premierContactToString(). '</label>');}?>
             </div>
             <div class="checkbox">
             	<label><input <?php 
             	if ($suivi->getSecondContact() !== null) {
             	    echo ('checked="checked"');
             	}
-            	?>name="deuxiemeContact" id="deuxiemeContact" type="checkbox">2eme contact <?php if($suivi->getSecondContact() !== null){echo($suivi->getSecondContact());}?></label>
+            	?>name="deuxiemeContact" id="deuxiemeContact" type="checkbox">2eme contact</label>
+            	<?php if($suivi->getSecondContact() != null){echo('<label class="pull-right">'. $suivi->secondContactToString(). '</label>');}?>
             </div>
             <div class="checkbox">
             	<label><input <?php if ($suivi->getPresenceEditeur() == 1) {

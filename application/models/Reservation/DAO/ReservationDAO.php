@@ -63,7 +63,7 @@ class ReservationDAO extends CI_Model
      * @param ReservationDTO $dto
      */
     public function updateReservation($dto){
-        $bdd = hydrateFromDTO($dto);
+        $bdd = $this->hydrateFromDTO($dto);
         
         $this->db->replace($this->table, $bdd);
     }
