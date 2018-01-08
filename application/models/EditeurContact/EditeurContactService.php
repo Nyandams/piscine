@@ -10,6 +10,8 @@ class EditeurContactService extends CI_Model
         $this->load->model("Editeur/DAO/EditeurDAO");
 
         $this->load->model("Contact/DAO/ContactDAO", "contactDAO");
+        $this->load->model("EditeurContact/DTO/EditeurContactCollection");
+        $this->load->model("EditeurContact/DTO/EditeurContactDTO");
     }
     
     public function initConstruct($daoEditeur, $daoContact){

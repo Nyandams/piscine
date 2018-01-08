@@ -18,17 +18,13 @@ class Editeur extends CI_Controller {
 		    // Récupération des données de l'Editeur
 		    $this->load->model("EditeurContact/EditeurContactFactory", "fact");
 		    $this->load->model("Editeur/EditeurFactory");
-		    $this->load->model("EditeurContact/DTO/EditeurContactDTO", "dto");
-		    $this->load->model("EditeurContact/DTO/EditeurContactCollection");
 		    $this->load->model("EditeurContact/EditeurContactService", "dao");
 		    $this->load->model("Suivi/SuiviFactory");
 		    $this->load->model("Festival/FestivalFactory");
 		    
 		    // Récupération des données de l'Editeur
 		    $this->load->model("Editeur/EditeurFactory");
-		    $this->load->model("Editeur/DTO/EditeurDTO");
-		    $this->load->model("Editeur/DTO/EditeurCollection");
-		    $this->load->model("Editeur/DAO/EditeurDAO");
+            $this->load->model("Reservation/ReservationFactory");
 		}
 	}
 	
@@ -82,6 +78,8 @@ class Editeur extends CI_Controller {
 		// Envoie du dto
 		$instanceDao = $this->EditeurFactory->getInstance();
 		$instanceDao->saveEditeur($dto);
+		
+		
 		$suiviDao    = $this->SuiviFactory->getInstance();
 		$festivalDao = $this->FestivalFactory->getInstance();
 		try{
@@ -97,6 +95,19 @@ class Editeur extends CI_Controller {
 		        $suiviDao->saveSuivi($suiviDto);
 		    }
 		}catch(Exception $e){
+		    
+		}
+		
+		$reservationDAO = $this->ReservationFactory->getInstance();
+		
+		try {
+		    $editeurDTO = $instanceDao->getLastIdEditeur();
+		    $reservationDTO = new ReservationDTO();
+		    $reservationDTO->setPrixNegociationReservation(0);
+		    $reservationDTO->setIdFestival($idFestival = $this->session->userdata("idFestival"));
+		    $reservationDTO->setIdEditeur($editeurDTO->getIdEditeur());
+		    $reservationDAO->saveReservation ($reservationDTO);
+		} catch(Exception $e){
 		    
 		}
 		redirect(site_url('/editeur'));
