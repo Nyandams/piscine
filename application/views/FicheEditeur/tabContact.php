@@ -11,7 +11,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h5 class="modal-title" id="exampleModalLabel">Ajouter éditeur</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Ajouter un contact</h5>
             </div>
 
             <form id="formContact" method="POST" action=<?php echo 'ficheEditeur/ajouterContact?idFicheEditeur='.  $idFicheEditeur ?>>
@@ -36,7 +36,7 @@
 
                         <div class="form-group col-sm-4">
                             <label for="numTelephone">Numéro téléphone</label>
-                            <input type="text" class="input-medium bfh-phone form-control" data-format="+1 (ddd) ddd-dddd" id="numTelephone" name="numTelephone" placeholder="Entrer le numéro de téléphone">
+                            <input type="text" class="input-medium bfh-phone form-control" data-format="+1 (ddd) ddd-dddd" id="numTelephone" name="numTelephone" placeholder="Entrer le numéro">
                         </div>
                     </div>
                   
@@ -67,6 +67,26 @@
 
                         </div>
                     </div>
+                    
+                    <div class="form-row">
+                    	
+                        <label for="selectContactExistant"><strong>OU</strong> choisissez un contact existant :</label>
+                      	<select class="selectContactExistant" name="selectContactExistant">
+                    	<?php 
+                        $selection = '<option value="0">Contact existant<option>';
+                        foreach ($AllContactDTO as $key => $EditContact) {
+                            $idContact = $EditContact->getIdContact();
+                            $nomContact = $EditContact->getNomContact();
+                            
+                            $selection = $selection . '<option value="'. $idContact . '">';
+                            $selection = $selection . $nomContact . "</option>";
+                        }
+                        echo ($selection);
+                        ?>
+                    	</select>
+                    </div>
+                    
+                    
                 </div>
 
                 <div class="modal-footer">
@@ -153,7 +173,7 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
-                                    <h5 class="modal-title" id="exampleModalLabel">Ajouter éditeur</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Ajouter contact</h5>
                                 </div>
                         
                                 <form id="formContact" method="POST" action="ficheEditeur/modifierContact?idFicheEditeur=' .  $idFicheEditeur . '&idContact=' . $idContact .'">
@@ -178,7 +198,7 @@
                     
                                             <div class="form-group col-sm-4">
                                                 <label for="numTelephone">Numéro téléphone</label>
-                                                <input type="text" value ="' . $telContact . '" class="input-medium bfh-phone form-control" data-format="+1 (ddd) ddd-dddd" id="numTelephone" name="numTelephone" placeholder="Entrer le numéro de téléphone">
+                                                <input type="text" value ="' . $telContact . '" class="input-medium bfh-phone form-control" data-format="+1 (ddd) ddd-dddd" id="numTelephone" name="numTelephone" placeholder="Entrer le numéro">
                                             </div>
                                         </div>
                                       

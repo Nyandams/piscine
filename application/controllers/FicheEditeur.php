@@ -92,6 +92,8 @@ class FicheEditeur extends CI_Controller {
 	    // Recupération du dao
 		$contactDAO = $this->ContactFactory->getInstance();
 		$data['ContactDTO'] = $contactDAO->getContactByIdEditeur($idFicheEditeur);
+		
+		$data['AllContactDTO'] = $contactDAO->getContact();
 		$data['idFicheEditeur'] = $idFicheEditeur;
 		
 		
@@ -296,11 +298,20 @@ class FicheEditeur extends CI_Controller {
 	
 	// Ajoute un contact via une méthode post
 	public function ajouterContact() {
-	    $dto = $this->recuperationContact();
-	    
 	    // Envoie du dto
-	    $instanceDao = $this->ContactFactory->getInstance();
-	    $instanceDao->saveContact($dto);
+	    $contactDAO = $this->ContactFactory->getInstance();
+	    if ($this->input->post("selectContactExistant") == 0) {
+	        $dto = $this->recuperationContact();
+	        $contactDAO->saveContact($dto);
+	    }
+	    
+	    else {   
+	        $dto = $contactDAO->getContactById($this->input->post("selectContactExistant"));
+	        $dto->setIdEditeur($this->input->get("idFicheEditeur"));
+	        $contactDAO->updateContact($dto);
+	    }
+	    
+	    
 	    $this->redirection();
 	}
 	

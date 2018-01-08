@@ -66,8 +66,31 @@ class Contact extends CI_Controller {
 	/* Modifie un contact via une requete
 	@param : idContact : int
 	*/
+	
+	// Récupère un contact envoyé par methode post et renvoie un dto
+	private function recuperationContact() {
+	    // création du dto qu'on va envoyer
+	    $dto = new ContactDTO();
+	    $dto->setIdContact($this->input->get('idContact'));
+	    $dto->setEstPrincipalContact(0);
+	    $dto->setNomContact($this->input->post('nomContact'));
+	    $dto->setPrenomContact($this->input->post('prenomContact'));
+	    $dto->setTelephoneContact($this->input->post('numTelephone'));
+	    $dto->setMailContact($this->input->post('adresseMail'));
+	    $dto->setRueContact($this->input->post('adresse'));
+	    $dto->setVilleContact($this->input->post('ville'));
+	    $dto->setCpContact($this->input->post('codePostal'));
+	    $dto->setIdEditeur($this->input->get('idFicheEditeur')); // Récupération dans l'url
+	    $dto->setEstPrincipalContact($this->input->post('selectPrincipal'));
+	    return $dto;
+	}
+	
 	public function modifierContact() {
-
+	    $contactDao = $this->ContactFactory->getInstance();
+	    $dto = $this->recuperationContact();
+	    $contactDao->updateContact($dto);
+	    
+	    redirect(site_url('Contact'));
 	}
 
 	/* Supprime un contact via une requete

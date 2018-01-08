@@ -147,7 +147,7 @@
                     $ligne = $ligne . '<td class="row">
                         <label class="col-lg-6">' . $libelleEditeur . '</label>
                         <span class="pull-right">
-                        <a class="btn btn-primary" data-toggle="modal" data-target="#modifierContactModal_"'. $idContact .' role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" data-toggle="modal" data-target="#modifierContactModal_'. $idContact .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         <a class="btn btn-primary" href="supprimerContact?idContact='.$idContact .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </span>
                         </td>';
@@ -166,7 +166,7 @@
                     }
                     
                     $modalModif =
-                    '<div class="modal fade" id="modifierContactModal_'. ($idContact) . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    '<div class="modal fade" id="modifierContactModal_'. $idContact . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -176,7 +176,7 @@
                                     <h5 class="modal-title" id="exampleModalLabel">Ajouter éditeur</h5>
                                 </div>
                                 
-                                <form id="formContact" method="POST" action="' . site_url ("Contact/modifierContact?idContact=" . $idContact) . '>
+                                <form id="formContact" method="POST" action="' . site_url ("Contact/modifierContact?idContact=" . $idContact) . '">
                                     <div class="container-fluid">
                                         <div class="form-row">
                                             <div class="form-group col-sm-6">
