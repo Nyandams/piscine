@@ -66,30 +66,14 @@ class ReserverDAO extends CI_Model
                         ->delete($this->table);
     }
     
-    // Renvoie le reserverDTO d'un jeu
-    public function getReserverByIdJeu($idJeu){
-        $resultat = $this->db->select()
-                            ->from($this->table)
-                            ->where('idJeu', $idJeu)
-                            ->get()
-                            ->result();
-        
-        $reserverCollection = new ReserverCollection();
-        
-        foreach($resultat as $element){
-            $dto = $this->hydrateFromDatabase($element);
-            $reserverCollection->append($dto);
-        }
-        
-        return $reserverCollection;
-    }
+
     
     /**
      * modifie dans la base de donnée
      * @param ReserverDTO $dto
      */
     public function updateReserver($dto){
-        $bdd = hydrateFromDTO($dto);
+        $bdd = $this->hydrateFromDTO($dto);
         $this->db->replace($this->table, $bdd);
     }
     
@@ -112,6 +96,17 @@ class ReserverDAO extends CI_Model
             $reserverCollection->append($dto);
         }        
         return $reserverCollection;
+    }
+    
+    // Renvoie le reserverDTO d'un jeu
+    public function getReserverByIdJeu($idJeu) {
+        $resultat = $this->db->select()
+        ->from($this->table)
+        ->where('idJeu', $idJeu)
+        ->get()
+        ->result();
+        
+        return $this->hydrateFromDatabase($resultat[0]);
     }
     
     

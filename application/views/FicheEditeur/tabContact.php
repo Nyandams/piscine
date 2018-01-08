@@ -1,6 +1,7 @@
-<!-- js pour les tableaux-->
+
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+
 
 <!-- Modal ajout -->
 <div class="modal fade" id="ajouterContactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -77,8 +78,9 @@
     </div>
 </div>
 
-<!-- Table Contact -->
-<h3><label class="label label-default">Contacts</label></h3>
+
+<!-- Table Jeu -->
+<h3><label class="label label-default">Contact</label></h3>
 <table id="tabContact" class="table table-striped table-bordered col-sm-12 text-left" cellspacing="0" width="100%">
         <!-- Entete du tableau -->
         <thead>
@@ -96,8 +98,8 @@
             </tr>
         </tfoot>
         <tbody>
-            
-            <!-- Insertion des données de manière dynamique -->
+        
+        <!-- Insertion des données de manière dynamique -->
             <?php
                 
                 // Récupération des données
@@ -152,9 +154,9 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                     <h5 class="modal-title" id="exampleModalLabel">Ajouter éditeur</h5>
-                                 </div>
+                                </div>
                         
-                            <form id="formContact" method="POST" action="ficheEditeur/modifierContact?idFicheEditeur=' .  $idFicheEditeur . '&idContact=' . $idContact .'">
+                                <form id="formContact" method="POST" action="ficheEditeur/modifierContact?idFicheEditeur=' .  $idFicheEditeur . '&idContact=' . $idContact .'">
                                     <div class="container-fluid">
                                         <div class="form-row">
                                             <div class="form-group col-sm-6">
@@ -219,22 +221,18 @@
                     echo ($modalModif);
                 }
             ?>
-
+            
+            
         </tbody>
     </table>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target='#ajouterContactModal'>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterContactModal">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>
    
-    <script type="text/javascript" > 
-    	       
+    <script type="text/javascript" >        
         $(document).ready(function() {
             // Javascript de la table de base
             $('#tabContact').DataTable();
-
-            }
         });
-
-        
     </script>

@@ -53,6 +53,10 @@ class FicheEditeur extends CI_Controller {
 		    
 		    // pour les reservations
 		    $this->load->model("Reservation/ReservationFactory");
+		    
+		    
+		    
+		    
 		}
 	}
 	
@@ -161,6 +165,32 @@ class FicheEditeur extends CI_Controller {
 	    $reserverDTO->setDotationJeuReserver($dotationJeu);
 	    
 	    $reserverDAO->saveReserver($reserverDTO);
+	    $this->redirection();
+	}
+	
+	public function modifierReserver() {
+	    $reserverDAO = $this->ReserverFactory->getInstance();
+	    $reserverDTO = $reserverDAO->getReserverByIdJeu($this->input->get('idJeu'));
+	    
+	    $quantiteJeu = $this->input->post("selectQuantite");
+	    $dotationJeu = $this->input->post("selectDotation");
+	    
+	    $reserverDTO->setQuantiteJeuReserver($quantiteJeu);
+	    $reserverDTO->setDotationJeuReserver($dotationJeu);
+	    if (null !== $this->input->post("recuBox")){
+	        $reserverDTO->setReceptionJeuReserver(1);
+	    } else {
+	        $reserverDTO->setReceptionJeuReserver(0);
+	    }
+	    
+	    if (null !== $this->input->post("renvoyerBox")){
+	        $reserverDTO->setRenvoiJeuReserver(1);
+	    } else {
+	        $reserverDTO->setRenvoiJeuReserver(0);
+	    }
+	    
+	    $reserverDAO->updateReserver($reserverDTO);
+	    
 	    $this->redirection();
 	}
 

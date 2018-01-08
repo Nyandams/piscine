@@ -88,7 +88,7 @@
                     <label class="col-lg-6 ">' . $mailContact . '</label>
                     <span class="pull-right">
                     <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#modifierEditeurModal_' . $idEditeur .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                    <a class="btn btn-primary pull-right" href="supprimerEditeur?idEditeur='. $idEditeur .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                    <a class="btn btn-primary pull-right" href="'. site_url('Editeur/supprimerEditeur?idEditeur=') . $idEditeur .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                     </span>
                     </td>';
                     $ligne = $ligne . '</tr>';

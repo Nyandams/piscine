@@ -68,7 +68,7 @@
                 <th>Jeu</th>
                 <th>Quantite</th> 
                 <th>Recu ?</th>
-                <th>Type Jeu</th> 
+                <th>Renvoyé</th> 
             </tr>
         </thead>
         <tfoot>
@@ -76,7 +76,7 @@
                <th>Jeu</th>
                 <th>Quantite</th> 
                 <th>Recu ?</th>
-                <th>Type Jeu</th> 
+                <th>Renvoyé</th> 
             </tr>
         </tfoot>
         <tbody>
@@ -97,28 +97,145 @@
                     $qteJeu = $reserverDTO->getQuantiteJeuReserver();
                     $recu = $reserverDTO->getReceptionJeuReserver();
                     $typeJeu = $jeuDTO->getIdTypeJeu();
+                    $renvoyerJeu = $reserverDTO->getRenvoiJeuReserver();
 
                     $quantiteJeu = $reserverDTO->getQuantiteJeuReserver();
 
                     // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un contact.
                     $ligne = '<tr>';
+                    
+                    // Affichage des oui ou non
+                    if ($recu == 0) {
+                        $recuTxt = 'Non';
+                    }
+                    else {
+                        $recuTxt = 'Oui';
+                    }
+                    
+                    if ($renvoyerJeu==0) {
+                        $renvoyerTxt = 'Non';
+                    }
+                    else {
+                        $renvoyerTxt = 'Oui';
+                    }
   
                     $ligne = $ligne . '<td>' . $nomJeu . '</td>';
                     $ligne = $ligne . '<td>' . $qteJeu . '</td>';
-                    $ligne = $ligne . '<td>' . $recu . '</td>';
+                    $ligne = $ligne . '<td>' . $recuTxt . '</td>';
                     
 
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
                     $ligne = $ligne . '<td class="row">
-                        <label class="col-lg-6">' . '0' . '</label>
+                        <label class="col-lg-6">' . $renvoyerTxt . '</label>
                         <span class="pull-right">
-                        <a class="btn btn-primary" href="modifierRes?idContact=' . '" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" data-toggle="modal" data-target="#modifierReserverModal_' . $idJeu .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         <a class="btn btn-primary" href="' . site_url("FicheEditeur/SupprimerJeu?idJeu=" . $idJeu . "&idFicheEditeur=" . $idFicheEditeur) . '" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </span>
                         </td>';
                     $ligne = $ligne . '</tr>';
                     
-                    echo  $ligne;
+                    echo $ligne;
+                    
+                    // Si jeu recu
+                    if ($reserverDTO->getReceptionJeuReserver() == 1) {
+                        $recu = 'checked="checked"';
+                    }
+                    else {
+                       
+                        $recu = '';
+                    }
+                    
+                    // Si jeu recu
+                    if ($reserverDTO->getRenvoiJeuReserver() == 1) {
+                        $renvoyer = 'checked="checked"';
+                    }
+                    else {
+                        $renvoyer = '';
+                    }
+                    
+                    // Si dotation
+                    // Si jeu recu
+                    if ($reserverDTO->getDotationJeuReserver() == 1) {
+                        $ouiDotationSelected = 'selected="selected"';
+                        $nonDotationSelected = '';
+                    }
+                    else {
+                        $ouiDotationSelected = '';
+                        $nonDotationSelected = 'selected="selected"';
+                    }
+                    
+                    // Nom de jeu commande
+                    $nbJeuCommande = $reserverDTO->getQuantiteJeuReserver();
+                
+                 
+                    $modalModif ='
+                    <div class="modal fade" id="modifierReserverModal_' . $idJeu . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h5 class="modal-title" id="exampleModalLabel">Modifier : <strong>' . $nomJeu . '</strong></h5>
+                             </div>
+                    
+                             <form method="POST" action="'.  site_url("FicheEditeur/modifierReserver?idFicheEditeur=" . $idFicheEditeur) . '&idJeu=' . $idJeu . '">
+                                <div class="container-fluid">
+                                    '.
+                                        // Premiere partie : le suivi du jeu
+                                    
+                                    '
+                                    
+                                    <div class="col-lg-6 well">
+                                        <div><strong>Suivi du Jeu</strong></div>
+                                        <div class="checkbox">
+                                            <label><input ' . $recu .' name="recuBox" id="recuBox" type="checkbox">Reçu</label>
+                                        </div>
+                                        
+                                        <div class="checkbox">
+                                            <label><input ' . $renvoyer. ' name="renvoyerBox" id="renvoyerBox" type="checkbox">Renvoyé</label>
+                                        </div>
+                                        
+                                     </div>
+                                    '.
+                                        // Deuxieme partie : Le changement de la réservation
+                                    
+                                    '
+            
+                                    <div class="col-lg-6 well">
+                                        <div><strong>Modification du jeu</strong></div>
+                                        <div class="form-row">
+                                            <div class="col-sm-11">
+                                                <label for="selectDotation">Dotation ?</label>
+                                                <select class="selectDotation" name="selectDotation">
+                                                	<option value="1" '. $ouiDotationSelected .'>Oui</option>
+                                                	<option value="0" '. $nonDotationSelected .'>Non</option>
+                                                </select>
+                                             </div>
+                                        </div>
+                                    
+            
+                            
+                                        <div class="form-row">
+                                            <div class="col-sm-8">
+                                                <label for="selectQuantite">Combien de jeu ?</label>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <input type="number" value="' . $nbJeuCommande. '" class="form-control" id="selectQuantite" name="selectQuantite" placeholder="Entrer la quantité">
+                                            </div>      
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                    <button type="submit" class="btn btn-secondary">Sauvegarder</button>
+                                </div> 
+                            </form>
+                        </div>
+                    </div>
+                </div>';
+                                echo ($modalModif);
                 }
             ?>
 

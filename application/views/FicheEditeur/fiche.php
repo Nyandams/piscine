@@ -8,7 +8,7 @@
 	<div class="row">
 		<div class = "col-sm-6">
     		<?php
-    			echo $tabContact;
+    		    echo $tabJeu;
     			echo $suiviPerso;
     			echo $zoneCommentaire;
     		?>
@@ -17,7 +17,8 @@
     	<!-- colonne de gauche -->
     	<div class = "col-sm-6">
     		<?php
-    			echo $tabJeu;
+    		    echo $tabContact;
+    			
     			echo $tabReserver;
     		?>
     	</div>
