@@ -39,12 +39,18 @@ class SuiviDTO extends CI_Model
     
     
     public function premierContactToString(){
-        return $this->getPremierContact()->format('d/m/Y');
+        if($this->premierContact != null){
+            return $this->getPremierContact()->format('d/m/Y');
+            
+        }
         
     }
     
     public function secondContactToString(){
-        return $this->getSecondContact()->format('d/m/Y');
+        if($this->secondContact != null){
+            return $this->getSecondContact()->format('d/m/Y');
+    
+        }
     }
     
     

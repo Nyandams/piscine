@@ -38,17 +38,31 @@ class FactureAffichageDTO extends CI_Model
     private $anneeFestival = null;
     
     /**
-     * @var string
+     * @var DateTime
      */
     private $dateEmissionFacture = null;
     
     /**
-     * @var string
+     * @var DateTime
      */
     private $datePaiementFacture = null;
     /**
      * @return the $idEditeur
      */
+    
+    
+    public function dateEmissionFactureToString(){
+        if($this->dateEmissionFacture != null){
+            return $this->dateEmissionFacture->format('d/m/Y');
+        }
+    }
+    
+    public function datePaiementFactureToString(){
+        if($this->datePaiementFacture != null){
+            return $this->datePaiementFacture->format('d/m/Y');
+        }
+    }
+    
     
     public function getIdEditeur()
     {

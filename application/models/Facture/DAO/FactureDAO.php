@@ -116,8 +116,18 @@ class FactureDAO extends CI_Model
     private function hydrateFromDTO($dto){
         $bdd = array();
         foreach($this->correlationTable as $getterName => $setterName){
-            $getter = 'get'.ucwords($getterName);
-            $bdd[$setterName] = $dto->$getter();
+            if ($setterName == "dateEmissionFacture" || $setterName == "datePaiementFacture"){
+                $getter = 'get'.ucwords($getterName);
+                if($dto->$getter() != null){
+                    $bdd[$setterName] = $dto->$getter()->format('Y-m-d H:i:s');
+                } else {
+                    $bdd[$setterName] = $dto->$getter();
+                }
+                
+            }else{
+                $getter = 'get'.ucwords($getterName);
+                $bdd[$setterName] = $dto->$getter();
+            }
         }
         return $bdd;
     }

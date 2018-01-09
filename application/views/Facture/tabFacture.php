@@ -36,8 +36,8 @@
 
                     $ligne = $ligne . '<td><a  href="' . site_url('ficheEditeur?idFicheEditeur='. $factureAffichageDto->getIdEditeur() ). '" >' . $factureAffichageDto->getLibelleEditeur() . '</a></td>';
                     $ligne = $ligne . '<td>'.$factureAffichageDto->getAnneeFestival().' </td>';
-                    $ligne = $ligne . '<td>'.$factureAffichageDto->getDateEmissionFacture().' </td>';
-                    $ligne = $ligne . '<td>'.$factureAffichageDto->getDatePaiementFacture().' </td>';
+                    $ligne = $ligne . '<td>'.$factureAffichageDto->dateEmissionFactureToString().' </td>';
+                    $ligne = $ligne . '<td>'.$factureAffichageDto->datePaiementFactureToString().' </td>';
                     $ligne = $ligne . '<td>'.$factureAffichageDto->getPrixNegociationReservation().' </td>';
                     
                     

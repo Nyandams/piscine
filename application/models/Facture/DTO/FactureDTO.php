@@ -22,6 +22,19 @@ class FactureDTO extends CI_Model
      */
     private $idReservation = null;
     
+    
+    public function dateEmissionFactureToString(){
+        if($this->dateEmissionFacture != null){
+            return $this->dateEmissionFacture->format('d/m/Y');
+        }
+    }
+    
+    public function datePaiementFactureToString(){
+        if($this->datePaiementFacture != null){
+            return $this->datePaiementFacture->format('d/m/Y');
+        }
+    }
+    
     /**
      * @return $idFacture
      */
@@ -35,7 +48,11 @@ class FactureDTO extends CI_Model
      */
     public function getDateEmissionFacture()
     {
-        return $this->dateEmissionFacture;
+        if($this->dateEmissionFacture == null){
+            return null;
+        }else{
+            return new \DateTime($this->dateEmissionFacture);
+        }
     }
 
     /**
@@ -43,7 +60,11 @@ class FactureDTO extends CI_Model
      */
     public function getDatePaiementFacture()
     {
-        return $this->datePaiementFacture;
+        if($this->datePaiementFacture == null){
+            return null;
+        }else{
+            return new \DateTime($this->datePaiementFacture);
+        }
     }
 
     /**
@@ -67,7 +88,11 @@ class FactureDTO extends CI_Model
      */
     public function setDateEmissionFacture($dateEmissionFacture)
     {
-        $this->dateEmissionFacture = $dateEmissionFacture;
+        if ($dateEmissionFacture instanceof \DateTime){
+            $this->dateEmissionFacture = $dateEmissionFacture->format('Y-m-d H:i:s');
+        } else {
+            $this->dateEmissionFacture = $dateEmissionFacture;
+        }
     }
 
     /**
@@ -75,7 +100,11 @@ class FactureDTO extends CI_Model
      */
     public function setDatePaiementFacture($datePaiementFacture)
     {
-        $this->datePaiementFacture = $datePaiementFacture;
+        if ($datePaiementFacture instanceof \DateTime){
+            $this->datePaiementFacture = $datePaiementFacture->format('Y-m-d H:i:s');
+        } else {
+            $this->datePaiementFacture = $datePaiementFacture;
+        }
     }
 
     /**
