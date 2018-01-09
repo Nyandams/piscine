@@ -129,7 +129,7 @@
                         <label class="col-lg-6">' . $renvoyerTxt . '</label>
                         <span class="pull-right">
                         <a class="btn btn-primary" data-toggle="modal" data-target="#modifierReserverModal_' . $idJeu .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                        <a class="btn btn-primary" href="' . site_url("FicheEditeur/SupprimerJeu?idJeu=" . $idJeu . "&idFicheEditeur=" . $idFicheEditeur) . '" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" href="' . site_url("FicheEditeur/supprimerReserver?idJeu=" . $idJeu . "&idFicheEditeur=" . $idFicheEditeur) . '" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </span>
                         </td>';
                     $ligne = $ligne . '</tr>';
@@ -250,7 +250,15 @@
     	<div class="pull-right">
     		<form method="POST" action="<?php echo site_url ("FicheEditeur/sauvegarderReservation?idFicheEditeur=" . $idFicheEditeur)?>">
     			<label for="prixTotReservation">Prix total négotié</label>
-        		<input type="number" value= "<?php echo $prixNego; ?>" id="prixTotReservation" name="prixTotReservation">
+        		<input type="number" <?php
+        		      // Si le réservation existe pas, on doit disabled 
+        		if (!isset($prixNego)) {
+        		    echo ('disabled="disabled" value="0"');
+        		} else {
+        		    echo ('value=' . $prixNego); 
+        		}
+        		      
+        		      ?> id="prixTotReservation" name="prixTotReservation">
         		<label>€</label>
         		<button type="submit" class="btn btn-primary">
             		<span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>

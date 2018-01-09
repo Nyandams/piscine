@@ -122,8 +122,6 @@ class FicheEditeur extends CI_Controller {
 	        $data['prixNego'] = $reservationDTO->getPrixNegociationReservation();
 	    } catch (Exception $e) {
 	        
-	        // Si pas de réservation, prix inexistant, par defaut 0
-            $data['prixNego'] = 10;
 	    }
 	    
 		
@@ -133,17 +131,26 @@ class FicheEditeur extends CI_Controller {
 	
 	// Supprimer un reserver pour un jeu
 	public function supprimerReserver() {
-	    /*$idJeu = $this->input->get("idJeu");
+	    $idJeu = $this->input->get("idJeu");
 	    
 	    $reserverDAO = $this->ReserverFactory->getInstance();
 	    $reserverDTO = $reserverDAO->getReserverByIdJeu($idJeu);
 	    $reserverDAO->deleteReserver($reserverDTO);
-	    $this->redirection();*/
-	    $idJeu = 1;
-	    $reserverDAO = $this->ReserverFactory->getInstance();
-	    $reserverDTO = $reserverDAO->getReserverByIdJeu($idJeu);
-	    echo $reserverDTO->getQuantitJeuReserver();
 	    
+	    // Vérification du nombre de reserver (si 0 on supprime Reservation)
+	    $reservationDAO = $this->ReservationFactory->getInstance();
+	    $idFestival = $this->session->userdata("idFestival");
+	    $idEditeur = $this->input->get("idFicheEditeur");
+	    
+	    $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	    $idReservation = $reservationDTO->getIdReservation();
+	    $reserversDTO = $reserverDAO->getReserverByIdReservation($idReservation);
+	    
+	    if (count($reserversDTO) == 0) {
+	        $reservationDAO->deleteReservation($reservationDTO);
+	    }
+	    
+	    $this->redirection();
 	}
 	
 	// Ajoute une nouvelle reserver pour un jeu
