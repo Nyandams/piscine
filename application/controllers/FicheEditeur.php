@@ -105,20 +105,25 @@ class FicheEditeur extends CI_Controller {
 		// Récupération du service
 		$reserverDAO = $this->EnsembleReservationFactory->getInstance();
 	    $ensembleReserverDTO = $reserverDAO->getReserverByIdEditeur($this->input->get("idFicheEditeur"));
+	    
 	    // Recupération des jeux
 	    $jeuDAO = $this->JeuFactory->getInstance();
 	    $data['jeux'] = $jeuDAO->getJeuByIdEditeur($idFicheEditeur);
+		
 		// Récupération de tout les contacts et éditeur associés
 	    $data['reservations'] = $ensembleReserverDTO;
 	    
 	    // Récupération du prix de la négo de réservation
 	    $idFestival = $this->session->userdata("idFestival");
 	    $idEditeur = $this->input->get("idFicheEditeur");
+	    try {
+	        $reservationDAO = $this->ReservationFactory->getInstance();
+	        $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	        $data['prixNego'] = $reservationDTO->getPrixNegociationReservation();
+	    } catch (Exception $e) {
+	        
+	    }
 	    
-	    $reservationDAO = $this->ReservationFactory->getInstance();
-	    $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
-	    
-	    $data['prixNego'] = $reservationDTO->getPrixNegociationReservation();
 		
 		return $this->load->view("FicheEditeur/tabReservation", $data, true);
 
@@ -126,17 +131,26 @@ class FicheEditeur extends CI_Controller {
 	
 	// Supprimer un reserver pour un jeu
 	public function supprimerReserver() {
-	    /*$idJeu = $this->input->get("idJeu");
+	    $idJeu = $this->input->get("idJeu");
 	    
 	    $reserverDAO = $this->ReserverFactory->getInstance();
 	    $reserverDTO = $reserverDAO->getReserverByIdJeu($idJeu);
 	    $reserverDAO->deleteReserver($reserverDTO);
-	    $this->redirection();*/
-	    $idJeu = 1;
-	    $reserverDAO = $this->ReserverFactory->getInstance();
-	    $reserverDTO = $reserverDAO->getReserverByIdJeu($idJeu);
-	    echo $reserverDTO->getQuantitJeuReserver();
 	    
+	    // Vérification du nombre de reserver (si 0 on supprime Reservation)
+	    $reservationDAO = $this->ReservationFactory->getInstance();
+	    $idFestival = $this->session->userdata("idFestival");
+	    $idEditeur = $this->input->get("idFicheEditeur");
+	    
+	    $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	    $idReservation = $reservationDTO->getIdReservation();
+	    $reserversDTO = $reserverDAO->getReserverByIdReservation($idReservation);
+	    
+	    if (count($reserversDTO) == 0) {
+	        $reservationDAO->deleteReservation($reservationDTO);
+	    }
+	    
+	    $this->redirection();
 	}
 	
 	// Ajoute une nouvelle reserver pour un jeu

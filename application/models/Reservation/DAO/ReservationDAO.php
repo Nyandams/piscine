@@ -55,7 +55,7 @@ class ReservationDAO extends CI_Model
      */
     public function deleteReservation($reservationDTO){
         $id = $reservationDTO->getIdReservation();
-        return $this->db->where('id', $id)->delete($this->table);
+        return $this->db->where('idReservation', $id)->delete($this->table);
     }
     
     /**
