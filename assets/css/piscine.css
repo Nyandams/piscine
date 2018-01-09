@@ -61,5 +61,8 @@ footer {
 	padding: 0;
 	margin-right: 0.5%;
 	margin-left: 0.5%;	
-	
+}
+
+.navbar-toggle{
+	float : inherit;
 }

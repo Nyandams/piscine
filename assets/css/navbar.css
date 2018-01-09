@@ -14,7 +14,10 @@ body,html{
   }
 
  @media (min-width: 765px) {
-
+    .sidenav{
+        margin-left : -12%;
+    }
+    
     .main{
       position: absolute;
       width: calc(100% - 40px); 
@@ -67,10 +70,13 @@ body,html{
       color: #777;
     }
 
+    .sidenav{
+        margin-left : -12%;
+    }
+    
     nav.sidebar{
       width: 100%;
       height: 100%;
-      margin-left: -160px;
       float: left;
       margin-bottom: 0px;
     }
@@ -89,7 +95,10 @@ body,html{
   }
    
   @media (min-width: 1330px) {
-
+    .sidenav{
+        margin-left : 0%;
+    }
+    
     .main{
       width: calc(100% - 200px);
       margin-left: 200px;
