@@ -10,7 +10,7 @@ class FactureAffichageDTO extends CI_Model
     /**
      * @var string
      */
-    private $nomEditeur = "";
+    private $libelleEditeur = "";
     
     /**
      * @var int
@@ -56,11 +56,11 @@ class FactureAffichageDTO extends CI_Model
     }
 
     /**
-     * @return the $nomEditeur
+     * @return the $libelleEditeur
      */
-    public function getNomEditeur()
+    public function getLibelleEditeur()
     {
-        return $this->nomEditeur;
+        return $this->libelleEditeur;
     }
 
     /**
@@ -128,11 +128,11 @@ class FactureAffichageDTO extends CI_Model
     }
 
     /**
-     * @param string $nomEditeur
+     * @param string $libelleEditeur
      */
-    public function setNomEditeur($nomEditeur)
+    public function setLibelleEditeur($libelleEditeur)
     {
-        $this->nomEditeur = $nomEditeur;
+        $this->libelleEditeur = $libelleEditeur;
     }
 
     /**
