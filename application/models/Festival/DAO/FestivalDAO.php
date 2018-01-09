@@ -62,7 +62,7 @@ class FestivalDAO extends CI_Model
     
     /**
      * renvoie le festival le plus récent
-     * @return FestivalCollection
+     * @return FestivalDTO
      * @throws NotFoundFestivalException
      */
     public function getFestivalActuel(){
@@ -73,6 +73,27 @@ class FestivalDAO extends CI_Model
         } else {
             throw new NotFoundFestivalException();
         }
+    }
+    
+    
+    /**
+     * renvoie le festival correspondant à l'iFestival
+     * @return FestivalDTO
+     * @throws NotFoundFestivalException
+     */
+    public function getFestivalById($idFestival){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->where('idFestival', $idFestival)
+                             ->get()
+                             ->result();
+        
+        if(!empty($resultat)){
+            $dto = hydrateFromDatabase($resultat[0]);
+            return $dto;
+        } else {
+            throw new NotFoundFestivalException();
+        }  
     }
     
 
@@ -105,25 +126,7 @@ class FestivalDAO extends CI_Model
         $this->db->replace($this->table, $bdd);
     }
     
-    /**
-     * @param int $id
-     * @return FestivalDTO
-     */
-    public function getFestivalById($id){
-        $resultat = $this->db->select()
-                             ->from($this->table)
-                             ->where('idFestival', $id)
-                             ->get()
-                             ->result();
-        
-        if(!empty($resultat)){
-            $dto = $this->hydrateFromDatabase($resultat[0]);
-            return $dto;
-        } else {
-            throw new NotFoundFestivalException();
-        }
-        
-    }
+
     
      
     /**

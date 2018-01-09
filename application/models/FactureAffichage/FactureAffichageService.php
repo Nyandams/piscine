@@ -1,0 +1,68 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class FactureAffichageService extends CI_Model
+{
+    private $reservationDao = null;
+    private $factureDao     = null;
+    private $festivalDao    = null;
+    private $editeurDao     = null;
+    
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('FactureAffichage/DTO/FactureAffichageDTO');
+        $this->load->model('FactureAffichage/DTO/FactureAffichageCollection');
+    }
+    
+    /**
+     * initialise l' EnsembleReserverService et le ReservationDAO du service
+     * @param EnsembleReserverService $serviceEnsembleReserver
+     * @param ReservationDAO $daoReservation
+     * @return EnsembleReservationService
+     */
+    public function initConstruct($daoReservation, $daoFacture, $daoFestival, $daoEditeur){
+        $this->reservationDao   = $daoReservation;
+        $this->factureDao       = $daoFacture;
+        $this->festivalDao      = $daoFestival;
+        $this->editeurDao       = $daoEditeur;
+        return $this;
+    }
+    
+    /**
+     * renvoie tout les factureAffichageCollection d'un festival
+     * @param int $idFestival
+     */
+    public function getFactureByIdFestival($idFestival){
+        try{
+            $festivalDto = $this->festivalDao->getFestivalById($idFestival);
+        }catch(Exception $e){
+            $festivalDto = new FestivalDTO();
+        }
+        
+        $reservationCollection = $this->reservationDao->getReservationByIdFestival($idFestival);
+        
+        $factureAffichageCollection = new FactureAffichageCollection();
+        foreach ($reservationCollection as $reservationDto){
+            try{
+                $factureDto = $this->factureDao->getFactureByIdReservation($reservationDto->getIdReservation());
+                $editeurDto = $this->editeurDao->getEditeurById($reservationDto->getIdReservation);
+                $factureAffichageDto = new FactureAffichageDTO();
+                $factureAffichageDto->setIdEditeur($reservationDto->getIdEditeur());
+                $factureAffichageDto->setNomEditeur($editeurDto->getNomEditeur());
+                $factureAffichageDto->setIdFacture($factureDto->getIdFacture());
+                $factureAffichageDto->setIdReservation($reservationDto->getIdReservation());
+                $factureAffichageDto->setIdFestival($festivalDto->getIdFestival());
+                $factureAffichageDto->setPrixNegociationReservation($reservationDto->getPrixNegociationReservation());
+                $factureAffichageDto->setAnneeFestival($festivalDto->getAnneeFestival());
+                $factureAffichageDto->setDateEmissionFacture($factureDto->getDateEmissionFacture());
+                $factureAffichageDto->setDatePaiementFacture($factureDto->getDatePaiementFacture());
+                
+                $factureAffichageCollection->append($factureAffichageDto);
+            }catch(Exception $e){
+                
+            }
+        }
+        
+        return $factureAffichageCollection;        
+    }
+    
+}

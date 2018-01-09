@@ -13,7 +13,7 @@ class Editeur extends CI_Controller {
 		 $this->load->helper('form');
 		
 		if (!$this->session->has_userdata('connexionOrganisateur')){
-		    redirect('/welcome');
+		    redirect(site_url('/welcome'));
 		} else {
 		    // Récupération des données de l'Editeur
 		    $this->load->model("EditeurContact/EditeurContactFactory", "fact");

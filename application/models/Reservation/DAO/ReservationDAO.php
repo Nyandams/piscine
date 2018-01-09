@@ -84,9 +84,30 @@ class ReservationDAO extends CI_Model
             return $dto;
         } else {
             throw new NotFoundReservationException();
+        }    
+    }   
+    
+    /**
+     * renvoie toutes les réservations correspondants à un festival
+     * @param int $idFestival
+     * @return ReservationCollection
+     */
+    public function getReservationByIdFestival($idFestival){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->where('idFestival', $idFestival)
+                             ->get()
+                             ->result();
+        
+        $reservationCollection = new ReservationCollection();
+        
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $reservationCollection->append($dto);
         }
-       
-    }    
+        
+        return $reservationCollection;
+    }
 
     /**
      * Retourne un ReservationDto comprenant toutes les reservations correspondant a l'idEditeur et l'idFestival passe en parametre

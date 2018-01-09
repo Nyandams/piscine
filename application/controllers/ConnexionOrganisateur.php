@@ -40,7 +40,7 @@ class ConnexionOrganisateur extends CI_Controller
                     }catch(Exception $e){
                     }
                     
-                    redirect('/festival');
+                    redirect(site_url('/festival'));
                 } else {
                     $this->load->view('Organisateur/Connexion');
                 }
@@ -50,7 +50,7 @@ class ConnexionOrganisateur extends CI_Controller
             }
             
         } else {
-            redirect('/welcome');
+            redirect(site_url('/welcome'));
         }
     }
     
