@@ -30,22 +30,15 @@
                 // Récupération des données
                 $ligne = ''; // Stocke une ligne le temps de la créer
                 
-                foreach ($factureAffichageCollection as $key => $factureDTO) {
-                    
-                    $idEditeur = $editeur->getIdEditeur();
-                    $nomEditeur = $editeur->getLibelleEditeur();
-                    
-                    
-                    
-                    
+                foreach ($factureAffichageCollection as $factureAffichageDto) {   
                     // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un éditeur.
                     $ligne = '<tr>';
 
-                    $ligne = $ligne . '<td><a  href="' . site_url('ficheEditeur?idFicheEditeur='. $idEditeur ) . '" >' . $nomEditeur . '</a></td>';
-                    $ligne = $ligne . '<td>'.$annee.' </td>';
-                    $ligne = $ligne . '<td>'.$envoiFacture.' </td>';
-                    $ligne = $ligne . '<td>'.$paiementFacture.' </td>';
-                    $ligne = $ligne . '<td>'.$prixFacture.' </td>';
+                    $ligne = $ligne . '<td><a  href="' . site_url('ficheEditeur?idFicheEditeur='. $factureAffichageDto->getIdEditeur() ). '" >' . $factureAffichageDto->getLibelleEditeur() . '</a></td>';
+                    $ligne = $ligne . '<td>'.$factureAffichageDto->getAnneeFestival().' </td>';
+                    $ligne = $ligne . '<td>'.$factureAffichageDto->getDateEmissionFacture().' </td>';
+                    $ligne = $ligne . '<td>'.$factureAffichageDto->getDatePaiementFacture().' </td>';
+                    $ligne = $ligne . '<td>'.$factureAffichageDto->getPrixNegociationReservation().' </td>';
                     
                     
                     

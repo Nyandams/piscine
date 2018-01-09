@@ -23,7 +23,7 @@ class Facture extends CI_Controller {
     
     public function factureFestival(){
         $factureAffichageService = $this->FactureAffichageFactory->getInstance();
-        $idFestival = $this->session->userdata('idEditeur');
+        $idFestival = $this->session->userdata('idFestival');
         
         $data['factureAffichageCollection'] = $factureAffichageService->getFactureByIdFestival($idFestival);
         $data['page'] = $this->load->view('Facture/tabFacture', $data, true);

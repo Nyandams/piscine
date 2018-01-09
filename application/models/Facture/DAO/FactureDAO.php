@@ -101,7 +101,7 @@ class FactureDAO extends CI_Model
                              ->result();
         
         if(!empty($resultat)){
-            $dto = hydrateFromDatabase($resultat[0]);
+            $dto = $this->hydrateFromDatabase($resultat[0]);
             return $dto;
         } else {
             throw new NotFoundFactureException();
