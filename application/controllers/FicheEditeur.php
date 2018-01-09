@@ -105,20 +105,27 @@ class FicheEditeur extends CI_Controller {
 		// Récupération du service
 		$reserverDAO = $this->EnsembleReservationFactory->getInstance();
 	    $ensembleReserverDTO = $reserverDAO->getReserverByIdEditeur($this->input->get("idFicheEditeur"));
+	    
 	    // Recupération des jeux
 	    $jeuDAO = $this->JeuFactory->getInstance();
 	    $data['jeux'] = $jeuDAO->getJeuByIdEditeur($idFicheEditeur);
+		
 		// Récupération de tout les contacts et éditeur associés
 	    $data['reservations'] = $ensembleReserverDTO;
 	    
 	    // Récupération du prix de la négo de réservation
 	    $idFestival = $this->session->userdata("idFestival");
 	    $idEditeur = $this->input->get("idFicheEditeur");
+	    try {
+	        $reservationDAO = $this->ReservationFactory->getInstance();
+	        $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	        $data['prixNego'] = $reservationDTO->getPrixNegociationReservation();
+	    } catch (Exception $e) {
+	        
+	        // Si pas de réservation, prix inexistant, par defaut 0
+            $data['prixNego'] = 10;
+	    }
 	    
-	    $reservationDAO = $this->ReservationFactory->getInstance();
-	    $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
-	    
-	    $data['prixNego'] = $reservationDTO->getPrixNegociationReservation();
 		
 		return $this->load->view("FicheEditeur/tabReservation", $data, true);
 
