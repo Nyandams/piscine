@@ -5,6 +5,7 @@ class EnsembleReserverService extends CI_Model
     private $reserverDAO = null;
     private $jeuDAO      = null;
     private $typeJeuDAO  = null;
+    private $zoneDAO     = null;
     
     
     public function __construct() {
@@ -23,10 +24,11 @@ class EnsembleReserverService extends CI_Model
      * @param TypeJeuDAO $daoTypeJeu
      * @return EnsembleReserverService
      */
-    public function initConstruct($daoReserver, $daoJeu, $daoTypeJeu){
+    public function initConstruct($daoReserver, $daoJeu, $daoTypeJeu, $daoZone){
         $this->reserverDAO = $daoReserver;
         $this->jeuDAO      = $daoJeu;
         $this->typeJeuDAO  = $daoTypeJeu;
+        $this->zoneDAO     = $daoZone;
         return $this;
     }
     
@@ -43,6 +45,13 @@ class EnsembleReserverService extends CI_Model
             $ensembleReserverTmp = new EnsembleReserverDTO();
             //récupération à partir de ReserverDTO
             $ensembleReserverTmp->setReserverDTO($reserverDto); 
+            
+            try{
+                $zoneDTO = $this->zoneDAO->getZoneById($reserverDto->getIdZone());
+                $ensembleReserverTmp->setZoneDTO($zoneDTO);
+            }catch(Exception $e){
+                
+            }
             
             //récupération à partir de JeuDTO
             try{

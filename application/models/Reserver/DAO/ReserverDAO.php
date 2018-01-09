@@ -10,7 +10,8 @@ class ReserverDAO extends CI_Model
         'quantiteJeuReserver'   => 'quantiteJeuReserver',
         'dotationJeuReserver'   => 'dotationJeuReserver',
         'receptionJeuReserver'  => 'receptionJeuReserver',
-        'renvoiJeuReserver'     => 'renvoiJeuReserver'
+        'renvoiJeuReserver'     => 'renvoiJeuReserver',
+        'idZone'                => 'idZone'
     );
     
     public function __construct(){
@@ -101,10 +102,10 @@ class ReserverDAO extends CI_Model
     // Renvoie le reserverDTO d'un jeu
     public function getReserverByIdJeu($idJeu) {
         $resultat = $this->db->select()
-        ->from($this->table)
-        ->where('idJeu', $idJeu)
-        ->get()
-        ->result();
+                             ->from($this->table)
+                             ->where('idJeu', $idJeu)
+                             ->get()
+                             ->result();
         
         return $this->hydrateFromDatabase($resultat[0]);
     }

@@ -22,7 +22,28 @@ class ReservationDTO extends CI_Model
      */
     private $idEditeur = null;
     
+    /**
+     * @var float
+     */
+    private $nbEmplacement = null;
     
+    
+    /**
+     * @return the $nbEmplacement
+     */
+    public function getNbEmplacement()
+    {
+        return $this->nbEmplacement;
+    }
+
+    /**
+     * @param number $nbEmplacement
+     */
+    public function setNbEmplacement($nbEmplacement)
+    {
+        $this->nbEmplacement = $nbEmplacement;
+    }
+
     /**
      * @return the $idReservation
      */

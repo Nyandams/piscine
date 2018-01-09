@@ -15,25 +15,18 @@ class EnsembleReserverDTO extends CI_Model
     /**
      * @var TypeJeuDTO
      */
+    private $typeJeuDTO = null;
+    
+    /**
+     * @var ZoneDTO
+     */
+    private $zoneDTO = null;
+    
+    /**
+     * @var TypeJeuDTO
+     */
     private $typeJeu = null;
     
-    
-    /**
-     * @return the $reserverDTO
-     */
-    public function getReserverDTO()
-    {
-        return $this->reserverDTO;
-    }
-
-    /**
-     * @return the $jeuDTO
-     */
-    public function getJeuDTO()
-    {
-        return $this->jeuDTO;
-    }
-
     /**
      * @return the $typeJeu
      */
@@ -41,6 +34,39 @@ class EnsembleReserverDTO extends CI_Model
     {
         return $this->typeJeu;
     }
+
+    /**
+     * @param TypeJeuDTO $typeJeu
+     */
+    public function setTypeJeu($typeJeu)
+    {
+        $this->typeJeu = $typeJeu;
+    }
+
+    /**
+     * @return the $zoneDTO
+     */
+    public function getZoneDTO()
+    {
+        return $this->zoneDTO;
+    }
+
+    /**
+     * @param ZoneDTO $zoneDTO
+     */
+    public function setZoneDTO($zoneDTO)
+    {
+        $this->zoneDTO = $zoneDTO;
+    }
+
+    /**
+     * @return the $reserverDTO
+     */
+    public function getReserverDTO()
+    {
+        return $this->reserverDTO;
+    }
+    
 
     /**
      * @param ReserverDTO $reserverDTO
@@ -57,13 +83,30 @@ class EnsembleReserverDTO extends CI_Model
     {
         $this->jeuDTO = $jeuDTO;
     }
+    
+    /**
+     * @return the $jeuDTO
+     */
+    public function getJeuDTO()
+    {
+        return $this->jeuDTO;
+    }
 
     /**
-     * @param TypeJeuDTO $typeJeu
+     * @return the $typeJeuDTO
      */
-    public function setTypeJeu($typeJeu)
+    public function getTypeJeuDTO()
     {
-        $this->typeJeu = $typeJeu;
+        return $this->typeJeuDTO;
     }
+
+    /**
+     * @param TypeJeuDTO $typeJeuDTO
+     */
+    public function setTypeJeuDTO($typeJeuDTO)
+    {
+        $this->typeJeuDTO = $typeJeuDTO;
+    }
+
 
 }

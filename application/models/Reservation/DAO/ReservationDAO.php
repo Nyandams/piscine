@@ -7,7 +7,8 @@ class ReservationDAO extends CI_Model
         'idReservation'             => 'idReservation',
         'prixNegociationReservation'=> 'prixNegociationReservation',
         'idFestival'                => 'idFestival',
-        'idEditeur'                 => 'idEditeur'
+        'idEditeur'                 => 'idEditeur',
+        'nbEmplacement'             => 'nbEmplacement'
     );
     
     public function __construct(){

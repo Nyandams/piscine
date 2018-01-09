@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mer 03 Janvier 2018 à 14:26
+-- Généré le :  Mar 09 Janvier 2018 à 19:55
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -52,7 +52,7 @@ INSERT INTO `contact` (`idContact`, `estPrincipalContact`, `nomContact`, `prenom
 (9, 0, 'lacour', 'Martial', 'lacourmartiale@gmail.com', '0468587456', '12 rue de la prison', 'Lille', '98600', 3),
 (10, 1, 'Roïd', 'Paula', 'polaroid@photo.com', '0458236745', '26 rue de l\'ambiance', 'St jean de Cuculles', '26800', 5),
 (11, 0, 'Masse', 'Sarah', 'çaramasse@gmail.com', '075823687', '32 rue de la liberté', 'Montpellier', '34000', 5),
-(12, 1, 'Golo', 'Thierry', 'tirigolo@gmail.com', '0478295842', '26 rue de la pluie', 'Quimper', '8500', 4),
+(12, 1, 'Golo', 'Thierry', 'tirigolo@gmail.com', '0478295842', '26 rue de la pluie', 'Quimper', '8500', 1),
 (13, 1, 'Ochon', 'Paul', 'polochon@hotmail.fr', '0685741258', '2 rue de la nuit', 'Grabels', '34700', 4),
 (14, 1, 'Enperte', 'Mélusine', 'metlusineenperte@gmail.com', '0458696985', '20 impasse de l\'industrie', 'Perpignan', '42000', 6);
 
@@ -80,8 +80,7 @@ INSERT INTO `editeur` (`idEditeur`, `libelleEditeur`) VALUES
 (6, 'Iello'),
 (7, 'Origames'),
 (8, 'Ludonaute'),
-(9, 'La Boite de Jeu'),
-(10, 'Pink Monkey Games');
+(9, 'La Boite de Jeu');
 
 -- --------------------------------------------------------
 
@@ -95,6 +94,13 @@ CREATE TABLE `facture` (
   `datePaiementFacture` date DEFAULT NULL,
   `idReservation` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `facture`
+--
+
+INSERT INTO `facture` (`idFacture`, `dateEmissionFacture`, `datePaiementFacture`, `idReservation`) VALUES
+(1, '2018-01-05', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -147,17 +153,16 @@ CREATE TABLE `jeu` (
   `idTypeJeu` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
 --
--- Structure de la table `localiser`
+-- Contenu de la table `jeu`
 --
 
-CREATE TABLE `localiser` (
-  `idZone` int(11) NOT NULL,
-  `idReservation` int(11) NOT NULL,
-  `nbEmplacement` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `jeu` (`idJeu`, `libelleJeu`, `nbMinJoueurJeu`, `nbMaxJoueurJeu`, `noticeJeu`, `idEditeur`, `idTypeJeu`) VALUES
+(1, 'Dofus', 1, 5, 'adaszae', 1, 0),
+(2, 'jeu', 4, 10, 'non', 4, 0),
+(3, 'jeu2', 1, 2, '', 4, 0),
+(4, 'jgjh', 0, 0, '', 5, 0),
+(5, 'lol', 0, 0, '', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -206,8 +211,18 @@ CREATE TABLE `reservation` (
   `idReservation` int(11) NOT NULL,
   `prixNegociationReservation` float NOT NULL,
   `idFestival` int(11) NOT NULL,
-  `idEditeur` int(11) NOT NULL
+  `idEditeur` int(11) NOT NULL,
+  `nbEmplacement` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `reservation`
+--
+
+INSERT INTO `reservation` (`idReservation`, `prixNegociationReservation`, `idFestival`, `idEditeur`, `nbEmplacement`) VALUES
+(1, 100, 8, 1, NULL),
+(2, 0, 8, 4, NULL),
+(3, 0, 8, 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -221,8 +236,19 @@ CREATE TABLE `reserver` (
   `quantiteJeuReserver` int(11) NOT NULL,
   `dotationJeuReserver` int(11) NOT NULL,
   `receptionJeuReserver` int(11) NOT NULL,
-  `renvoiJeuReserver` int(11) NOT NULL
+  `renvoiJeuReserver` int(11) NOT NULL,
+  `idZone` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `reserver`
+--
+
+INSERT INTO `reserver` (`idJeu`, `idReservation`, `quantiteJeuReserver`, `dotationJeuReserver`, `receptionJeuReserver`, `renvoiJeuReserver`, `idZone`) VALUES
+(1, 1, 2, 0, 1, 0, NULL),
+(3, 2, 1, 1, 0, 0, NULL),
+(4, 3, 1, 1, 0, 0, NULL),
+(5, 1, 1, 1, 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -237,24 +263,25 @@ CREATE TABLE `suivi` (
   `presenceEditeur` int(11) DEFAULT NULL,
   `idFestival` int(11) NOT NULL,
   `idEditeur` int(11) NOT NULL,
-  `logementSuivi` int(11) DEFAULT NULL
+  `logementSuivi` int(11) DEFAULT NULL,
+  `reponseEditeur` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `suivi`
 --
 
-INSERT INTO `suivi` (`commentaireSuivi`, `premierContact`, `secondContact`, `presenceEditeur`, `idFestival`, `idEditeur`, `logementSuivi`) VALUES
-('', NULL, NULL, 0, 8, 1, 0),
-('', NULL, NULL, 0, 8, 2, 0),
-('', NULL, NULL, 0, 8, 3, 0),
-('', NULL, NULL, 0, 8, 4, 0),
-('', NULL, NULL, 0, 8, 5, 0),
-('', NULL, NULL, 0, 8, 6, 0),
-('', NULL, NULL, 0, 8, 7, 0),
-('', NULL, NULL, 0, 8, 8, 0),
-('', NULL, NULL, 0, 8, 9, 0),
-('', NULL, NULL, 0, 8, 10, 0);
+INSERT INTO `suivi` (`commentaireSuivi`, `premierContact`, `secondContact`, `presenceEditeur`, `idFestival`, `idEditeur`, `logementSuivi`, `reponseEditeur`) VALUES
+('<h2>lol</h2>', '2018-01-04', '2018-01-09', 1, 8, 1, 0, NULL),
+('', NULL, NULL, 0, 8, 2, 0, NULL),
+('', NULL, NULL, 0, 8, 3, 0, NULL),
+('', NULL, NULL, 0, 8, 4, 0, NULL),
+('', NULL, NULL, 0, 8, 5, 0, NULL),
+('', NULL, NULL, 0, 8, 6, 0, NULL),
+('', NULL, NULL, 0, 8, 7, 0, NULL),
+('', NULL, NULL, 0, 8, 8, 0, NULL),
+('', NULL, NULL, 0, 8, 9, 0, NULL),
+('', NULL, NULL, 0, 8, 10, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -277,7 +304,7 @@ CREATE TABLE `typeJeu` (
 CREATE TABLE `zone` (
   `idZone` int(11) NOT NULL,
   `nomZone` varchar(100) NOT NULL,
-  `idEditeur` int(11) NOT NULL
+  `idFestival` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -319,12 +346,6 @@ ALTER TABLE `hebergement`
 --
 ALTER TABLE `jeu`
   ADD PRIMARY KEY (`idJeu`);
-
---
--- Index pour la table `localiser`
---
-ALTER TABLE `localiser`
-  ADD PRIMARY KEY (`idZone`,`idReservation`);
 
 --
 -- Index pour la table `logement`
@@ -381,12 +402,12 @@ ALTER TABLE `contact`
 -- AUTO_INCREMENT pour la table `editeur`
 --
 ALTER TABLE `editeur`
-  MODIFY `idEditeur` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idEditeur` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT pour la table `facture`
 --
 ALTER TABLE `facture`
-  MODIFY `idFacture` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idFacture` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT pour la table `festival`
 --
@@ -396,7 +417,7 @@ ALTER TABLE `festival`
 -- AUTO_INCREMENT pour la table `jeu`
 --
 ALTER TABLE `jeu`
-  MODIFY `idJeu` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idJeu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT pour la table `logement`
 --
@@ -406,12 +427,12 @@ ALTER TABLE `logement`
 -- AUTO_INCREMENT pour la table `organisateur`
 --
 ALTER TABLE `organisateur`
-  MODIFY `idOrganisateur` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idOrganisateur` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `idReservation` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idReservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `typeJeu`
 --

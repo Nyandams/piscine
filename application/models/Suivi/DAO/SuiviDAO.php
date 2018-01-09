@@ -11,7 +11,8 @@ class SuiviDAO extends CI_Model
         'secondContact'     => 'secondContact',
         'presenceEditeur'   => 'presenceEditeur',
         'commentaireSuivi'  => 'commentaireSuivi',
-        'logementSuivi'     => 'logementSuivi'
+        'logementSuivi'     => 'logementSuivi',
+        'reponseEditeur'    => 'reponseEditeur'
     );
     
     public function __construct(){

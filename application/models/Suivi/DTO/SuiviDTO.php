@@ -37,7 +37,28 @@ class SuiviDTO extends CI_Model
      */
     private $logementSuivi = null;
     
+    /**
+     * @var int
+     */
+    private $reponseEditeur = null;
     
+    
+    /**
+     * @return the $reponseEditeur
+     */
+    public function getReponseEditeur()
+    {
+        return $this->reponseEditeur;
+    }
+
+    /**
+     * @param number $reponseEditeur
+     */
+    public function setReponseEditeur($reponseEditeur)
+    {
+        $this->reponseEditeur = $reponseEditeur;
+    }
+
     public function premierContactToString(){
         if($this->premierContact != null){
             return $this->getPremierContact()->format('d/m/Y');

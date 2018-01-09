@@ -7,7 +7,7 @@ class ZoneDAO extends CI_Model
     private $correlationTable = array(
         'idZone'    => 'idZone',
         'nomZone'   => 'nomZone',
-        'idEditeur' => 'idEditeur'
+        'idFestival'=> 'idFestival'
     );
     
     public function __construct(){
@@ -42,7 +42,7 @@ class ZoneDAO extends CI_Model
      * @param ZoneDTO $zoneDTO
      */
     public function saveZone($zoneDTO){
-        $bdd = hydrateFromDTO($zoneDTO);
+        $bdd = $this->hydrateFromDTO($zoneDTO);
         $this->db->set($bdd)
                  ->insert($this->table);
     }
@@ -62,7 +62,7 @@ class ZoneDAO extends CI_Model
      * @param ZoneDTO $dto
      */
     public function updateZone($dto){
-        $bdd = hydrateFromDTO($dto);
+        $bdd = $this->hydrateFromDTO($dto);
         
         $this->db->replace($this->table, $bdd);
     }
@@ -79,7 +79,7 @@ class ZoneDAO extends CI_Model
                              ->result();
         
         if(!empty($resultat)){
-            $dto = hydrateFromDatabase($resultat[0]);
+            $dto = $this->hydrateFromDatabase($resultat[0]);
             return $dto;
         } else {
             throw new NotFoundZoneException();

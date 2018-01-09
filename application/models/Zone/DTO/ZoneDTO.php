@@ -15,7 +15,7 @@ class ZoneDTO extends CI_Model
     /**
      * @var int
      */
-    private $idEditeur = null;
+    private $idFestival = null;
     
     
     
@@ -38,9 +38,9 @@ class ZoneDTO extends CI_Model
     /**
      * @return the $idEditeur
      */
-    public function getIdEditeur()
+    public function getIdFestival()
     {
-        return $this->idEditeur;
+        return $this->idFestival;
     }
 
     /**
@@ -62,9 +62,9 @@ class ZoneDTO extends CI_Model
     /**
      * @param number $idEditeur
      */
-    public function setIdEditeur($idEditeur)
+    public function setIdFestival($idEditeur)
     {
-        $this->idEditeur = $idEditeur;
+        $this->idEditeur = $idFestival;
     }
 
     

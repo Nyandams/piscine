@@ -5,7 +5,6 @@ class EnsembleReservationService extends CI_Model
     private $ensembleReserverService = null;    
     private $reservationDao = null;
     private $factureDao     = null;
-    private $ensembleLocaliserService = null;
     
     public function __construct() {
         parent::__construct();
@@ -17,11 +16,10 @@ class EnsembleReservationService extends CI_Model
      * @param ReservationDAO $daoReservation
      * @return EnsembleReservationService
      */
-    public function initConstruct($serviceEnsembleReserver, $daoReservation, $daoFacture, $serviceEnsembleLocaliser){
+    public function initConstruct($serviceEnsembleReserver, $daoReservation, $daoFacture){
         $this->ensembleReserverService = $serviceEnsembleReserver;
         $this->reservationDao          = $daoReservation;
         $this->factureDao              = $daoFacture;
-        $this->ensembleLocaliserService= $serviceEnsembleLocaliser;
         return $this;
     }
     
@@ -88,13 +86,8 @@ class EnsembleReservationService extends CI_Model
             $factureDto = $this->factureDao->getFactureByIdReservation($reservationDto->getIdReservation());
             $ensembleReservationDTO->setFactureDTO($factureDto);
             
-            $ensembleLocaliserDto = $this->ensembleLocaliserService->getEnsembleLocaliserByIdReservation($reservationDto->getIdReservation());
-            $ensembleReservationDTO->setEnsembleLocaliserDTO($ensembleLocaliserDto);
         } catch (Exception $e){
             //si la réservation n'est pas trouvé, un ensembleReservation remplie de dto vide est renvoyé, à modifier selon ce que tu veux récup si c'est vide
-            $ensembleReservationDTO->setEnsembleLocaliserDTO(new EnsembleLocaliserDTO());
-            $ensembleReservationDTO->getEnsembleLocaliserDTO()->setLocaliserDTO(new LocaliserDTO());
-            $ensembleReservationDTO->getEnsembleLocaliserDTO()->setZoneDTO(new ZoneDTO());
             $ensembleReservationDTO->setEnsembleReserverCollection(new EnsembleReserverCollection());
             $ensembleReservationDTO->setFactureDTO(new FactureDTO());
             $ensembleReservationDTO->setReservationDTO(new ReservationDTO());

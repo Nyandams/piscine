@@ -32,9 +32,29 @@ class ReserverDTO extends CI_Model
      */
     private $renvoiJeuReserver = null;
     
+    /**
+     * @var int
+     */
+    private $idZone = null;
     
     /**
-     * @return the $idJeu
+     * @return $idZone
+     */
+    public function getIdZone()
+    {
+        return $this->idZone;
+    }
+
+    /**
+     * @param number $idZone
+     */
+    public function setIdZone($idZone)
+    {
+        $this->idZone = $idZone;
+    }
+
+    /**
+     * @return $idJeu
      */
     public function getIdJeu()
     {
