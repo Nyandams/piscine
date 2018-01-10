@@ -25,6 +25,9 @@ class Editeur extends CI_Controller {
 		    // Récupération des données de l'Editeur
 		    $this->load->model("Editeur/EditeurFactory");
             $this->load->model("Reservation/ReservationFactory");
+            
+            // Récupération de l'éditeur et de son suivi
+            $this->load->model("EnsembleSuivi/EnsembleSuiviFactory");
 		}
 	}
 	
@@ -43,8 +46,10 @@ class Editeur extends CI_Controller {
 
 	// @return tableau des éditeurs prêt à être affiché dans une page.
 	public function tableauEditeur () {
-		$instanceDao = $this->fact->getInstance();
-		$data['editeursDTO'] = $instanceDao->getEditeurContactPrincipal();
+		$instanceDao = $this->EnsembleSuiviFactory->getInstance();
+		$idFestival = $this->session->userdata("idFestival");
+		$data['ensemblesSuiviDTO'] = $instanceDao->getEnsembleSuiviDTOByIdFestival($idFestival);
+		
 		return $this->load->view("Editeur/tabEditeur", $data, true);
 		
 	}

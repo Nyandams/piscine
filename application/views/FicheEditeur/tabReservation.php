@@ -10,7 +10,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h5 class="modal-title" id="exampleModalLabel">Ajouter éditeur</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Ajouter un jeu à la réservation</h5>
             </div>
 
             <form method="POST" action="<?php echo (site_url("FicheEditeur/ajouterReserver?idFicheEditeur=" . $idFicheEditeur));?>">
@@ -166,8 +166,21 @@
                     
                     // Nom de jeu commande
                     $nbJeuCommande = $reserverDTO->getQuantiteJeuReserver();
-                
-                 
+                    
+                    // Creation du selecteur de zone
+                    $choixZone = '<option value="0">Choisir zone</option>';
+                    foreach ($zones as $key => $zone) {
+                        // Si le jeu a une zone on affiche dans la liste déroulante sa zone en premier
+                        if ($reserverDTO->getIdZone() == $zone->getIdZone()) {
+                            $choixZone = $choixZone . '<option value="'. $zone->getIdZone() . '" selected="selected">';
+                        }
+                        else {
+                            $choixZone = $choixZone . '<option value="'. $zone->getIdZone() . '">';
+                        }
+                        
+                        $choixZone = $choixZone . $zone->getNomZone() . "</option>";
+                    }
+
                     $modalModif ='
                     <div class="modal fade" id="modifierReserverModal_' . $idJeu . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -224,6 +237,34 @@
                                                 <input type="number" value="' . $nbJeuCommande. '" class="form-control" id="selectQuantite" name="selectQuantite" placeholder="Entrer la quantité">
                                             </div>      
                                         </div>
+
+
+                                        <div class="form-row">
+                                            <div class="col-sm-4">
+                                                <label for="selectZone">Zone : </label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <select class="selectZone" name="selectZone"> 
+                                                    '. 
+                                                    // Affichage des différentes zones.
+                                                        $choixZone
+                                                    .'
+                                                </select>
+                                             </div>
+                                        </div>
+                                        
+                                        <div class="form-row">
+                                            <div class="col-sm-8 pull-right">
+                                                <label for="creerZone">Créer zone ?</label>
+                                            </div>
+                                            
+                                            <div class="form-row">
+                                                <div class="col-sm-8 pull-right">
+                                                    <input type="text" value="" class="form-control" id="nomCreerZone" name="nomCreerZone" placeholder="Saisir son nom">
+                                                </div>
+                                            </div>
+
+    
                                     </div>
                                 </div>
             
@@ -249,13 +290,31 @@
     	
     	<div class="pull-right">
     		<form method="POST" action="<?php echo site_url ("FicheEditeur/sauvegarderReservation?idFicheEditeur=" . $idFicheEditeur)?>">
+    			<label for="nbTableReservees">Nombre de table reservées :</label>
+    			<input type="number" step="0.5"<?php
+        		      // Si le réservation existe pas, on doit disabled 
+    			if (!isset($reservationDTO)) {
+        		    echo (' value="0" ');
+        		} else {
+
+        		    // On regarde si nb d'emplacement n'est pas null
+        		    $nbEmplacement = $reservationDTO->getNbEmplacement();
+        		    if ($nbEmplacement == null) {
+        		        echo (' value="0" ');
+        		    }
+        		    else {
+        		        echo (' value="' . $reservationDTO->getNbEmplacement() .'" ');
+        		    }
+        		}
+        		      
+        		      ?> id="nbTableReservees" name="nbTableReservees">
     			<label for="prixTotReservation">Prix total négotié</label>
         		<input type="number" <?php
         		      // Si le réservation existe pas, on doit disabled 
-        		if (!isset($prixNego)) {
-        		    echo ('disabled="disabled" value="0"');
+        		if (!isset($reservationDTO)) {
+        		    echo (' value="0" ');
         		} else {
-        		    echo ('value=' . $prixNego); 
+        		    echo (' value="' . $reservationDTO->getPrixNegociationReservation() .'" ');
         		}
         		      
         		      ?> id="prixTotReservation" name="prixTotReservation">

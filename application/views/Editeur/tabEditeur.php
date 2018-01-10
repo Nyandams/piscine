@@ -40,6 +40,7 @@
             <th>Contact principal</th>
             <th>Telephone</th>
             <th>Mail</th>
+            <th>Suivi rapide</th>
         </tr>
     </thead>
     <tfoot>
@@ -48,6 +49,7 @@
             <th>Contact principal</th>
             <th>Telephone</th>
             <th>Mail</th>
+            <th>Suivi rapide</th>
         </tr>
     </tfoot>
     <tbody>
@@ -57,7 +59,8 @@
                 // Récupération des données
                 $ligne = ''; // Stocke une ligne le temps de la créer
                 
-                foreach ($editeursDTO as $key => $editeur) {
+                foreach ($ensemblesSuiviDTO as $key => $ensembleSuiviDTO) {
+                    $editeur = $ensembleSuiviDTO->getEditeurDTO();
                     
                     $idEditeur = $editeur->getIdEditeur();
                     $nomEditeur = $editeur->getLibelleEditeur();
@@ -81,11 +84,26 @@
                     $ligne = $ligne . '<td><a  href="' . site_url('ficheEditeur?idFicheEditeur='. $idEditeur ) . '" >' . $nomEditeur . '</a></td>';
                     $ligne = $ligne . '<td><a  href="contact">' . $nomContact . '</a></td>';
                     $ligne = $ligne . '<td>' . $numContact . '</td>';
-              
+                    $ligne = $ligne . '<td>' . $mailContact . '</td>';
+                    
+                    
+                    // Préparation de la sélection pour la présence de l'editeur
+                    $selection = '';
+                    $reponseEditeur = 6;
+                    for ($i = 0; $i <= 3; $i++) {
+                        
+                        
+                        $selection = $selection . '<option value="'. $jeu->getIdJeu() . '">';
+                        $libEditeur = $jeu->getLibelleJeu();
+                        $selection = $selection . $libEditeur . "</option>";
+                    }
 
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
                     $ligne = $ligne . '<td class="row">
-                    <label class="col-lg-6 ">' . $mailContact . '</label>
+                    <div class ="pull-left">
+                        <label><input name="contactFait" id="contactFait" type="checkbox">Contacté</label>
+                        
+                    </div>
                     <span class="pull-right">
                     <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#modifierEditeurModal_' . $idEditeur .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                     <a class="btn btn-primary pull-right" href="'. site_url('Editeur/supprimerEditeur?idEditeur=') . $idEditeur .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>

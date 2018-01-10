@@ -68,6 +68,25 @@ class ZoneDAO extends CI_Model
     }
     
     /**
+     * retourne la dernier zone crée
+     * @return ZoneDTO
+     */
+    public function getLastIdZone(){
+        $resultat = $this->db->select()
+        ->from($this->table)
+        ->order_by('idZone', 'desc')
+        ->get()
+        ->result();
+        
+        if (!empty($resultat)){
+            $dto = $this->hydrateFromDatabase($resultat[0]);
+            return $dto;
+        } else {
+            throw new NotFoundZoneException();
+        }
+    }
+    
+    /**
      * @param int $id
      * @return ZoneDTO
      */
