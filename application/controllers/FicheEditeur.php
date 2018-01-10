@@ -127,6 +127,8 @@ class FicheEditeur extends CI_Controller {
 	    $zoneDAO = $this->ZoneFactory->getInstance();
 	    $data["zones"] = $zoneDAO->getZones();
 	    
+	    
+	    
 		return $this->load->view("FicheEditeur/tabReservation", $data, true);
 
 	}
