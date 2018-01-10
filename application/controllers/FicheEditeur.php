@@ -54,8 +54,8 @@ class FicheEditeur extends CI_Controller {
 		    // pour les reservations
 		    $this->load->model("Reservation/ReservationFactory");
 		    
-		    
-		    
+		    $this->load->model("Zone/ZoneFactory");
+		    $this->load->model("Zone/DTO/ZoneDTO");
 		    
 		}
 	}
@@ -124,7 +124,10 @@ class FicheEditeur extends CI_Controller {
 	        
 	    }
 	    
-		
+	    // Envoie des données pour choisir la zone d'un jeu
+	    $zoneDAO = $this->ZoneFactory->getInstance();
+	    $data["zones"] = $zoneDAO->getZones();
+	    
 		return $this->load->view("FicheEditeur/tabReservation", $data, true);
 
 	}
@@ -202,6 +205,8 @@ class FicheEditeur extends CI_Controller {
 	    
 	    $reserverDTO->setQuantiteJeuReserver($quantiteJeu);
 	    $reserverDTO->setDotationJeuReserver($dotationJeu);
+	    
+	    // Mis a jour du mini suivi du jeu
 	    if (null !== $this->input->post("recuBox")){
 	        $reserverDTO->setReceptionJeuReserver(1);
 	    } else {
@@ -212,6 +217,36 @@ class FicheEditeur extends CI_Controller {
 	        $reserverDTO->setRenvoiJeuReserver(1);
 	    } else {
 	        $reserverDTO->setRenvoiJeuReserver(0);
+	    }
+	    
+	    // Mis à jour de la zone du jeu
+	    
+	    // Si on ne souhaite pas créer une zone, on met à jour la zone selectionnée
+	    $nomCreerZone = $this->input->post("nomCreerZone");
+	    if ($nomCreerZone == "") {
+	        $idZoneSelection = $this->input->post("selectZone"); 
+            
+	        // Si on a choisi de pas mettre de zone
+	        if ($idZoneSelection == 0) {
+	            $reserverDTO->setIdZone(NULL);
+	        }
+	        else {
+	            $reserverDTO->setIdZone($idZoneSelection);
+	        }
+	    } else {
+	        // Création de la nouvelle zone pour l'éditeur
+             $zoneDTO = new ZoneDTO();
+             $zoneDTO->setIdZone(NULL);
+             $zoneDTO->setNomZone($nomCreerZone);
+             $zoneDTO->setIdFestival($this->session->userdata("idFestival"));
+             echo ("id zone : " . $zoneDTO->getIdFestival());
+             $zoneDAO = $this->ZoneFactory->getInstance();
+             $zoneDAO->saveZone($zoneDTO);
+             
+             // Et ajout de l'id de la zone dans la reserver du jeu
+             $lastZoneDTO = $zoneDAO->getLastIdZone();
+             $reserverDTO->setIdZone($lastZoneDTO->getIdZone());
+             
 	    }
 	    
 	    $reserverDAO->updateReserver($reserverDTO);
