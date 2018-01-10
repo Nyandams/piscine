@@ -6,6 +6,7 @@ class EnsembleSuiviFactory extends CI_Model
         parent::__construct();
         $this->load->model('Editeur/EditeurFactory');
         $this->load->model('Suivi/SuiviFactory');
+        $this->load->model('EnsembleSuivi/EnsembleSuiviService');
     }
     
     static public function getInstance() {
