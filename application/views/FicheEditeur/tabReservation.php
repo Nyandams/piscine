@@ -290,13 +290,31 @@
     	
     	<div class="pull-right">
     		<form method="POST" action="<?php echo site_url ("FicheEditeur/sauvegarderReservation?idFicheEditeur=" . $idFicheEditeur)?>">
+    			<label for="nbTableReservees">Nombre de table reservées :</label>
+    			<input type="number" step="0.5"<?php
+        		      // Si le réservation existe pas, on doit disabled 
+    			if (!isset($reservationDTO)) {
+        		    echo (' value="0" ');
+        		} else {
+
+        		    // On regarde si nb d'emplacement n'est pas null
+        		    $nbEmplacement = $reservationDTO->getNbEmplacement();
+        		    if ($nbEmplacement == null) {
+        		        echo (' value="0" ');
+        		    }
+        		    else {
+        		        echo (' value="' . $reservationDTO->getNbEmplacement() .'" ');
+        		    }
+        		}
+        		      
+        		      ?> id="nbTableReservees" name="nbTableReservees">
     			<label for="prixTotReservation">Prix total négotié</label>
         		<input type="number" <?php
         		      // Si le réservation existe pas, on doit disabled 
-        		if (!isset($prixNego)) {
-        		    echo ('disabled="disabled" value="0"');
+        		if (!isset($reservationDTO)) {
+        		    echo (' value="0" ');
         		} else {
-        		    echo ('value=' . $prixNego); 
+        		    echo (' value="' . $reservationDTO->getPrixNegociationReservation() .'" ');
         		}
         		      
         		      ?> id="prixTotReservation" name="prixTotReservation">

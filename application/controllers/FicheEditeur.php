@@ -118,8 +118,7 @@ class FicheEditeur extends CI_Controller {
 	    $idEditeur = $this->input->get("idFicheEditeur");
 	    try {
 	        $reservationDAO = $this->ReservationFactory->getInstance();
-	        $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
-	        $data['prixNego'] = $reservationDTO->getPrixNegociationReservation();
+	        $data['reservationDTO'] = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
 	    } catch (Exception $e) {
 	        
 	    }
@@ -130,6 +129,19 @@ class FicheEditeur extends CI_Controller {
 	    
 		return $this->load->view("FicheEditeur/tabReservation", $data, true);
 
+	}
+	
+	// Renvoie la tableau des jeu
+	public function tabJeu ($idFicheEditeur) {
+	    $jeuDAO = $this->JeuFactory->getInstance();
+	    $data['jeux'] = $jeuDAO->getJeuByIdEditeur($idFicheEditeur);
+	    
+	    
+	    // Récupération du dao Editeur pour le modal d'ajout d'un jeu
+	    $editDAO = $this->EditeurFactory->getInstance();
+	    $data['EditeurDto'] = $editDAO->getEditeurs();
+	    
+	    return $this->load->view("FicheEditeur/tabJeu", $data, true);
 	}
 	
 	// Supprimer un reserver pour un jeu
@@ -260,25 +272,23 @@ class FicheEditeur extends CI_Controller {
 	    $idEditeur = $this->input->get("idFicheEditeur");
 	    
 	    $reservationDAO = $this->ReservationFactory->getInstance();
-	    $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	    try {
+	        // S'il n'y a pas de réservation pour cet éditeur il faut lui en créer une.
+	        $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	    } catch(Exception $e) {
+	        $reservationDTO = new ReservationDTO();
+	        $reservationDTO->setIdFestival($idFestival);
+	        $reservationDTO->setIdEditeur($idEditeur);
+	    }
+	    
+	    $reservationDTO->setNbEmplacement($this->input->post("nbTableReservees"));
 	    $reservationDTO->setPrixNegociationReservation($this->input->post("prixTotReservation"));
 	    
 	    $reservationDAO->updateReservation($reservationDTO);
 	    $this->redirection();
 	}
 
-	// Renvoie la tableau des jeu
-	public function tabJeu ($idFicheEditeur) {
-		$jeuDAO = $this->JeuFactory->getInstance();
-		$data['jeux'] = $jeuDAO->getJeuByIdEditeur($idFicheEditeur);
-		
-		
-		// Récupération du dao Editeur pour le modal d'ajout d'un jeu
-		$editDAO = $this->EditeurFactory->getInstance();
-		$data['EditeurDto'] = $editDAO->getEditeurs();
-		
-		return $this->load->view("FicheEditeur/tabJeu", $data, true);
-	}
+	
 
 	// Renvoie la zone de commentaire
 	public function commentairePerso ($idFicheEditeur) {
@@ -463,16 +473,4 @@ class FicheEditeur extends CI_Controller {
 	    $jeuDao->updateJeu($dto);
 	    $this->redirection();
 	}
-	
-	// fonction utilisé pour le débuggage
-	public function testDate(){
-	    $suiviDAO =  $this->SuiviFactory->getInstance();
-	    $idFestival = $this->session->userdata("idFestival");
-	    $idEditeur = 1;
-	    $suiviDAO->setPremierContact($idEditeur, $idFestival);	    
-	    $suiviDto = $suiviDAO->getSuiviByIdEditeurFestival($idEditeur,$idFestival);
-	    $suiviDAO->setPremierContact($idEditeur, $idFestival);
-	}
-	
-
 }
