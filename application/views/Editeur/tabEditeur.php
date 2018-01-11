@@ -86,42 +86,42 @@
                     $ligne = $ligne . '<td>' . $numContact . '</td>';
                     $ligne = $ligne . '<td>' . $mailContact . '</td>';
                     
-                    
                     // Préparation de la sélection pour la présence de l'editeur
                     $suiviEditeur = $ensembleSuiviDTO->getSuiviDTO();
                     $selectionReponseEditeur = '';
-                    
+                       
                     $selectionReponseEditeur = '
                      <option ';
                      $selected = '';
-                     if (is_null($suiviEditeur->getReponseEditeur())) {
+                     if ($suiviEditeur->getReponseEditeur() == -1) {
                          $selected = 'selected="selected"';
                      }
-                     $selectionReponseEditeur = $selectionReponseEditeur . $selected .'value="'. NULL . '">Pas de réponse</option>';
+                     $selectionReponseEditeur = $selectionReponseEditeur . $selected .' value="'. -1 . '">Pas de réponse</option>';
                      
                      $selectionReponseEditeur = $selectionReponseEditeur .'
                      <option ';
                      $selected = '';
-                     if ($suiviEditeur->getReponseEditeur() === -1) {
-                         $selected = 'selected="selected"';
-                     }
-                     $selectionReponseEditeur = $selectionReponseEditeur . $selected .'value="'. -1 . '">Abscent</option>';
                      
-                     $selectionReponseEditeur = $selectionReponseEditeur .'
-                     <option ';
-                     $selected = '';
-                     if ($suiviEditeur->getReponseEditeur() === 0) {
+                     if ($suiviEditeur->getReponseEditeur() == 1) {
+                         
                          $selected = 'selected="selected"';
                      }
-                     $selectionReponseEditeur = $selectionReponseEditeur . $selected .'value="'. 0 . '">Hésite</option>';
+                     $selectionReponseEditeur = $selectionReponseEditeur . $selected .' value="'. 1 . '">Abscent</option>';
                      
-                     $selectionReponseEditeur = $selectionReponseEditeur .'
-                     <option ';
+                     $selectionReponseEditeur = $selectionReponseEditeur .'<option ';
                      $selected = '';
-                     if ($suiviEditeur->getReponseEditeur() === 1) {
+              
+                     if ($suiviEditeur->getReponseEditeur() == 2) {
                          $selected = 'selected="selected"';
                      }
-                     $selectionReponseEditeur = $selectionReponseEditeur . $selected . ' value="'. 1 . '">Présent</option>';
+                     $selectionReponseEditeur = $selectionReponseEditeur . $selected .' value="'. 2 . '">Hésite</option>';
+                     
+                     $selectionReponseEditeur = $selectionReponseEditeur .'<option ';
+                     $selected = '';
+                     if ($suiviEditeur->getReponseEditeur() == 3) {
+                         $selected = 'selected="selected"';
+                     }
+                     $selectionReponseEditeur = $selectionReponseEditeur . $selected . ' value="'. 3 . '">Présent</option>';
                      
                      // Préparation de selection du bouton contacté
                      $cocheDejaContacte = '';
@@ -133,7 +133,7 @@
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
                     $ligne = $ligne . '<td class="row">
                     <div class ="pull-left">
-                        <form method="POST" action="'. site_url ('Editeur/sauvagardeSuiviRapideEditeur?idEditeur=' . $idEditeur) .'">
+                        <form method="POST" action="'. site_url ('Editeur/sauvegardeSuiviRapideEditeur?idEditeur=' . $idEditeur) .'">
                             <label><input ' . $cocheDejaContacte . ' name="contactFait" id="contactFait" type="checkbox"> Contacté</label>
                             <select class="selectReponse" name="selectReponse">' . $selectionReponseEditeur .'</select>
                             <button type="submit" class="btn btn-primary">

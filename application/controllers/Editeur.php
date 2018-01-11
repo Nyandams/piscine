@@ -82,7 +82,7 @@ class Editeur extends CI_Controller {
 	}
 	
 	// Sauvegarde le suivi rapide d'un éditeur
-	public function sauvagardeSuiviRapideEditeur() {
+	public function sauvegardeSuiviRapideEditeur() {
 	    $idEditeur = $this->input->get("idEditeur");
 	    $idFestival = $this->session->userdata("idFestival");
 	    
@@ -91,17 +91,17 @@ class Editeur extends CI_Controller {
 	    
 	    $reponseEditeur = $this->input->post('selectReponse');
 	    $suiviDTO->setReponseEditeur($reponseEditeur);
-	    $suiviDAO->setPremierContact($idEditeur, $idFestival);
 	    
-	    $suiviDAO->setPremierContact($idEditeur, $idFestival);
-	    /*if (null !== $this->input->post("contactFait") and is_null($suiviDTO->getPremierContact())){
+	    $suiviDAO->updateSuivi($suiviDTO);
+	    
+	    if (null !== $this->input->post("contactFait") and is_null($suiviDTO->getPremierContact())){
 	        $suiviDAO->setPremierContact($idEditeur, $idFestival);
 	        // Si décoché et que c'était coché avant
 	    } else if ($this->input->post("contactFait") == null and $suiviDTO->getPremierContact() !== NULL) {
 	        $suiviDAO->unsetPremierContact($idEditeur, $idFestival);
-	    }*/
+	    }
 	    
-	    $suiviDAO->updateSuivi($suiviDTO);
+	    
 	    
 	    redirect(site_url('Editeur/'));
 	   

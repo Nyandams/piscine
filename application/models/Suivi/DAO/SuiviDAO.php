@@ -142,6 +142,7 @@ class SuiviDAO extends CI_Model
      * @param int $idFestival
      */
     public function setPremierContact($idEditeur, $idFestival){
+        
         try{
             $suiviDto = $this->getSuiviByIdEditeurFestival($idEditeur, $idFestival);
             $suiviDto->setPremierContact(new \DateTime());

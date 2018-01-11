@@ -335,6 +335,7 @@ class FicheEditeur extends CI_Controller {
 	    return $this->load->view("FicheEditeur/suiviPerso", $data, true);
 	}
 	
+	
 	// Sauvegarde le suivi de l'editeur qu'on est en train de traiter
 	public function sauvegarderSuivi() {
 	    // obtention du suivi de l'edtieur actuel
