@@ -3,7 +3,7 @@
 class EnsembleSuiviService extends CI_Model
 {
     private $suiviDAO = null;
-    private $editeurDAO = null;
+    private $editeurContactDAO = null;
    
     
     
@@ -20,24 +20,28 @@ class EnsembleSuiviService extends CI_Model
      * @param TypeJeuDAO $daoTypeJeu
      * @return EnsembleReserverService
      */
-    public function initConstruct($editeurDAO, $suiviDAO){
+    public function initConstruct($editeurContactDAO, $suiviDAO){
         $this->suiviDAO = $suiviDAO;
-        $this->editeurDAO = $editeurDAO;
+        $this->editeurContactDAO = $editeurContactDAO;
         
         return $this;
     }
     
     public function getEnsembleSuiviDTOByIdFestival ($idFestival) {
         $ensembleSuiviCollection = new EnsembleSuiviCollection();
-        $suivisDTO = $this->suiviDAO->getSuiviByIdFestival();
+        $suivisDTO = $this->suiviDAO->getSuiviByIdFestival($idFestival);
+        
         
         foreach ($suivisDTO as $key => $suiviDTO) {
             $ensembleSuiviTmp = new EnsembleSuiviDTO();
-            $editeurDTO = $this->editeurDAO->getEditeurById($suiviDTO->getIdEditeur());
+            
+            $editeurContactDTO = $this->
+            editeurContactDAO->
+            getEditeurContactByIdEditeur($suiviDTO->getIdEditeur());
             
             
             $ensembleSuiviTmp->setSuiviDTO($suiviDTO);
-            $ensembleSuiviTmp->setEditeurDTO($editeurDTO);
+            $ensembleSuiviTmp->setEditeurContactDTO($editeurContactDTO);
             
             $ensembleSuiviCollection->append($ensembleSuiviTmp);
         }

@@ -60,10 +60,10 @@
                 $ligne = ''; // Stocke une ligne le temps de la créer
                 
                 foreach ($ensemblesSuiviDTO as $key => $ensembleSuiviDTO) {
-                    $editeur = $ensembleSuiviDTO->getEditeurDTO();
-                    
+                    $editeur = $ensembleSuiviDTO->getEditeurContactDTO();
                     $idEditeur = $editeur->getIdEditeur();
                     $nomEditeur = $editeur->getLibelleEditeur();
+                    
                     if (!is_null($editeur->getIdContact())){
                         $idContact = $editeur->getIdContact();
                         $nomContact = $editeur->getNomContact();
@@ -88,21 +88,58 @@
                     
                     
                     // Préparation de la sélection pour la présence de l'editeur
-                    $selection = '';
-                    $reponseEditeur = 6;
-                    for ($i = 0; $i <= 3; $i++) {
-                        
-                        
-                        $selection = $selection . '<option value="'. $jeu->getIdJeu() . '">';
-                        $libEditeur = $jeu->getLibelleJeu();
-                        $selection = $selection . $libEditeur . "</option>";
-                    }
+                    $suiviEditeur = $ensembleSuiviDTO->getSuiviDTO();
+                    $selectionReponseEditeur = '';
+                    
+                    $selectionReponseEditeur = '
+                     <option ';
+                     $selected = '';
+                     if (is_null($suiviEditeur->getReponseEditeur())) {
+                         $selected = 'selected="selected"';
+                     }
+                     $selectionReponseEditeur = $selectionReponseEditeur . $selected .'value="'. NULL . '">Pas de réponse</option>';
+                     
+                     $selectionReponseEditeur = $selectionReponseEditeur .'
+                     <option ';
+                     $selected = '';
+                     if ($suiviEditeur->getReponseEditeur() === -1) {
+                         $selected = 'selected="selected"';
+                     }
+                     $selectionReponseEditeur = $selectionReponseEditeur . $selected .'value="'. -1 . '">Abscent</option>';
+                     
+                     $selectionReponseEditeur = $selectionReponseEditeur .'
+                     <option ';
+                     $selected = '';
+                     if ($suiviEditeur->getReponseEditeur() === 0) {
+                         $selected = 'selected="selected"';
+                     }
+                     $selectionReponseEditeur = $selectionReponseEditeur . $selected .'value="'. 0 . '">Hésite</option>';
+                     
+                     $selectionReponseEditeur = $selectionReponseEditeur .'
+                     <option ';
+                     $selected = '';
+                     if ($suiviEditeur->getReponseEditeur() === 1) {
+                         $selected = 'selected="selected"';
+                     }
+                     $selectionReponseEditeur = $selectionReponseEditeur . $selected . ' value="'. 1 . '">Présent</option>';
+                     
+                     // Préparation de selection du bouton contacté
+                     $cocheDejaContacte = '';
+                     if (!is_null($suiviEditeur->getPremierContact())) {
+                         $cocheDejaContacte = 'checked="checked"';
+                     }
+                    
 
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
                     $ligne = $ligne . '<td class="row">
                     <div class ="pull-left">
-                        <label><input name="contactFait" id="contactFait" type="checkbox">Contacté</label>
-                        
+                        <form method="POST" action="'. site_url ('Editeur/sauvagardeSuiviRapideEditeur?idEditeur=' . $idEditeur) .'">
+                            <label><input ' . $cocheDejaContacte . ' name="contactFait" id="contactFait" type="checkbox"> Contacté</label>
+                            <select class="selectReponse" name="selectReponse">' . $selectionReponseEditeur .'</select>
+                            <button type="submit" class="btn btn-primary">
+            		          <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+        		            </button>
+                        </form>
                     </div>
                     <span class="pull-right">
                     <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#modifierEditeurModal_' . $idEditeur .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>

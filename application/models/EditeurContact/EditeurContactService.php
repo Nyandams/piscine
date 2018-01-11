@@ -7,7 +7,7 @@ class EditeurContactService extends CI_Model
     
     public function __construct() {
         parent::__construct();
-        $this->load->model("Editeur/DAO/EditeurDAO");
+        $this->load->model("Editeur/EditeurFactory");
 
         $this->load->model("Contact/DAO/ContactDAO", "contactDAO");
         $this->load->model("EditeurContact/DTO/EditeurContactCollection");
@@ -81,4 +81,35 @@ class EditeurContactService extends CI_Model
         }
         return $editeurContactCollection;
     }
+    
+    // Renvoie un editeur avec son contact principal s'il en a un
+    public function getEditeurContactByIdEditeur($idEditeur) {
+        $editeurContact = new EditeurContactDTO();
+        $editeurDAO = $this->EditeurFactory->getInstance();
+       
+        
+        try{
+            $editeur = $editeurDAO->getEditeurById($idEditeur);
+            $editeurContact->setIdEditeur($idEditeur);
+            $editeurContact->setLibelleEditeur($editeur->getLibelleEditeur());
+            
+            
+            $contactDTO = $this->contactDAO->getContactEditeurPrincipal($editeur->getIdEditeur());
+            $editeurContact->setIdContact($contactDTO->getIdContact());
+            $editeurContact->setNomContact($contactDTO->getNomContact());
+            $editeurContact->setRueContact($contactDTO->getRueContact());
+            $editeurContact->setVilleContact($contactDTO->getVilleContact());
+            $editeurContact->setCpContact($contactDTO->getCpContact());
+            $editeurContact->setMailContact($contactDTO->getMailContact());
+            $editeurContact->setEstPrincipalContact($contactDTO->getEstPrincipalContact());
+            $editeurContact->setTelephoneContact($contactDTO->getTelephoneContact());
+            
+        } catch(Exception $e) {
+            
+        }
+        
+        return $editeurContact;
+        
+    }
+    
 }

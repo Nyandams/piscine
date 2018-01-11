@@ -27,7 +27,7 @@ class Editeur extends CI_Controller {
             $this->load->model("Reservation/ReservationFactory");
             
             // Récupération de l'éditeur et de son suivi
-            $this->load->model("EnsembleSuivi/EnsembleSuiviFactory");
+            $this->load->model ("EnsembleSuivi/EnsembleSuiviFactory");
 		}
 	}
 	
@@ -46,9 +46,8 @@ class Editeur extends CI_Controller {
 
 	// @return tableau des éditeurs prêt à être affiché dans une page.
 	public function tableauEditeur () {
-		$instanceDao = $this->EnsembleSuiviFactory->getInstance();
-		$idFestival = $this->session->userdata("idFestival");
-		$data['ensemblesSuiviDTO'] = $instanceDao->getEnsembleSuiviDTOByIdFestival($idFestival);
+		$instanceDAO = $this->EnsembleSuiviFactory->getInstance();
+		$data['ensemblesSuiviDTO'] = $instanceDAO->getEnsembleSuiviDTOByIdFestival($this->session->userdata("idFestival"));
 		
 		return $this->load->view("Editeur/tabEditeur", $data, true);
 		
@@ -58,6 +57,7 @@ class Editeur extends CI_Controller {
 	@param : idEditeur : int
 	*/
 	public function supprimerEditeur() {
+	    // il faut aussi supprimer le suivi qui va avec
 		$idEditeur = $this->input->get("idEditeur");
 		$instanceDao = $this->EditeurFactory->getInstance();
 		try{
@@ -66,8 +66,45 @@ class Editeur extends CI_Controller {
 		} catch(Exception $e){
 		    
 		}
+		$idFestival = $this->session->userdata("idFestival");
+		
+		try {
+		    
+		} catch (Exception $e) {
+		    $suiviDAO = $this->SuiviFactory->getInstance();
+		    $suiviDTO = $suiviDAO->getSuiviByIdEditeurFestival($idEditeur,$idFestival);
+		}
+
+		$suiviDAO->deleteSuivi($suiviDTO);
+		
 		
 		redirect('/editeur/editeurliste');
+	}
+	
+	// Sauvegarde le suivi rapide d'un éditeur
+	public function sauvagardeSuiviRapideEditeur() {
+	    $idEditeur = $this->input->get("idEditeur");
+	    $idFestival = $this->session->userdata("idFestival");
+	    
+	    $suiviDAO = $this->SuiviFactory->getInstance();
+	    $suiviDTO = $suiviDAO->getSuiviByIdEditeurFestival($idEditeur,$idFestival);
+	    
+	    $reponseEditeur = $this->input->post('selectReponse');
+	    $suiviDTO->setReponseEditeur($reponseEditeur);
+	    $suiviDAO->setPremierContact($idEditeur, $idFestival);
+	    
+	    $suiviDAO->setPremierContact($idEditeur, $idFestival);
+	    /*if (null !== $this->input->post("contactFait") and is_null($suiviDTO->getPremierContact())){
+	        $suiviDAO->setPremierContact($idEditeur, $idFestival);
+	        // Si décoché et que c'était coché avant
+	    } else if ($this->input->post("contactFait") == null and $suiviDTO->getPremierContact() !== NULL) {
+	        $suiviDAO->unsetPremierContact($idEditeur, $idFestival);
+	    }*/
+	    
+	    $suiviDAO->updateSuivi($suiviDTO);
+	    
+	    redirect(site_url('Editeur/'));
+	   
 	}
 
 	// Ajoute un éditeur via une méthode post 

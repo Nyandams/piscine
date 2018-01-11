@@ -4,9 +4,9 @@ class EnsembleSuiviDTO extends CI_Model
 {
     
     /***
-     * @var EditeurDTO
+     * @var editeurContactDTO
      */
-    private $editeurDTO = null;
+    private $editeurContactDTO = null;
     
     /**
      * @var SuiviDTO
@@ -15,11 +15,11 @@ class EnsembleSuiviDTO extends CI_Model
     
     
     /**
-     * @return EditeurDTO
+     * @return editeurContactDTO
      */
-    public function getEditeurDTO()
+    public function getEditeurContactDTO()
     {
-        return $this->editeurDTO;
+        return $this->editeurContactDTO;
     }
 
     /**
@@ -31,11 +31,11 @@ class EnsembleSuiviDTO extends CI_Model
     }
 
     /**
-     * @param EditeurDTO $editeurDTO
+     * @param editeurContactDTO $editeurContactDTO
      */
-    public function setEditeurDTO($editeurDTO)
+    public function setEditeurContactDTO($editeurContactDTO)
     {
-        $this->editeurDTO = $editeurDTO;
+        $this->editeurContactDTO = $editeurContactDTO;
     }
 
     /**
