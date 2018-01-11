@@ -43,6 +43,27 @@ class ReserverDAO extends CI_Model
     }
     
     /**
+     * renvoie une collection d' "ReserverDTO"
+     * @return ReserverCollection
+     */
+    public function getReserverByZone($idZone){
+        $resultat = $this->db->select()
+        ->from($this->table)
+        ->where("idZone", $idZone)
+        ->get()
+        ->result();
+        
+        $reserverCollection = new ReserverCollection();
+        
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $reserverCollection->append($dto);
+        }
+        
+        return $reserverCollection;
+    }
+    
+    /**
      * sauvegarde un reserver dans la BDD
      * @param ReserverDTO $reserverDTO
      */

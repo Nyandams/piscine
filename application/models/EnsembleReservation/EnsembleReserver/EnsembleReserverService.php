@@ -73,4 +73,41 @@ class EnsembleReserverService extends CI_Model
         return $ensembleReserverCollection; 
     }
     
+    // Renvoie tout une collection d'ensembleReserverDTO appartenant à une zone passée en argument
+    public function getEnsembleReserverByZone ($idFestival, $idZone) {
+        $reserverCollection = $this->reserverDAO->getReserverByIdReservation($idZone);
+        $ensembleReserverCollection = new EnsembleReserverCollection();
+        
+        foreach ($reserverCollection as $reserverDTO){
+            $ensembleReserverTmp = new EnsembleReserverDTO();
+            $ensembleReserverTmp->setReserverDTO($reserverDTO);
+            
+            
+            // Récupération de la zone
+            try{
+                $zoneDTO = $this->zoneDAO->getZoneById($idZone);
+                $ensembleReserverTmp->setZoneDTO($zoneDTO);
+            }catch(Exception $e){
+                
+            }
+            
+            //récupération à partir de JeuDTO
+            try{
+                $jeuDTO = $this->jeuDAO->getJeuById($ensembleReserverTmp->getReserverDTO()->getIdJeu());
+                $ensembleReserverTmp->setJeuDTO($jeuDTO);
+            }catch (exception $e){
+                
+            }
+            
+            //récupération à partir de TypeJeuDTO
+            try{
+                $typeJeuDto = $this->typeJeuDAO->getTypeJeuById($ensembleReserverTmp->getJeuDTO()->getIdTypeJeu());
+                $ensembleReserverTmp->setTypeJeu($typeJeuDto);
+            }catch (Exception $e){
+                
+            }
+            $ensembleReserverCollection->append($ensembleReserverTmp);
+        }
+        return $ensembleReserverCollection; 
+    }
 }

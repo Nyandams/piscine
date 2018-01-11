@@ -87,6 +87,13 @@
                     $ligne = $ligne . '<td>' . $mailContact . '</td>';
                     
                     // Préparation de la sélection pour la présence de l'editeur
+                    
+                    /* Correspondance pour la réponse Editeur 
+                     * - -1 = Pas de réponse
+                     * -  1 = Absent
+                     * -  2 = Hésite
+                     * -  3 = Présent
+                     */
                     $suiviEditeur = $ensembleSuiviDTO->getSuiviDTO();
                     $selectionReponseEditeur = '';
                        
@@ -106,7 +113,7 @@
                          
                          $selected = 'selected="selected"';
                      }
-                     $selectionReponseEditeur = $selectionReponseEditeur . $selected .' value="'. 1 . '">Abscent</option>';
+                     $selectionReponseEditeur = $selectionReponseEditeur . $selected .' value="'. 1 . '">Absent</option>';
                      
                      $selectionReponseEditeur = $selectionReponseEditeur .'<option ';
                      $selected = '';

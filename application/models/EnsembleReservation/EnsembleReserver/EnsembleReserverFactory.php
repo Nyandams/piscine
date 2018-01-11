@@ -8,6 +8,7 @@ class EnsembleReserverFactory extends CI_Model
         $this->load->model('Jeu/JeuFactory');
         $this->load->model('TypeJeu/TypeJeuFactory');
         $this->load->model('Zone/ZoneFactory');
+        $this->load->model('EnsembleReservation/EnsembleReserver/EnsembleReserverService');
     }
     
     static public function getInstance() {

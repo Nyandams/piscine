@@ -38,6 +38,27 @@ class ZoneDAO extends CI_Model
     }
     
     /**
+     * renvoie une collection d' "ZoneDTO"
+     * @return ZoneCollection
+     */
+    public function getZonesByIdFestival($idFestival){
+        $resultat = $this->db->select()
+        ->from($this->table)
+        ->where("idFestival", $idFestival)
+        ->get()
+        ->result();
+        
+        $zoneCollection = new ZoneCollection();
+        
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $zoneCollection->append($dto);
+        }
+        
+        return $zoneCollection;
+    }
+    
+    /**
      * sauvegarde une zone dans la BDD
      * @param ZoneDTO $zoneDTO
      */
