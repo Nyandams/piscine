@@ -60,10 +60,9 @@ class EnsembleSuiviService extends CI_Model
         $suivisDTO = $this->suiviDAO->getSuiviByIdFestival($idFestival);
 
         foreach ($suivisDTO as $key => $suiviDTO) {
-            
             $ensembleSuiviTmp = new EnsembleSuiviDTO();
-
-            $premierContact->getPremierContact()
+            
+            $premierContact = $suiviDTO->getPremierContact();
 
             if ($premierContact == null) {
 

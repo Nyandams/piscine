@@ -456,16 +456,28 @@ class FicheEditeur extends CI_Controller {
 	    // Envoie du dto
 	    $instanceDao = $this->JeuFactory->getInstance();
 	    $instanceDao->saveJeu($dto);
+	    
+	    // On ajoute directement un reserver pour le jeu
+	    $reserverDAO = $this->ReserverFactory->getInstance();
+	    $idFestival = $this->session->userdata("idFestival");
+	    $idEditeur = $this->input->get("idFicheEditeur");
+	    
+	    $reserveDTO = new ReserverDTO();
+	    
+	    
 	    $this->redirection();
 	}
 	
 	// Supprimer un jeu via la méthode post
 	public function supprimerJeu () {
 	    $idJeu = $this->input->get('idJeu');
-	    
-	    $instanceDao = $this->JeuFactory->getInstance();
-	    $dto = $instanceDao->getJeuById($idJeu);
-	    $instanceDao->deleteJeu($dto);
+	    $reserverDAO = $this->RserverFactory->getInstance();
+	    $jeuDAO = $this->JeuFactory->getInstance();
+
+	    $jeuDTO = $jeuDAO->getJeuById($idJeu);
+	    // Supprimer la reservation pour le jeu
+	    $reserverDAO->suppReserverByIdJeu($jeuDTO->getIdJeu());
+	    $jeuDAO->deleteJeu($jeuDTO);
 	    $this->redirection();
 	    
 	}

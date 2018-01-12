@@ -14,7 +14,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Ajouter un contact</h5>
             </div>
 
-            <form id="formContact" method="POST" action=<?php echo 'ficheEditeur/ajouterContact?idFicheEditeur='.  $idFicheEditeur ?>>
+            <form id="formContact" method="POST" action="<?php echo 'ficheEditeur/ajouterContact?idFicheEditeur='.  $idFicheEditeur ?>">
                 <div class="container-fluid">
                     <div class="form-row">
                         <div class="form-group col-sm-6">

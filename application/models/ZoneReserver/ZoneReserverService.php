@@ -21,7 +21,6 @@ class ZoneReserverService extends CI_Model
         $zoneReserverCollection = new ZoneReserverCollection();
         
         $ensembleReserverDAO = $this->EnsembleReserverFactory->getInstance();
-
         foreach ($zonesDTO as $key => $zoneDTO) {
             $zoneReserverDTO = new ZoneReserverDTO();
             $ensembleJeuEditeur = new EnsembleJeuEditeurReserverDTO();
@@ -29,8 +28,8 @@ class ZoneReserverService extends CI_Model
             try {
                 // Récupération de ensembleReserver qui nous donne une bonne partie des infos
                 $reserverZoneCollection = $ensembleReserverDAO->getEnsembleReserverByZone($idFestival, $zoneDTO->getIdZone());
-                
-                // Création des lignes pour chaque zone
+ 
+               // Création des lignes pour chaque zone
                 foreach ($reserverZoneCollection as $key => $reserverZoneCollection) {
                     $ensembleJeuEditeur = new EnsembleJeuEditeurReserverDTO();
                     
@@ -50,11 +49,13 @@ class ZoneReserverService extends CI_Model
                 }
                 
                 $zoneReserverDTO->setZoneDTO($zoneDTO);
+                
+                
                 $zoneReserverDTO->setEnsembleJeuEditeur($ensembleJeuEditeurCollection);
                 $zoneReserverCollection->append($zoneReserverDTO);
                 
             } catch (Exception $e) {
-                
+                print($e);
             }
         }
         

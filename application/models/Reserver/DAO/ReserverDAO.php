@@ -42,6 +42,11 @@ class ReserverDAO extends CI_Model
         return $reserverCollection;
     }
     
+    public function suppReserverByIdJeu($idJeu) {
+        $this->db->where('idJeu', $idJeu)
+        ->delete($this->table);
+    }
+    
     /**
      * renvoie une collection d' "ReserverDTO"
      * @return ReserverCollection

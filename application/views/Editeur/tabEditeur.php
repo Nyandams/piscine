@@ -30,12 +30,16 @@
     </div>
 </div>
 
+
 <!-- selection filtre suivi -->
+<form method="POST" action="<?php echo site_url('Editeur/choixFiltre?idFiltre=-1'); ?>">
 <select id="selectFiltre">
-
-    <option><a href="<?php echo site_url('Editeur/choixFiltre?idFiltre=-1'); ?>">Pas Contacté</a></option> 
-
+    <option>Pas Contacté</option> 
 </select>
+
+<button type="submit" class="btn btn-secondary">Appliquer filtre</button>
+</form>
+
 
 
 
@@ -207,16 +211,7 @@
         </button>
 
 
-    <!--
-    <form method="POST" action="ajouterEditeur">
-    
-      <div class="form-group">
-        <label for="nomJeu">Nom du jeu</label>
-        <input type="text" class="form-control" id="nomJeu" name="nomJeu" placeholder="Entrer le nom">
-      </div>
-      <button type="submit" class="btn btn-secondary">Sauvegarder</button>
-    </form>
--->
+
 
 <script type="text/javascript" >        
     $(document).ready(function() {
