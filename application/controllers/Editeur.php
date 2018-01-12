@@ -37,7 +37,7 @@ class Editeur extends CI_Controller {
 	
 	//affiche le tableau des éditeurs
 	public function editeurListe() {
-		$data['page'] = $this->tableauEditeur();
+		$data['page'] = $this->choixFiltre();
 		$data['title']= 'Editeurs';
 
 		$this->load->view("Theme/theme", $data);	
@@ -144,5 +144,36 @@ class Editeur extends CI_Controller {
 
 	}
 
+	/*
+choixFiltre peut etre appelé d 2 facons : soit par défaut on on affiche donc tous les editeus, soit par le choix du filtre et on affiche les editeurs en fct du filtre.
+	*/
+	public function choixFiltre(){
+
+		$idFestival = $this->session->userdata('idFestival');
+		$ensembleSuiviDAO=$this->EnsembleSuiviFactory->getInstance();
+
+		$numFiltre = $this->input->get('idFiltre'); 
+
+		if (!isset($numFiltre)){
+
+			$data['ensemblesSuiviDTO'] = $ensembleSuiviDAO->getEnsembleSuiviDTOByIdFestival($idFestival);
+			return $this->load->view("Editeur/tabEditeur", $data, true);
+		}
+
+		else {
+
+			if ($numFiltre==-1){
+
+				$data['ensemblesSuiviDTO'] =$ensembleSuiviDAO->getSuiviNonContacteDTOByIdFestival($idFestival);
+				$data['title']= 'Editeurs';
+
+				$this->load->view("Theme/theme", $data);
+			}
+
+		}
+
+		
+
+	}
 
 }
