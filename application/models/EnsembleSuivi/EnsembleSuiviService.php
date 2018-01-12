@@ -49,5 +49,36 @@ class EnsembleSuiviService extends CI_Model
         return $ensembleSuiviCollection;
         
     }
+
+
+### alia et hedvig :
+
+    #renvoie que les suivis des éditeurs pas contacté
+
+   public function getSuiviNonContacteDTOByIdFestival ($idFestival) {
+        $ensembleSuiviCollection = new EnsembleSuiviCollection();
+        $suivisDTO = $this->suiviDAO->getSuiviByIdFestival($idFestival);
+
+        foreach ($suivisDTO as $key => $suiviDTO) {
+            
+            $ensembleSuiviTmp = new EnsembleSuiviDTO();
+
+            $premierContact->getPremierContact()
+
+            if ($premierContact == null) {
+
+                $editeurContactDTO = $this->editeurContactDAO->getEditeurContactByIdEditeur($suiviDTO->getIdEditeur());
+            
+                $ensembleSuiviTmp->setSuiviDTO($suiviDTO);
+                $ensembleSuiviTmp->setEditeurContactDTO($editeurContactDTO);
+            
+                $ensembleSuiviCollection->append($ensembleSuiviTmp);
+
+            }
+        }
+
+        return $ensembleSuiviCollection;
+        
+    }
     
 }

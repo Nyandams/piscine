@@ -39,7 +39,7 @@ class Editeur extends CI_Controller {
 	public function editeurListe() {
 		$data['page'] = $this->tableauEditeur();
 		$data['title']= 'Editeurs';
-		
+
 		$this->load->view("Theme/theme", $data);	
 	}
 
@@ -48,7 +48,7 @@ class Editeur extends CI_Controller {
 	public function tableauEditeur () {
 		$instanceDAO = $this->EnsembleSuiviFactory->getInstance();
 		$data['ensemblesSuiviDTO'] = $instanceDAO->getEnsembleSuiviDTOByIdFestival($this->session->userdata("idFestival"));
-		
+		$data['test']= $this->Test();
 		return $this->load->view("Editeur/tabEditeur", $data, true);
 		
 	}
@@ -142,5 +142,15 @@ class Editeur extends CI_Controller {
 		
 		redirect(site_url('/editeur'));
 
+	}
+
+
+	public function Test(){
+
+		$idFestival=$this->session->userdata("idFestival");
+
+		$ensembleSuiviCollection->getSuiviNonContacteDTOByIdFestival($idFestival) ;
+
+		return $ensembleSuiviCollection ;
 	}
 }
