@@ -28,6 +28,10 @@ class Editeur extends CI_Controller {
             
             // Récupération de l'éditeur et de son suivi
             $this->load->model ("EnsembleSuivi/EnsembleSuiviFactory");
+            
+            $this->load->model ("Jeu/JeuFactory");
+            
+            $this->load->model("Reserver/ReserverFactory");
 		}
 	}
 	
@@ -48,7 +52,6 @@ class Editeur extends CI_Controller {
 	public function tableauEditeur () {
 		$instanceDAO = $this->EnsembleSuiviFactory->getInstance();
 		$data['ensemblesSuiviDTO'] = $instanceDAO->getEnsembleSuiviDTOByIdFestival($this->session->userdata("idFestival"));
-		$data['test']= $this->Test();
 		return $this->load->view("Editeur/tabEditeur", $data, true);
 		
 	}
@@ -60,24 +63,34 @@ class Editeur extends CI_Controller {
 	    // il faut aussi supprimer le suivi qui va avec
 		$idEditeur = $this->input->get("idEditeur");
 		$instanceDao = $this->EditeurFactory->getInstance();
+		
+		$idFestival = $this->session->userdata("idFestival");
+		
+		try {
+		    // Suppression du suivi pour cet éditeur
+		    $suiviDAO = $this->SuiviFactory->getInstance();
+		    $suiviDTO = $suiviDAO->getSuiviByIdEditeurFestival($idEditeur,$idFestival);
+		    $suiviDAO->deleteSuivi($suiviDTO);
+		    
+		    // Suppression de ses jeux (Leur reserver est supprimé aussi
+		    $jeuDAO = $this->JeuFactory->getInstance();
+		    $jeuDTOCollection = $jeuDAO->getJeuByIdEditeur($idEditeur);
+		    
+		    $reserverDAO = $this->ReserverFactory->getInstance();
+		    foreach ($jeuDTOCollection as $key => $jeuDTO) {
+		        $reserverDAO->suppReserverByIdJeu($jeuDTO->getIdJeu());
+		        $jeuDAO->deleteJeu($jeuDTO);
+		    }  
+		} catch (Exception $e) {
+		    
+		}
+		
 		try{
 		    $supp = $instanceDao->getEditeurById($idEditeur);
 		    $instanceDao->deleteEditeur($supp);
 		} catch(Exception $e){
 		    
 		}
-		$idFestival = $this->session->userdata("idFestival");
-		
-		try {
-		    
-		} catch (Exception $e) {
-		    $suiviDAO = $this->SuiviFactory->getInstance();
-		    $suiviDTO = $suiviDAO->getSuiviByIdEditeurFestival($idEditeur,$idFestival);
-		}
-
-		$suiviDAO->deleteSuivi($suiviDTO);
-		
-		
 		redirect('/editeur/editeurliste');
 	}
 	
@@ -142,15 +155,5 @@ class Editeur extends CI_Controller {
 		
 		redirect(site_url('/editeur'));
 
-	}
-
-
-	public function Test(){
-
-		$idFestival=$this->session->userdata("idFestival");
-
-		$ensembleSuiviCollection->getSuiviNonContacteDTOByIdFestival($idFestival) ;
-
-		return $ensembleSuiviCollection ;
 	}
 }

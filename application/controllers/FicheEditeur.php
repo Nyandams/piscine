@@ -462,10 +462,13 @@ class FicheEditeur extends CI_Controller {
 	// Supprimer un jeu via la méthode post
 	public function supprimerJeu () {
 	    $idJeu = $this->input->get('idJeu');
-	    
-	    $instanceDao = $this->JeuFactory->getInstance();
-	    $dto = $instanceDao->getJeuById($idJeu);
-	    $instanceDao->deleteJeu($dto);
+	    $reserverDAO = $this->RserverFactory->getInstance();
+	    $jeuDAO = $this->JeuFactory->getInstance();
+
+	    $jeuDTO = $jeuDAO->getJeuById($idJeu);
+	    // Supprimer la reservation pour le jeu
+	    $reserverDAO->suppReserverByIdJeu($jeuDTO->getIdJeu());
+	    $jeuDAO->deleteJeu($jeuDTO);
 	    $this->redirection();
 	    
 	}
