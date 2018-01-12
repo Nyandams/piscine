@@ -30,6 +30,10 @@
     </div>
 </div>
 
+<?php print_r($test);
+
+  ?>
+
 
 
 <!-- Table Editeur -->
