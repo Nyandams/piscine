@@ -115,7 +115,7 @@ class Editeur extends CI_Controller {
 	    }
 	    
 	    
-	    
+	 
 	    redirect(site_url('Editeur/'));
 	   
 	}
