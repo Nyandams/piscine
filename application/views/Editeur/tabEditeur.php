@@ -199,16 +199,7 @@
         </button>
 
 
-    <!--
-    <form method="POST" action="ajouterEditeur">
-    
-      <div class="form-group">
-        <label for="nomJeu">Nom du jeu</label>
-        <input type="text" class="form-control" id="nomJeu" name="nomJeu" placeholder="Entrer le nom">
-      </div>
-      <button type="submit" class="btn btn-secondary">Sauvegarder</button>
-    </form>
--->
+
 
 <script type="text/javascript" >        
     $(document).ready(function() {
