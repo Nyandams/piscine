@@ -31,6 +31,17 @@
 </div>
 
 
+<!-- selection filtre suivi -->
+<form method="POST" action="<?php echo site_url('Editeur/choixFiltre?idFiltre=-1'); ?>">
+<select id="selectFiltre">
+    <option>Pas Contacté</option> 
+</select>
+
+<button type="submit" class="btn btn-secondary">Appliquer filtre</button>
+</form>
+
+
+
 
 
 <!-- Table Editeur -->
@@ -208,3 +219,10 @@
         $('#tabEditeur').DataTable();
     });
 </script>
+
+
+
+ 
+
+
+

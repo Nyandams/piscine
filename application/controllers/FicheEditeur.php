@@ -456,6 +456,15 @@ class FicheEditeur extends CI_Controller {
 	    // Envoie du dto
 	    $instanceDao = $this->JeuFactory->getInstance();
 	    $instanceDao->saveJeu($dto);
+	    
+	    // On ajoute directement un reserver pour le jeu
+	    $reserverDAO = $this->ReserverFactory->getInstance();
+	    $idFestival = $this->session->userdata("idFestival");
+	    $idEditeur = $this->input->get("idFicheEditeur");
+	    
+	    $reserveDTO = new ReserverDTO();
+	    
+	    
 	    $this->redirection();
 	}
 	
