@@ -8,9 +8,11 @@ class ZoneReserverDTO extends CI_Model
     private $zoneDTO = null;
     
     /**
-     * @var EnsembleReservationDTO
+     * @var EnsembleJeuEditeurReserverDTO
      */
-    private $ensembleReserverCollection = null;
+    private $ensembleJeuEditeur = null;
+    
+    
     /**
      * @return ZoneDTO
      */
@@ -20,11 +22,11 @@ class ZoneReserverDTO extends CI_Model
     }
 
     /**
-     * @return EnsembleReservationDTO
+     * @return EnsembleJeuEditeurReserverCollection
      */
-    public function getEnsembleReserverDTO()
+    public function getEnsembleJeuEditeur()
     {
-        return $this->ensembleReserverDTO;
+        return $this->ensembleJeuEditeur;
     }
 
     /**
@@ -36,17 +38,13 @@ class ZoneReserverDTO extends CI_Model
     }
 
     /**
-     * @param EnsembleReservationDTO $ensembleReserverDTO
+     * @param EnsembleJeuEditeurReserverDTO $ensembleJeuEditeur
      */
-    public function setEnsembleReserverCollection($ensembleReserverCollection)
+    public function setEnsembleJeuEditeur($ensembleJeuEditeur)
     {
-        $this->ensembleReserverCollection = $ensembleReserverCollection;
+        $this->ensembleJeuEditeur = $ensembleJeuEditeur;
     }
 
     
-    
-    
-   
-
     
 }
