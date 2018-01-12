@@ -145,12 +145,4 @@ class Editeur extends CI_Controller {
 	}
 
 
-	public function Test(){
-
-		$idFestival=$this->session->userdata("idFestival");
-
-		$ensembleSuiviCollection->getSuiviNonContacteDTOByIdFestival($idFestival) ;
-
-		return $ensembleSuiviCollection ;
-	}
 }

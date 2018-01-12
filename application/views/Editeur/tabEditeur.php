@@ -30,9 +30,13 @@
     </div>
 </div>
 
-<?php print_r($test);
+<!-- selection filtre suivi -->
+<select id="selectFiltre">
 
-  ?>
+    <option><a href="<?php echo site_url('Editeur/choixFiltre?idFiltre=-1'); ?>">Pas Contacté</a></option> 
+
+</select>
+
 
 
 
@@ -220,3 +224,10 @@
         $('#tabEditeur').DataTable();
     });
 </script>
+
+
+
+ 
+
+
+

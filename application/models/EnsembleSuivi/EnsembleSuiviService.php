@@ -51,7 +51,7 @@ class EnsembleSuiviService extends CI_Model
     }
 
 
-### alia et hedvig :
+
 
     #renvoie que les suivis des éditeurs pas contacté
 
