@@ -189,3 +189,4 @@ choixFiltre peut etre appelé d 2 facons : soit par défaut on on affiche donc t
 		
 
 	}
+}
