@@ -16,9 +16,7 @@ class Editeur extends CI_Controller {
 		    redirect(site_url('/welcome'));
 		} else {
 		    // Récupération des données de l'Editeur
-		    $this->load->model("EditeurContact/EditeurContactFactory", "fact");
 		    $this->load->model("Editeur/EditeurFactory");
-		    $this->load->model("EditeurContact/EditeurContactService", "dao");
 		    $this->load->model("Suivi/SuiviFactory");
 		    $this->load->model("Festival/FestivalFactory");
 		    
@@ -51,7 +49,7 @@ class Editeur extends CI_Controller {
 	// @return tableau des éditeurs prêt à être affiché dans une page.
 	public function tableauEditeur () {
 		$instanceDAO = $this->EnsembleSuiviFactory->getInstance();
-		$data['ensemblesSuiviDTO'] = $instanceDAO->getEnsembleSuiviDTOByIdFestival($this->session->userdata("idFestival"));
+		$data['ensembleSuiviCollection'] = $instanceDAO->getEnsembleSuiviDTOByIdFestival($this->session->userdata("idFestival"));
 		return $this->load->view("Editeur/tabEditeur", $data, true);
 		
 	}
@@ -62,35 +60,8 @@ class Editeur extends CI_Controller {
 	public function supprimerEditeur() {
 	    // il faut aussi supprimer le suivi qui va avec
 		$idEditeur = $this->input->get("idEditeur");
-		$instanceDao = $this->EditeurFactory->getInstance();
-		
-		$idFestival = $this->session->userdata("idFestival");
-		
-		try {
-		    // Suppression du suivi pour cet éditeur
-		    $suiviDAO = $this->SuiviFactory->getInstance();
-		    $suiviDTO = $suiviDAO->getSuiviByIdEditeurFestival($idEditeur,$idFestival);
-		    $suiviDAO->deleteSuivi($suiviDTO);
-		    
-		    // Suppression de ses jeux (Leur reserver est supprimé aussi
-		    $jeuDAO = $this->JeuFactory->getInstance();
-		    $jeuDTOCollection = $jeuDAO->getJeuByIdEditeur($idEditeur);
-		    
-		    $reserverDAO = $this->ReserverFactory->getInstance();
-		    foreach ($jeuDTOCollection as $key => $jeuDTO) {
-		        $reserverDAO->suppReserverByIdJeu($jeuDTO->getIdJeu());
-		        $jeuDAO->deleteJeu($jeuDTO);
-		    }  
-		} catch (Exception $e) {
-		    
-		}
-		
-		try{
-		    $supp = $instanceDao->getEditeurById($idEditeur);
-		    $instanceDao->deleteEditeur($supp);
-		} catch(Exception $e){
-		    
-		}
+		$ensembleSuiviService = $this->EnsembleSuiviFactory->getInstance();
+		$ensembleSuiviService->supprimerEditeur($idEditeur);
 		redirect('/editeur/editeurliste');
 	}
 	
@@ -122,6 +93,7 @@ class Editeur extends CI_Controller {
 
 	// Ajoute un éditeur via une méthode post 
 	public function ajouterEditeur() {
+	    $ensembleSuiviService = $this->EnsembleSuiviFactory->getInstance();
 		// Récupération des valeurs
 		$nomEditeur = $this->input->post('nomEditeur');
 
@@ -129,29 +101,9 @@ class Editeur extends CI_Controller {
 		$dto = new EditeurDTO();
 		$dto->setIdEditeur(null);
 		$dto->setLibelleEditeur($nomEditeur);
-
-		// Envoie du dto
-		$instanceDao = $this->EditeurFactory->getInstance();
-		$instanceDao->saveEditeur($dto);
-		
-		
-		$suiviDao    = $this->SuiviFactory->getInstance();
-		$festivalDao = $this->FestivalFactory->getInstance();
-		try{
-		    $editeurDto = $instanceDao->getLastIdEditeur();
-		    $suiviDto = new SuiviDTO();
-		    $suiviDto->setIdEditeur($editeurDto->getIdEditeur());
-		    $suiviDto->setPresenceEditeur(0);
-		    $suiviDto->setLogementSuivi(0);
-		    
-		    $festivalCollection = $festivalDao->getFestivals();
-		    foreach ($festivalCollection as $festivalDto){
-		        $suiviDto->setIdFestival($festivalDto->getIdFestival());
-		        $suiviDao->saveSuivi($suiviDto);
-		    }
-		}catch(Exception $e){
-		    
-		}
+        
+		// Envoie du dto dans ensembleSuiviService
+		$ensembleSuiviService->ajouterEditeur($dto);
 		
 		redirect(site_url('/editeur'));
 
@@ -164,23 +116,25 @@ choixFiltre peut etre appelé d 2 facons : soit par défaut on on affiche donc t
 	public function choixFiltre(){
 
 		$idFestival = $this->session->userdata('idFestival');
-		$ensembleSuiviDAO=$this->EnsembleSuiviFactory->getInstance();
+		$ensembleSuiviService=$this->EnsembleSuiviFactory->getInstance();
 
 		$numFiltre = $this->input->post('idFiltre'); 
         echo("hey" . $numFiltre);
 		if (!isset($numFiltre)){
 
-			$data['ensemblesSuiviDTO'] = $ensembleSuiviDAO->getEnsembleSuiviDTOByIdFestival($idFestival);
+		    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getEnsembleSuiviDTOByIdFestival($idFestival);
+			
 			return $this->load->view("Editeur/tabEditeur", $data, true);
 		}
 
 		else {
 
 			if ($numFiltre==-1){
-                echo ("page");
-				$data['ensemblesSuiviDTO'] =$ensembleSuiviDAO->getSuiviNonContacteDTOByIdFestival($idFestival);
-				$data['title']= 'Editeurs';
 
+
+			    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getSuiviNonContacteDTOByIdFestival($idFestival);
+
+				$data['title']= 'Editeurs';
 				$this->load->view("Theme/theme", $data);
 			}
 

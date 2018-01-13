@@ -100,7 +100,7 @@ class SuiviDAO extends CI_Model
     
    
     /**
-    * renvoie tous les idSuivi d'un festival
+    * renvoie tous les Suivi d'un festival
     * @param int $idFestival
     * @return SuiviCollection
     */
@@ -108,6 +108,27 @@ class SuiviDAO extends CI_Model
         $resultat = $this->db->select()  
                              ->from($this->table)
                              ->where('idFestival', $idFestival)
+                             ->get()
+                             ->result();
+        
+        $suiviCollection = new SuiviCollection();
+        
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $suiviCollection->append($dto);
+        }
+        return $suiviCollection;
+    }
+    
+    /**
+     * renvoie tous les Suivi d'un editeur
+     * @param int $idEditeur
+     * @return SuiviCollection
+     */
+    public function getSuiviByIdEditeur($idEditeur){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->where('idEditeur', $idEditeur)
                              ->get()
                              ->result();
         

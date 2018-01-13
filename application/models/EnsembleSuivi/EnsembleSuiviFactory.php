@@ -7,13 +7,23 @@ class EnsembleSuiviFactory extends CI_Model
         $this->load->model('EditeurContact/EditeurContactFactory');
         $this->load->model('Suivi/SuiviFactory');
         $this->load->model('EnsembleSuivi/EnsembleSuiviService');
+        $this->load->model('Editeur/EditeurFactory');
+        $this->load->model('Jeu/JeuFactory');
+        $this->load->model('Reservation/ReservationFactory');
+        $this->load->model('Reserver/ReserverFactory');
+        $this->load->model('Festival/FestivalFactory');
     }
     
     static public function getInstance() {
         $editeurContactDAO = EditeurContactFactory::getInstance();
         $suiviDAO   = SuiviFactory::getInstance();
+        $editeurDAO = EditeurFactory::getInstance();
+        $jeuDAO     = JeuFactory::getInstance();
+        $reservationDAO = ReservationFactory::getInstance();
+        $reserverDAO = ReserverFactory::getInstance();
+        $festivalDAO = FestivalFactory::getInstance();
         
         $dao = new EnsembleSuiviService();
-        return $dao->initConstruct($editeurContactDAO, $suiviDAO);
+        return $dao->initConstruct($editeurContactDAO, $suiviDAO, $editeurDAO, $jeuDAO, $reservationDAO, $reserverDAO, $festivalDAO);
     }
 }
