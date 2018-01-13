@@ -30,17 +30,17 @@
     </div>
 </div>
 
-
 <!-- selection filtre suivi -->
 <form method="POST" action="<?php echo site_url('Editeur/choixFiltre'); ?>">
     <select id="selectFiltre" name="selectFiltre">
-    	<option value="7">Tout les éditeurs</option>
-        <option value="1">Non Contacté</option>
-        <option value="2">1 contact, pas de réponse</option>
-        <option value="3">2 contacts, pas de réponse</option>
-        <option value="4">Présent</option>
-        <option value="5">Hésite</option>
-        <option value="6">Absent</option>
+    	
+    	<option value="7" <?php if(isset($filtreAff) && $filtreAff == 7){echo ('selected="selected"');}?>>Tout les éditeurs</option>
+        <option value="1" <?php if(isset($filtreAff) && $filtreAff == 1) {echo ('selected="selected"');}?>>Non Contacté</option>
+        <option value="2" <?php if(isset($filtreAff) && $filtreAff == 2) {echo ('selected="selected"');}?>>1 contact, pas de réponse</option>
+        <option value="3" <?php if(isset($filtreAff) && $filtreAff == 3) {echo ('selected="selected"');}?>>2 contacts, pas de réponse</option>
+        <option value="4" <?php if(isset($filtreAff) && $filtreAff == 4) {echo ('selected="selected"');}?>>Présent</option>
+        <option value="5" <?php if(isset($filtreAff) && $filtreAff == 5){echo ('selected="selected"');}?>>Hésite</option>
+        <option value="6" <?php if(isset($filtreAff) && $filtreAff == 6) {echo ('selected="selected"');}?>>Absent</option>
         
     </select>
 	<button type="submit" class="btn btn-secondary">Appliquer filtre</button>
@@ -153,11 +153,19 @@
                          $cocheDejaContacte = 'checked="checked"';
                      }
                     
-
+                    // Préparation du lien (on met le filtre si on est sur un filtre
+                     if (isset($filtreAff)) {
+                         $lienSupp =  site_url('Editeur/supprimerEditeur?idEditeur='. $idEditeur . '&selectFiltre=' . $filtreAff);
+                         $lienModifSuivi = site_url ('Editeur/sauvegardeSuiviRapideEditeur?idEditeur=' . $idEditeur . '&selectFiltre=' . $filtreAff);
+                     }
+                     else {
+                         $lienSupp =  site_url('Editeur/supprimerEditeur?idEditeur='. $idEditeur); 
+                         $lienModifSuivi = site_url ('Editeur/sauvegardeSuiviRapideEditeur?idEditeur=' . $idEditeur);
+                     }
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
                     $ligne = $ligne . '<td class="row">
                     <div class ="pull-left">
-                        <form method="POST" action="'. site_url ('Editeur/sauvegardeSuiviRapideEditeur?idEditeur=' . $idEditeur) .'">
+                        <form method="POST" action="'. $lienModifSuivi .'">
                             <label><input ' . $cocheDejaContacte . ' name="contactFait" id="contactFait" type="checkbox"> Contacté</label>
                             <select class="selectReponse" name="selectReponse">' . $selectionReponseEditeur .'</select>
                             <button type="submit" class="btn btn-primary">
@@ -167,7 +175,7 @@
                     </div>
                     <span class="pull-right">
                     <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#modifierEditeurModal_' . $idEditeur .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                    <a class="btn btn-primary pull-right" href="'. site_url('Editeur/supprimerEditeur?idEditeur=') . $idEditeur .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                    <a class="btn btn-primary pull-right" href="'. $lienSupp .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                     </span>
                     </td>';
                     $ligne = $ligne . '</tr>';
