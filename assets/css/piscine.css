@@ -30,6 +30,11 @@ footer {
 
 #contenuPage{
 	padding : 15px;
+	font-family: Helvetica Neue;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.471;
+	color: #2F4F4F;
 }
 
 .alarmeSuivi{

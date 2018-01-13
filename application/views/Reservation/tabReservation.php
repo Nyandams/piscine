@@ -11,7 +11,7 @@
             <th>Année</th>
             <th>Liste jeux réservés</th>
             <th>Nombre de tables réservées</th>
-            <th>Prix total nagocié</th>
+            <th>Prix total négocié</th>
         </tr>
     </thead>
     <tfoot>
