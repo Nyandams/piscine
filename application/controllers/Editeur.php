@@ -62,8 +62,11 @@ class Editeur extends CI_Controller {
 		$idEditeur = $this->input->get("idEditeur");
 		$ensembleSuiviService = $this->EnsembleSuiviFactory->getInstance();
 		$ensembleSuiviService->supprimerEditeur($idEditeur);
-		redirect('/editeur/editeurliste');
+		
+		$this->redirection();
+		
 	}
+	
 	
 	// Sauvegarde le suivi rapide d'un éditeur
 	public function sauvegardeSuiviRapideEditeur() {
@@ -87,7 +90,7 @@ class Editeur extends CI_Controller {
 	    
 	    
 	 
-	    redirect(site_url('Editeur/'));
+	    $this->redirection();
 	   
 	}
 
@@ -118,8 +121,12 @@ choixFiltre peut etre appelé d 2 facons : soit par défaut on on affiche donc t
 		$idFestival = $this->session->userdata('idFestival');
 		$ensembleSuiviService=$this->EnsembleSuiviFactory->getInstance();
 		
-		$numFiltre = $this->input->post('selectFiltre'); 
-		echo ("Num du filtre : " . $numFiltre);
+		// numFiltre peut venir de get (modif) mais aussi de post (choix direct de la vue)
+		$numFiltre = $this->input->post('selectFiltre');
+		if (!isset($numFiltre)) {
+		    $numFiltre = $this->input->get("selectFiltre");
+		}
+		
 		
 		if (!isset($numFiltre)){
 		    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getEnsembleSuiviDTOByIdFestival($idFestival);
@@ -131,28 +138,46 @@ choixFiltre peut etre appelé d 2 facons : soit par défaut on on affiche donc t
 
 			if ($numFiltre==1){
 			    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getSuiviNonContacteDTOByIdFestival($idFestival);
+			    $data["filtreAff"] = 1;
 			}
 			if ($numFiltre==2){
 			    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getSuivi1erContactSansReponseDTOByIdFestival($idFestival);
+			    $data["filtreAff"] = 2;
 			}
 			if ($numFiltre==3){
 			    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getSuivi2emeContactSansReponseDTOByIdFestival($idFestival);
+			    $data["filtreAff"] = 3;
 			}
 			if ($numFiltre==4){
 			    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getSuiviReponseOuiDTOByIdFestival($idFestival);
+			    $data["filtreAff"] = 4;
 			}
 			if ($numFiltre==5){
 			    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getSuiviReponsePeutEtreDTOByIdFestival($idFestival);
+			    $data["filtreAff"] = 5;
 			}
 			if ($numFiltre==6){
 			    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getSuiviReponseNonDTOByIdFestival($idFestival);
+			    $data["filtreAff"] = 6;
 			}
 			if ($numFiltre==7) {
 			    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getEnsembleSuiviDTOByIdFestival($idFestival);
+			    $data["filtreAff"] = 7;
 			}
 			
 			$data["page"] = $this->load->view("Editeur/tabEditeur", $data, TRUE);
 			$this->load->view("Theme/theme", $data);
 		}
+	}
+	
+	private function redirection () {
+	    // On redirection vers un filtre s'il un filtre été appliqué lors de la modification
+	    $numFiltre = $this->input->get("selectFiltre");
+	    if (isset ($numFiltre)) {
+	        $this->choixFiltre();
+	    }
+	    else {
+	        redirect('/editeur');
+	    }
 	}
 }
