@@ -66,16 +66,16 @@
         <thead>
             <tr>
                 <th>Jeu</th>
-                <th>Quantite</th> 
-                <th>Recu ?</th>
+                <th>Quantité</th> 
+                <th>Reçu</th>
                 <th>Renvoyé</th> 
             </tr>
         </thead>
         <tfoot>
             <tr>
                <th>Jeu</th>
-                <th>Quantite</th> 
-                <th>Recu ?</th>
+                <th>Quantité</th> 
+                <th>Reçu</th>
                 <th>Renvoyé</th> 
             </tr>
         </tfoot>
@@ -284,7 +284,7 @@
     </table>
 	
 	<div class="OptionSupplementaire">
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterReserverModal">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterReserverModal"  title="Ajouter une réservation">
         	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     	</button>
     	
@@ -319,6 +319,7 @@
         		      
         		      ?> id="prixTotReservation" name="prixTotReservation">
         		<label>€</label>
+        		
         		<button type="submit" class="btn btn-primary">
             		<span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
         		</button>

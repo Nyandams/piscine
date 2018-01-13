@@ -106,15 +106,15 @@
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>Prenom</th>
-                <th>Adresse email</th>   
+                <th>Prénom</th>
+                <th>Email</th>   
             </tr>
         </thead>
         <tfoot>
             <tr>
                 <th>Nom</th>
-                <th>Prenom</th>
-                <th>Adresse email</th>
+                <th>Prénom</th>
+                <th>Email</th>
             </tr>
         </tfoot>
         <tbody>
@@ -246,7 +246,7 @@
         </tbody>
     </table>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterContactModal">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterContactModal" title="Ajouter un contact">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>
    

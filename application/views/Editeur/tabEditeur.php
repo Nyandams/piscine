@@ -31,20 +31,30 @@
 </div>
 
 <!-- selection filtre suivi -->
-<form method="POST" action="<?php echo site_url('Editeur/choixFiltre'); ?>">
-    <select id="selectFiltre" name="selectFiltre">
-    	
-    	<option value="7" <?php if(isset($filtreAff) && $filtreAff == 7){echo ('selected="selected"');}?>>Tout les éditeurs</option>
-        <option value="1" <?php if(isset($filtreAff) && $filtreAff == 1) {echo ('selected="selected"');}?>>Non Contacté</option>
-        <option value="2" <?php if(isset($filtreAff) && $filtreAff == 2) {echo ('selected="selected"');}?>>1 contact, pas de réponse</option>
-        <option value="3" <?php if(isset($filtreAff) && $filtreAff == 3) {echo ('selected="selected"');}?>>2 contacts, pas de réponse</option>
-        <option value="4" <?php if(isset($filtreAff) && $filtreAff == 4) {echo ('selected="selected"');}?>>Présent</option>
-        <option value="5" <?php if(isset($filtreAff) && $filtreAff == 5){echo ('selected="selected"');}?>>Hésite</option>
-        <option value="6" <?php if(isset($filtreAff) && $filtreAff == 6) {echo ('selected="selected"');}?>>Absent</option>
+<div class="row">
+	<div class="col-lg-3">
+	<button type="button" class="btn btn-primary" data-toggle="modal" title="Ajouter un éditeur ?" data-target="#ajouterEditeurModal">
+    	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+   	</button>
+   	</div>
+   	
+   	<div class="pull-right">
+	<form method="POST" class="form-inline" action="<?php echo site_url('Editeur/choixFiltre'); ?>">
+		<select id="selectFiltre" name="selectFiltre">
+			<option value="7" <?php if(isset($filtreAff) && $filtreAff == 7){echo ('selected="selected"');}?>>Tout les éditeurs</option>
+            <option value="1" <?php if(isset($filtreAff) && $filtreAff == 1) {echo ('selected="selected"');}?>>Non Contacté</option>
+            <option value="2" <?php if(isset($filtreAff) && $filtreAff == 2) {echo ('selected="selected"');}?>>1 contact, pas de réponse</option>
+            <option value="3" <?php if(isset($filtreAff) && $filtreAff == 3) {echo ('selected="selected"');}?>>2 contacts, pas de réponse</option>
+            <option value="4" <?php if(isset($filtreAff) && $filtreAff == 4) {echo ('selected="selected"');}?>>Présent</option>
+            <option value="5" <?php if(isset($filtreAff) && $filtreAff == 5){echo ('selected="selected"');}?>>Hésite</option>
+            <option value="6" <?php if(isset($filtreAff) && $filtreAff == 6) {echo ('selected="selected"');}?>>Absent</option>
+                
+        </select>
         
-    </select>
-	<button type="submit" class="btn btn-secondary">Appliquer filtre</button>
-</form>
+        <button type="submit" class="btn btn-secondary">Appliquer filtre</button>
+    </form>
+    </div>
+</div>
 
 
 
@@ -218,13 +228,6 @@
 
             </tbody>
         </table>
-
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterEditeurModal">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        </button>
-
-
-
 
 <script type="text/javascript" >        
     $(document).ready(function() {
