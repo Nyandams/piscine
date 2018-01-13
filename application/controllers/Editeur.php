@@ -166,8 +166,8 @@ choixFiltre peut etre appelé d 2 facons : soit par défaut on on affiche donc t
 		$idFestival = $this->session->userdata('idFestival');
 		$ensembleSuiviDAO=$this->EnsembleSuiviFactory->getInstance();
 
-		$numFiltre = $this->input->get('idFiltre'); 
-
+		$numFiltre = $this->input->post('idFiltre'); 
+        echo("hey" . $numFiltre);
 		if (!isset($numFiltre)){
 
 			$data['ensemblesSuiviDTO'] = $ensembleSuiviDAO->getEnsembleSuiviDTOByIdFestival($idFestival);
@@ -177,7 +177,7 @@ choixFiltre peut etre appelé d 2 facons : soit par défaut on on affiche donc t
 		else {
 
 			if ($numFiltre==-1){
-
+                echo ("page");
 				$data['ensemblesSuiviDTO'] =$ensembleSuiviDAO->getSuiviNonContacteDTOByIdFestival($idFestival);
 				$data['title']= 'Editeurs';
 
@@ -185,7 +185,5 @@ choixFiltre peut etre appelé d 2 facons : soit par défaut on on affiche donc t
 			}
 
 		}
-
-		
-
 	}
+}
