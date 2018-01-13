@@ -44,6 +44,7 @@ foreach($festivalCollection as $festival){
       		        <div class="panel-body">
                        <p>Nb Emplacements : '.$festival->getNbEmplacementTotal().'</p>
                        <p>Prix de l\'emplacement : '.$festival->getPrixEmplacementFestival().'</p>
+                       <p>Emplacements restants : '. $festival->getNbEmplacementsRestant() .'</p>
                     </div>
                 </div>
             </a>';

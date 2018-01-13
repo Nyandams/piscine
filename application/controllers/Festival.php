@@ -17,6 +17,7 @@ class Festival extends CI_Controller {
             $this->load->model("Festival/FestivalFactory", "fact");
             $this->load->model("Suivi/SuiviFactory");
             $this->load->model("Editeur/EditeurFactory");
+            $this->load->model("Reservation/ReservationFactory");
         }
     }
     
@@ -26,10 +27,19 @@ class Festival extends CI_Controller {
     }
     
     public function affichageFestival(){
+        $reservationDao = $this->ReservationFactory->getInstance();
         $data['title'] = "Festivals";
         $dao = $this->fact->getInstance();
-        
-        $data['festivalCollection'] = $dao->getFestivals();
+        $festivalCollection = $dao->getFestivals();
+        foreach ($festivalCollection as $festivalDto){
+            $reservationCollection = $reservationDao->getReservationByIdFestival($festivalDto->getIdFestival());
+            $nbEmplacementOccupe = 0;
+            foreach ($reservationCollection as $reservationDto){
+                $nbEmplacementOccupe += $reservationDto->getNbEmplacement();
+            }
+            $festivalDto->setNbEmplacementsRestant($festivalDto->getNbEmplacementTotal() - $nbEmplacementOccupe);
+        }
+        $data['festivalCollection'] = $festivalCollection;
         $data['page']               = $this->load->view('Festival/festival', $data, true);
         $this->load->view("Theme/theme", $data);
     }

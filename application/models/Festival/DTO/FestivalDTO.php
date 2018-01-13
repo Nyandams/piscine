@@ -13,7 +13,7 @@ class FestivalDTO extends CI_Model
     private $anneeFestival = NULL;
     
     /**
-     * @var int
+     * @var float
      */
     private $nbEmplacementTotal = NULL;
     
@@ -22,6 +22,27 @@ class FestivalDTO extends CI_Model
      */
     private $prixEmplacementFestival = NULL;
     
+    /**
+     * @var float
+     */
+    private $nbEmplacementsRestant = NULL;
+    
+    /**
+     * @return the $nbEmplacementsRestant
+     */
+    public function getNbEmplacementsRestant()
+    {
+        return $this->nbEmplacementsRestant;
+    }
+
+    /**
+     * @param number $nbEmplacementsRestant
+     */
+    public function setNbEmplacementsRestant($nbEmplacementsRestant)
+    {
+        $this->nbEmplacementsRestant = $nbEmplacementsRestant;
+    }
+
     /**
      * @return the $idFestival
      */

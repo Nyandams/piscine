@@ -125,9 +125,7 @@ class FestivalDAO extends CI_Model
         
         $this->db->replace($this->table, $bdd);
     }
-    
 
-    
      
     /**
      * @param FestivalDTO $dto
