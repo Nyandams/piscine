@@ -50,6 +50,7 @@ class Editeur extends CI_Controller {
 	public function tableauEditeur () {
 		$instanceDAO = $this->EnsembleSuiviFactory->getInstance();
 		$data['ensembleSuiviCollection'] = $instanceDAO->getEnsembleSuiviDTOByIdFestival($this->session->userdata("idFestival"));
+		
 		return $this->load->view("Editeur/tabEditeur", $data, true);
 		
 	}
@@ -164,7 +165,7 @@ choixFiltre peut etre appelé d 2 facons : soit par défaut on on affiche donc t
 			    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getEnsembleSuiviDTOByIdFestival($idFestival);
 			    $data["filtreAff"] = 7;
 			}
-			
+
 			$data["page"] = $this->load->view("Editeur/tabEditeur", $data, TRUE);
 			$this->load->view("Theme/theme", $data);
 		}
@@ -180,4 +181,14 @@ choixFiltre peut etre appelé d 2 facons : soit par défaut on on affiche donc t
 	        redirect('/editeur');
 	    }
 	}
+
+        private function testSuivi(){
+
+        $idFestival = $this->session->userdata('idFestival');
+        $ensembleSuiviService=$this->EnsembleSuiviFactory->getInstance();
+        $ensembleSuiviCollection= $ensembleSuiviService->getSuivi1erContactSansReponseDTOByIdFestival($idFestival);
+        return $ensembleSuiviCollection;
+        }
+
+
 }
