@@ -54,6 +54,7 @@ class EnsembleSuiviService extends CI_Model
     }
 
 
+
     /**
      * supprime un éditeur en bdd et tous les suivis/jeux/reservation/reserver
      * @param int $idEditeur
@@ -80,8 +81,9 @@ class EnsembleSuiviService extends CI_Model
             }
             $this->reservationDAO->deleteReservation($reservationDTO);
         }
+        $editeurDTO = $this->editeurDAO->getEditeurById($idEditeur);
+        $this->editeurDAO->deleteEditeur($editeurDTO);
     }
-
 
 /* renvoie que les suivis des éditeurs pas contacté */
 
@@ -97,10 +99,10 @@ class EnsembleSuiviService extends CI_Model
             if ($premierContact == null) {
 
                 $editeurContactDTO = $this->editeurContactDAO->getEditeurContactByIdEditeur($suiviDTO->getIdEditeur());
-            
+
                 $ensembleSuiviTmp->setSuiviDTO($suiviDTO);
                 $ensembleSuiviTmp->setEditeurContactDTO($editeurContactDTO);
-            
+
                 $ensembleSuiviCollection->append($ensembleSuiviTmp);
 
             }
@@ -122,9 +124,10 @@ class EnsembleSuiviService extends CI_Model
             $ensembleSuiviTmp = new EnsembleSuiviDTO();
             
             $premierContact = $suiviDTO->getPremierContact();
+            $secondContact = $suiviDTO->getSecondContact();
             $reponseEditeur = $suiviDTO->getReponseEditeur();
 
-            if ($premierContact!=null and $reponseEditeur== -1) {
+            if ($premierContact!=null and $secondContact==null and $reponseEditeur== -1) {
 
                 $editeurContactDTO = $this->editeurContactDAO->getEditeurContactByIdEditeur($suiviDTO->getIdEditeur());
             
