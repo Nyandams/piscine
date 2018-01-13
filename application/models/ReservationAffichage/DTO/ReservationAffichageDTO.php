@@ -47,6 +47,8 @@ class ReservationAffichageDTO extends CI_Model
 
 
 
+
+
 	/**
 	* @return the $libelleEditeur
 	*/
@@ -83,6 +85,8 @@ class ReservationAffichageDTO extends CI_Model
 	}
 
 	
+
+
 
 
 	/**
@@ -140,7 +144,14 @@ class ReservationAffichageDTO extends CI_Model
 	public function setLibelleJeu($libelleJeu)
   	{
 		$this->libelleJeu = $libelleJeu;
-	}    
+	}
 
+        /**
+        * @param string $nbEmplacement
+        */
+        public function setNbEmplacement($nbEmplacement)
+        {
+                $this->nbEmplacement = $nbEmplacement;
+        }
 
 }
