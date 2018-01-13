@@ -46,14 +46,18 @@ class ReservationAffichageDTO extends CI_Model
 
 
 
-
-
+        /**
+        * @return the $idEditeur
+        */
+        public function getIdEditeur(){
+	        return $this->idEditeur;
+        }
 
 	/**
 	* @return the $libelleEditeur
 	*/
 	public function getLibelleEditeur(){
-	return $this->libelleEditeur;
+		return $this->libelleEditeur;
 	}
 
 	/**
@@ -74,14 +78,14 @@ class ReservationAffichageDTO extends CI_Model
 	* @return the $libelleJeu
 	*/
 	public function getLibelleJeu(){
-	return $this->libelleJeu;
+		return $this->libelleJeu;
 	}
 
 	/**
 	* @return the $nbEmplacement
 	*/
 	public function getNbEmplacement(){
-	return $this->nbEmplacement;
+		return $this->nbEmplacement;
 	}
 
 	
