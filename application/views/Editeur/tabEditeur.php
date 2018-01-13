@@ -32,12 +32,18 @@
 
 
 <!-- selection filtre suivi -->
-<form method="POST" action="<?php echo site_url('Editeur/choixFiltre?idFiltre="1"'); ?>">
-<select id="selectFiltre">
-    <option>Pas Contacté</option> 
-</select>
-
-<button type="submit" class="btn btn-secondary">Appliquer filtre</button>
+<form method="POST" action="<?php echo site_url('Editeur/choixFiltre'); ?>">
+    <select id="selectFiltre" name="selectFiltre">
+    	<option value="7">Tout les éditeurs</option>
+        <option value="1">Non Contacté</option>
+        <option value="2">1 contact, pas de réponse</option>
+        <option value="3">2 contacts, pas de réponse</option>
+        <option value="4">Présent</option>
+        <option value="5">Hésite</option>
+        <option value="6">Absent</option>
+        
+    </select>
+	<button type="submit" class="btn btn-secondary">Appliquer filtre</button>
 </form>
 
 

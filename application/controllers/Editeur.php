@@ -117,27 +117,42 @@ choixFiltre peut etre appelé d 2 facons : soit par défaut on on affiche donc t
 
 		$idFestival = $this->session->userdata('idFestival');
 		$ensembleSuiviService=$this->EnsembleSuiviFactory->getInstance();
-
-		$numFiltre = $this->input->post('idFiltre'); 
-        echo("hey" . $numFiltre);
+		
+		$numFiltre = $this->input->post('selectFiltre'); 
+		echo ("Num du filtre : " . $numFiltre);
+		
 		if (!isset($numFiltre)){
-
 		    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getEnsembleSuiviDTOByIdFestival($idFestival);
-			
 			return $this->load->view("Editeur/tabEditeur", $data, true);
 		}
 
 		else {
+		    $data['title']= 'Editeurs';
 
-			if ($numFiltre==-1){
-
-
+			if ($numFiltre==1){
 			    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getSuiviNonContacteDTOByIdFestival($idFestival);
-
-				$data['title']= 'Editeurs';
-				$this->load->view("Theme/theme", $data);
 			}
-
+			if ($numFiltre==2){
+			    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getSuivi1erContactSansReponseDTOByIdFestival($idFestival);
+			}
+			if ($numFiltre==3){
+			    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getSuivi2emeContactSansReponseDTOByIdFestival($idFestival);
+			}
+			if ($numFiltre==4){
+			    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getSuiviReponseOuiDTOByIdFestival($idFestival);
+			}
+			if ($numFiltre==5){
+			    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getSuiviReponsePeutEtreDTOByIdFestival($idFestival);
+			}
+			if ($numFiltre==6){
+			    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getSuiviReponseNonDTOByIdFestival($idFestival);
+			}
+			if ($numFiltre==7) {
+			    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getEnsembleSuiviDTOByIdFestival($idFestival);
+			}
+			
+			$data["page"] = $this->load->view("Editeur/tabEditeur", $data, TRUE);
+			$this->load->view("Theme/theme", $data);
 		}
 	}
 }
