@@ -111,4 +111,25 @@ class EnsembleReserverService extends CI_Model
         }
         return $ensembleReserverCollection; 
     }
+    
+    
+    public function getReserverCollectionByIdReservation($idReservation){
+        return $this->reserverDAO->getReserverByIdReservation($idReservation);
+    }
+    
+    /**
+     * sauvegarde un nouveau reserverDTO en BDD
+     * @param ReserverDTO $reserverDTO
+     */
+    public function saveReserver($reserverDTO){
+        $this->reserverDAO->saveReserver($reserverDTO);
+    }
+    
+    /**
+     * update un reserverDTO en BDD
+     * @param ReserverDTO $reserverDTO
+     */
+    public function updateReserver($reserverDTO){
+        $this->reserverDAO->updateReserver($reserverDTO);
+    }
 }

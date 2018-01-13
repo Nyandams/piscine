@@ -5,8 +5,9 @@ class EnsembleReservationFactory extends CI_Model
     public function __construct() {
         parent::__construct();
         $this->load->model('Reservation/ReservationFactory');
-        $this->load->model('EnsembleReservation/EnsembleReserverFactory');
         $this->load->model('Facture/FactureFactory');
+        $this->load->model('EnsembleReservation/EnsembleReserver/EnsembleReserverFactory');
+        $this->load->model('EnsembleReservation/EnsembleReservationService');
     }
     
     
