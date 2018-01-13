@@ -92,7 +92,7 @@ class EnsembleReservationService extends CI_Model
             $ensembleReservationDTO->setFactureDTO(new FactureDTO());
             $ensembleReservationDTO->setReservationDTO(new ReservationDTO());
         }
-        
         return $ensembleReservationDTO;
     }
+    
 }
