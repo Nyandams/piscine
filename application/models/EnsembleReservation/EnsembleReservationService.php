@@ -95,4 +95,30 @@ class EnsembleReservationService extends CI_Model
         return $ensembleReservationDTO;
     }
     
+    /***
+     * ajoute un reserver à la réservation d'un editeur si cette réservation existe
+     * @param int $idEditeur
+     * @param ReserverDTO $reserverDTO
+     */
+    public function ajoutReserver($idEditeur, $reserverDTO){
+        $idFestival = $this->session->userdata("idFestival");
+        try
+        {
+            $reservationDTO = $reservationDTO = $this->reservationDao->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+            
+            $reserverCollection = $this->ensembleReserverService->getReserverCollectionByIdReservation($reservationDTO->getIdReservation());
+            if ($reserverCollection->existeReserverIdJeu($reserverDTO->getIdJeu())){
+                $reserverExistantDto = $reserverCollection->getByIdJeu($reserverDTO->getIdJeu());
+                $reserverExistantDto->setQuantiteJeuReserver($reserverExistantDto->getQuantiteJeuReserver() + $reserverDTO->getQuantiteJeuReserver());
+                $this->ensembleReserverService->updateReserver($reserverExistantDto);
+            } else {
+                $reserverDTO->setIdReservation($reservationDTO->getIdReservation());
+                $this->ensembleReserverService->saveReserver($reserverDTO);
+            }
+        }catch (Exception $e){
+                
+        }
+        
+        
+    }
 }

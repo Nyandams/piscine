@@ -170,26 +170,8 @@ class FicheEditeur extends CI_Controller {
 	
 	// Ajoute une nouvelle reserver pour un jeu
 	public function ajouterReserver() {
-	    $reserverDAO = $this->ReserverFactory->getInstance();
-	    $idFestival = $this->session->userdata("idFestival");
+	    $ensembleReservationService = $this->EnsembleReservationFactory->getInstance();
 	    $idEditeur = $this->input->get("idFicheEditeur");
-	    
-	    // Pour obtenir l'id de reservation attaché à l'éditeur 
-	    $reservationDAO = $this->ReservationFactory->getInstance();
-	    try{
-	        $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
-	    }catch(Exception $e){
-	        $reservationDTO = new ReservationDTO();
-	        $reservationDTO->setIdEditeur($idEditeur);
-	        $reservationDTO->setIdFestival($idFestival);
-	        $reservationDTO->setPrixNegociationReservation(0);
-	        $reservationDAO->saveReservation($reservationDTO);
-	        
-	        $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
-	    }
-	    
-	    $idReservation  = $reservationDTO->getIdReservation();
-	    
 	    // Pour obtenir l'id du jeu
 	    $idJeu = $this->input->post("selectJeu");
 	    $quantiteJeu = $this->input->post("selectQuantite");
@@ -198,13 +180,13 @@ class FicheEditeur extends CI_Controller {
 	    // Création du dto
 	    $reserverDTO = new ReserverDTO();
 	    $reserverDTO->setIdJeu($idJeu);
-	    $reserverDTO->setIdReservation($idReservation);
 	    $reserverDTO->setQuantiteJeuReserver($quantiteJeu);
 	    $reserverDTO->setReceptionJeuReserver(0);
 	    $reserverDTO->setRenvoiJeuReserver(0);
 	    $reserverDTO->setDotationJeuReserver($dotationJeu);
 	    
-	    $reserverDAO->saveReserver($reserverDTO);
+	    $ensembleReservationService->ajoutReserver($idEditeur,$reserverDTO);
+
 	    $this->redirection();
 	}
 	
@@ -477,7 +459,6 @@ class FicheEditeur extends CI_Controller {
 	    $reserverDAO->suppReserverByIdJeu($jeuDTO->getIdJeu());
 	    $jeuDAO->deleteJeu($jeuDTO);
 	    $this->redirection();
-	    
 	}
 	
 	public function modifierJeu () {
