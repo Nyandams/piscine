@@ -35,9 +35,7 @@ class EnsembleSuiviService extends CI_Model
         foreach ($suivisDTO as $key => $suiviDTO) {
             $ensembleSuiviTmp = new EnsembleSuiviDTO();
             
-            $editeurContactDTO = $this->
-            editeurContactDAO->
-            getEditeurContactByIdEditeur($suiviDTO->getIdEditeur());
+            $editeurContactDTO = $this->editeurContactDAO->getEditeurContactByIdEditeur($suiviDTO->getIdEditeur());
             
             
             $ensembleSuiviTmp->setSuiviDTO($suiviDTO);
@@ -49,8 +47,6 @@ class EnsembleSuiviService extends CI_Model
         return $ensembleSuiviCollection;
         
     }
-
-
 
 
 /* renvoie que les suivis des éditeurs pas contacté */
@@ -67,10 +63,10 @@ class EnsembleSuiviService extends CI_Model
             if ($premierContact == null) {
 
                 $editeurContactDTO = $this->editeurContactDAO->getEditeurContactByIdEditeur($suiviDTO->getIdEditeur());
-            
+
                 $ensembleSuiviTmp->setSuiviDTO($suiviDTO);
                 $ensembleSuiviTmp->setEditeurContactDTO($editeurContactDTO);
-            
+
                 $ensembleSuiviCollection->append($ensembleSuiviTmp);
 
             }
@@ -92,9 +88,10 @@ class EnsembleSuiviService extends CI_Model
             $ensembleSuiviTmp = new EnsembleSuiviDTO();
             
             $premierContact = $suiviDTO->getPremierContact();
+            $secondContact = $suiviDTO->getSecondContact();
             $reponseEditeur = $suiviDTO->getReponseEditeur();
 
-            if ($premierContact!=null and $reponseEditeur== -1) {
+            if ($premierContact!=null and $secondContact==null and $reponseEditeur== -1) {
 
                 $editeurContactDTO = $this->editeurContactDAO->getEditeurContactByIdEditeur($suiviDTO->getIdEditeur());
             
