@@ -8,6 +8,7 @@ class EnsembleSuiviService extends CI_Model
     private $jeuDAO = null;
     private $reservationDAO = null;
     private $reserverDAO = null;
+    private $festivalDAO = null;
     
     
     public function __construct() {
@@ -24,13 +25,14 @@ class EnsembleSuiviService extends CI_Model
      * @param TypeJeuDAO $daoTypeJeu
      * @return EnsembleReserverService
      */
-    public function initConstruct($editeurContactDAO, $suiviDAO,$editeurDAO, $jeuDAO, $reservationDAO, $reserverDAO){
+    public function initConstruct($editeurContactDAO, $suiviDAO,$editeurDAO, $jeuDAO, $reservationDAO, $reserverDAO, $festivalDAO){
         $this->suiviDAO         = $suiviDAO;
         $this->editeurContactDAO= $editeurContactDAO;
         $this->editeurDAO       = $editeurDAO;
         $this->jeuDAO           = $jeuDAO;
         $this->reservationDAO   = $reservationDAO;
         $this->reserverDAO      = $reserverDAO;
+        $this->festivalDAO      = $festivalDAO;
         
         return $this;
     }
@@ -83,6 +85,32 @@ class EnsembleSuiviService extends CI_Model
         }
         $editeurDTO = $this->editeurDAO->getEditeurById($idEditeur);
         $this->editeurDAO->deleteEditeur($editeurDTO);
+    }
+    
+    /**
+     * Ajoute un éditeur en BDD + les suivis correspondants
+     * @param EditeurDTO $editeurDTO
+     */
+    public function ajouterEditeur($editeurDTO){
+        $this->editeurDAO->saveEditeur($editeurDTO);
+        
+        try{
+            $editeurDto = $this->editeurDAO->getLastIdEditeur();
+            
+            $suiviDto = new SuiviDTO();
+            $suiviDto->setIdEditeur($editeurDto->getIdEditeur());
+            $suiviDto->setPresenceEditeur(0);
+            $suiviDto->setLogementSuivi(0);
+            
+            $festivalCollection = $this->festivalDAO->getFestivals();
+            
+            foreach ($festivalCollection as $festivalDto){
+                $suiviDto->setIdFestival($festivalDto->getIdFestival());
+                $this->suiviDAO->saveSuivi($suiviDto);
+            }
+        }catch(Exception $e){
+            
+        }
     }
 
 /* renvoie que les suivis des éditeurs pas contacté */

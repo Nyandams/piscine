@@ -11,6 +11,7 @@ class EnsembleSuiviFactory extends CI_Model
         $this->load->model('Jeu/JeuFactory');
         $this->load->model('Reservation/ReservationFactory');
         $this->load->model('Reserver/ReserverFactory');
+        $this->load->model('Festival/FestivalFactory');
     }
     
     static public function getInstance() {
@@ -20,8 +21,9 @@ class EnsembleSuiviFactory extends CI_Model
         $jeuDAO     = JeuFactory::getInstance();
         $reservationDAO = ReservationFactory::getInstance();
         $reserverDAO = ReserverFactory::getInstance();
+        $festivalDAO = FestivalFactory::getInstance();
         
         $dao = new EnsembleSuiviService();
-        return $dao->initConstruct($editeurContactDAO, $suiviDAO, $editeurDAO, $jeuDAO, $reservationDAO, $reserverDAO);
+        return $dao->initConstruct($editeurContactDAO, $suiviDAO, $editeurDAO, $jeuDAO, $reservationDAO, $reserverDAO, $festivalDAO);
     }
 }

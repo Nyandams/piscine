@@ -93,6 +93,7 @@ class Editeur extends CI_Controller {
 
 	// Ajoute un éditeur via une méthode post 
 	public function ajouterEditeur() {
+	    $ensembleSuiviService = $this->EnsembleSuiviFactory->getInstance();
 		// Récupération des valeurs
 		$nomEditeur = $this->input->post('nomEditeur');
 
@@ -100,29 +101,9 @@ class Editeur extends CI_Controller {
 		$dto = new EditeurDTO();
 		$dto->setIdEditeur(null);
 		$dto->setLibelleEditeur($nomEditeur);
-
-		// Envoie du dto
-		$instanceDao = $this->EditeurFactory->getInstance();
-		$instanceDao->saveEditeur($dto);
-		
-		
-		$suiviDao    = $this->SuiviFactory->getInstance();
-		$festivalDao = $this->FestivalFactory->getInstance();
-		try{
-		    $editeurDto = $instanceDao->getLastIdEditeur();
-		    $suiviDto = new SuiviDTO();
-		    $suiviDto->setIdEditeur($editeurDto->getIdEditeur());
-		    $suiviDto->setPresenceEditeur(0);
-		    $suiviDto->setLogementSuivi(0);
-		    
-		    $festivalCollection = $festivalDao->getFestivals();
-		    foreach ($festivalCollection as $festivalDto){
-		        $suiviDto->setIdFestival($festivalDto->getIdFestival());
-		        $suiviDao->saveSuivi($suiviDto);
-		    }
-		}catch(Exception $e){
-		    
-		}
+        
+		// Envoie du dto dans ensembleSuiviService
+		$ensembleSuiviService->ajouterEditeur($dto);
 		
 		redirect(site_url('/editeur'));
 
