@@ -70,8 +70,7 @@
         <?php
                 // Récupération des données
                 $ligne = ''; // Stocke une ligne le temps de la créer
-                
-                foreach ($ensemblesSuiviDTO as $key => $ensembleSuiviDTO) {
+                foreach ($ensembleSuiviCollection as $key => $ensembleSuiviDTO) {
                     $editeur = $ensembleSuiviDTO->getEditeurContactDTO();
                     $idEditeur = $editeur->getIdEditeur();
                     $nomEditeur = $editeur->getLibelleEditeur();

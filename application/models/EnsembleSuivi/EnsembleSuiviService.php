@@ -4,13 +4,17 @@ class EnsembleSuiviService extends CI_Model
 {
     private $suiviDAO = null;
     private $editeurContactDAO = null;
-   
+    private $editeurDAO = null;
+    private $jeuDAO = null;
+    private $reservationDAO = null;
+    private $reserverDAO = null;
     
     
     public function __construct() {
         parent::__construct();
         $this->load->model("EnsembleSuivi/DTO/EnsembleSuiviDTO");
         $this->load->model("EnsembleSuivi/DTO/EnsembleSuiviCollection");
+     
     }
     
     /**
@@ -20,37 +24,63 @@ class EnsembleSuiviService extends CI_Model
      * @param TypeJeuDAO $daoTypeJeu
      * @return EnsembleReserverService
      */
-    public function initConstruct($editeurContactDAO, $suiviDAO){
-        $this->suiviDAO = $suiviDAO;
-        $this->editeurContactDAO = $editeurContactDAO;
+    public function initConstruct($editeurContactDAO, $suiviDAO,$editeurDAO, $jeuDAO, $reservationDAO, $reserverDAO){
+        $this->suiviDAO         = $suiviDAO;
+        $this->editeurContactDAO= $editeurContactDAO;
+        $this->editeurDAO       = $editeurDAO;
+        $this->jeuDAO           = $jeuDAO;
+        $this->reservationDAO   = $reservationDAO;
+        $this->reserverDAO      = $reserverDAO;
         
         return $this;
     }
     
     public function getEnsembleSuiviDTOByIdFestival ($idFestival) {
         $ensembleSuiviCollection = new EnsembleSuiviCollection();
-        $suivisDTO = $this->suiviDAO->getSuiviByIdFestival($idFestival);
+        $suiviCollection = $this->suiviDAO->getSuiviByIdFestival($idFestival);
         
         
-        foreach ($suivisDTO as $key => $suiviDTO) {
+        foreach ($suiviCollection as $key => $suiviDTO) {
             $ensembleSuiviTmp = new EnsembleSuiviDTO();
             
-            $editeurContactDTO = $this->
-            editeurContactDAO->
-            getEditeurContactByIdEditeur($suiviDTO->getIdEditeur());
-            
+            $editeurContactDTO = $this->editeurContactDAO->getEditeurContactByIdEditeur($suiviDTO->getIdEditeur());
             
             $ensembleSuiviTmp->setSuiviDTO($suiviDTO);
             $ensembleSuiviTmp->setEditeurContactDTO($editeurContactDTO);
             
             $ensembleSuiviCollection->append($ensembleSuiviTmp);
         }
-        
         return $ensembleSuiviCollection;
-        
     }
 
 
+    /**
+     * supprime un éditeur en bdd et tous les suivis/jeux/reservation/reserver
+     * @param int $idEditeur
+     */
+    public function supprimerEditeur($idEditeur){
+        //suppression des suivis
+        $suiviCollection = $this->suiviDAO->getSuiviByIdEditeur($idEditeur);
+        foreach ($suiviCollection as $suiviDTO){
+            $this->suiviDAO->deleteSuivi($suiviDTO);
+        }
+        
+        //suppression des jeux
+        $jeuCollection = $this->jeuDAO->getJeuByIdEditeur($idEditeur);
+        foreach ($jeuCollection as $jeuDTO){
+            $this->jeuDAO->deleteJeu($jeuDTO);
+        }
+        
+        //suppression des réservation + reserver
+        $reservationCollection = $this->reservationDAO->getReservationByIdEditeur($idEditeur);
+        foreach ($reservationCollection as $reservationDTO){
+            $reserverCollection = $this->reserverDAO->getReserverByIdReservation($reservationDTO->getIdReservation());
+            foreach($reserverCollection as $reserverDTO){
+                $this->reserverDAO->deleteReserver($reserverDTO);
+            }
+            $this->reservationDAO->deleteReservation($reservationDTO);
+        }
+    }
 
 
 /* renvoie que les suivis des éditeurs pas contacté */
@@ -166,8 +196,7 @@ class EnsembleSuiviService extends CI_Model
 
         return $ensembleSuiviCollection;
         
-    }
-
+   }
 
 /* renvoie que les suivis des éditeurs qui ont répondu NON (au 1er ou 2eme contact) */
 

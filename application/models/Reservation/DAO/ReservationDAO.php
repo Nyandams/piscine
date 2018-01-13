@@ -111,6 +111,28 @@ class ReservationDAO extends CI_Model
     }
 
     /**
+     * renvoie toutes les réservations correspondants à un editeur
+     * @param int $idEditeur
+     * @return ReservationCollection
+     */
+    public function getReservationByIdEditeur($idEditeur){
+        $resultat = $this->db->select()
+                             ->from($this->table)
+                             ->where('idEditeur', $idEditeur)
+                             ->get()
+                             ->result();
+        
+        $reservationCollection = new ReservationCollection();
+        
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $reservationCollection->append($dto);
+        }
+        
+        return $reservationCollection;
+    }
+    
+    /**
      * Retourne un ReservationDto comprenant toutes les reservations correspondant a l'idEditeur et l'idFestival passe en parametre
      * @param int $idEditeur
      * @param int $idFestival

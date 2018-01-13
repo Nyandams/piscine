@@ -93,7 +93,11 @@ class JeuDAO extends CI_Model
        
     }
     
-    // Renvoie tout les jeux d'un éditeur 
+    /**
+     * Renvoie tout les jeux d'un éditeur 
+     * @param id $idEditeur
+     * @return JeuCollection
+     */
     public function getJeuByIdEditeur ($idEditeur) {
         $resultat = $this->db->select()
                              ->from($this->table)
