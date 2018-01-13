@@ -39,8 +39,6 @@ class FicheEditeur extends CI_Controller {
 		    // Récupération des données pour les commentaires de l'éditeur
 		    $this->load->model("Suivi/SuiviFactory");
 		    
-
-		    
 		    // Récupération de l'enssembleReservation de chaque editeur
 		    $this->load->model("EnsembleReservation/EnsembleReserver/EnsembleReserverFactory");
 		    $this->load->model("EnsembleReservation/EnsembleReserver/EnsembleReserverService");
@@ -471,7 +469,7 @@ class FicheEditeur extends CI_Controller {
 	// Supprimer un jeu via la méthode post
 	public function supprimerJeu () {
 	    $idJeu = $this->input->get('idJeu');
-	    $reserverDAO = $this->RserverFactory->getInstance();
+	    $reserverDAO = $this->ReserverFactory->getInstance();
 	    $jeuDAO = $this->JeuFactory->getInstance();
 
 	    $jeuDTO = $jeuDAO->getJeuById($idJeu);
