@@ -32,7 +32,7 @@
 
 
 <!-- selection filtre suivi -->
-<form method="POST" action="<?php echo site_url('Editeur/choixFiltre?idFiltre=-1'); ?>">
+<form method="POST" action="<?php echo site_url('Editeur/choixFiltre?idFiltre="1"'); ?>">
 <select id="selectFiltre">
     <option>Pas Contacté</option> 
 </select>
