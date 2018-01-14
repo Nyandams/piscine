@@ -6,7 +6,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class = "col-sm-6">
+		<div class = "col-lg-6 col-md-12">
     		<?php
     		    echo $tabJeu;
     			echo $suiviPerso;
@@ -15,7 +15,7 @@
     	</div>
     
     	<!-- colonne de gauche -->
-    	<div class = "col-sm-6">
+    	<div class = "col-lg-6 col-md-12">
     		<?php
     		    echo $tabContact;
     			
