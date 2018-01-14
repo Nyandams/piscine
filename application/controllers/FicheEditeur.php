@@ -55,6 +55,7 @@ class FicheEditeur extends CI_Controller {
 		    $this->load->model("Zone/ZoneFactory");
 		    $this->load->model("Zone/DTO/ZoneDTO");
 		    
+		    $this->load->model("Facture/FactureFactory");
 		}
 	}
 	
@@ -233,7 +234,6 @@ class FicheEditeur extends CI_Controller {
              $zoneDTO->setIdZone(NULL);
              $zoneDTO->setNomZone($nomCreerZone);
              $zoneDTO->setIdFestival($this->session->userdata("idFestival"));
-             echo ("id zone : " . $zoneDTO->getIdFestival());
              $zoneDAO = $this->ZoneFactory->getInstance();
              $zoneDAO->saveZone($zoneDTO);
              
@@ -312,6 +312,16 @@ class FicheEditeur extends CI_Controller {
 	public function suiviPerso ($idFicheEditeur) {
 	    $suiviDTO = $this->getSuivi();
 	    $data['suivi'] = $suiviDTO;
+	    
+	    // Obtention du numero de l'id réservation
+	    $idFestival = $this->session->userdata("idFestival");
+	    $idEditeur = $this->input->get("idFicheEditeur");
+	    
+	    $reservationDAO = $this->ReservationFactory->getInstance();
+	    $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	    $idReservation = $reservationDTO->getIdReservation();
+	    $factureDAO = $this->FactureFactory->getInstance();
+	    $data['factureDTO'] = $factureDAO->getFactureByIdReservation($idReservation);
 	    return $this->load->view("FicheEditeur/suiviPerso", $data, true);
 	}
 	
@@ -326,6 +336,32 @@ class FicheEditeur extends CI_Controller {
 	    $idEditeur = $this->input->get("idFicheEditeur");
 	    
 	    
+	    $reponseEditeur = $this->input->post('selectReponse');
+	    $suiviDTO->setReponseEditeur($reponseEditeur);
+	    
+	    // Obtention de la bonne facture
+	    $reservationDAO = $this->ReservationFactory->getInstance();
+	    $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	    $idReservation = $reservationDTO->getIdReservation();
+	    $factureDAO = $this->FactureFactory->getInstance();
+	    $factureDTO = $factureDAO->getFactureByIdReservation($idReservation);
+	    
+	    
+	    // Enregistrement pour la facture et du paiement
+	    if (null !==($this->input->post("factureEnvoye"))) {
+	        $factureDTO->setDateEmissionFacture(new DateTime());
+	    }
+	    else if (null == $this->input->post("factureEnvoye") and !is_null($factureDTO->getDateEmissionFacture())) {
+	        $factureDTO->unsetDateEmissionFacture();
+	    }
+	    if (null !==($this->input->post("paiementEnvoye"))) {
+	        $factureDTO->setDatePaiementFacture(new DateTime());
+	    }
+	    else if (null == $this->input->post("paiementEnvoye") and !is_null($factureDTO->getDatePaiementFacture())) {
+	        $factureDTO->unsetDatePaiementFacture();
+	    }
+	    
+	    $factureDAO->updateFacture($factureDTO);
 	    
 	    // Utilise directement le dao sans passer par le dto
 	    // Si on coche et que c'etait pas coché avant	    
@@ -340,22 +376,49 @@ class FicheEditeur extends CI_Controller {
 	    } else {
 	        $suiviDTO->setLogementSuivi(0);
 	    }
+	    $reponseEditeur = $suiviDTO->getReponseEditeur();
+	    
+	    $check1 = $this->input->post ("premierContact");
+	    $check2 = $this->input->post ("deuxiemeContact");
+	    
+	    
+	    $contact1 = $suiviDTO->getPremierContact();
+	    $contact2 = $suiviDTO->getSecondContact();
+	    
+	    $disabled1 = !is_null($suiviDTO->getSecondContact());
+	    $disabled2 = is_null($suiviDTO->getPremierContact()) or !( $reponseEditeur == null or $reponseEditeur == -1);
+	    
+	    $reponseEditeurSelected = NULL;
+	    // Les deux réponses ne peuvent pas ^etre disabled en meme temps, on prend la réponse de celle qui ne l'est pas
+	    if (NULL !== $this->input->post("selectReponse1")){
+	        $reponseEditeurSelected = $this->input->post("selectReponse1");
+	        
+	    }
+	    else {
+	        $reponseEditeurSelected = $this->input->post("selectReponse2");
+	    }
+	    
+	    $suiviDTO->setReponseEditeur($reponseEditeurSelected);
 	    
 	    $suiviDAO->updateSuivi($suiviDTO);
 	    
-	    if (null !== $this->input->post("premierContact") and $suiviDTO->getPremierContact() == NULL){
+	       
+	    if ($check1 !== NULL and $contact1 == NULL){
 	        $suiviDAO->setPremierContact($idEditeur, $idFestival);
-	        // Si décoché et que c'était coché avant
-	    } else if ($this->input->post("premierContact") == null and $suiviDTO->getPremierContact() !== NULL) {
+	        // Si décoché et que c'était coché avant et qu'on doit décoché le deux (probleme de lecture avec disabled
+	    } else if ($check1 == null and $contact1 !== NULL and disabled1) {
 	        $suiviDAO->unsetPremierContact($idEditeur, $idFestival);
 	    }
 	    
-	    if (null !== $this->input->post("deuxiemeContact") and $suiviDTO->getSecondContact() == NULL){
+	    if ($check2!=null and $contact2 == NULL){
 	        $suiviDAO->setSecondContact($idEditeur, $idFestival);
 	        // Si décoché et que c'était coché avant
-	    } else if ($this->input->post("deuxiemeContact") == null and $suiviDTO->getSecondContact() !== NULL) {
+	    } else if ($check2 == null and $contact2 !== NULL and !$disabled2) {
 	        $suiviDAO->unsetSecondContact($idEditeur, $idFestival);
 	    }
+	    
+	    
+	    
 	    
 	    $this->redirection();
 	}

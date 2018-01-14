@@ -9,7 +9,7 @@
 
 	<div class="form-row">
 		<div class="pull-right"> 
-        	<button type="submit" class="btn btn-secondary">Sauvegarder</button>
+        	<button type="submit" class="btn btn-success">Sauvegarder</button>
         </div>
 	</div>
 </form>

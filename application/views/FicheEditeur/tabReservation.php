@@ -284,45 +284,39 @@
     </table>
 	
 	<div class="OptionSupplementaire">
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterReserverModal"  title="Ajouter une réservation">
-        	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    	</button>
+		 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ajouterReserverModal" title="Ajouter un contact">Ajouter une réservation</button>
+		 
+		 <?php
+		  // Prépa pour l'affichage des valeurs
+		 // Si le réservation existe pas, on doit disabled
+		 $valuePrix = 'value="0"';
+		 $valueEmplacement = 'value="0"';
+		  
+		 if (isset($reservationDTO)) {
+		     // On regarde si nb d'emplacement n'est pas null
+		     $nbEmplacement = $reservationDTO->getNbEmplacement();
+		     $nbPrix = $reservationDTO->getPrixNegociationReservation();
+		     if (!is_null($nbEmplacement)) { 	     
+		         $valueEmplacement = 'value="' . $nbEmplacement .'"';
+		     }
+		     
+		     if (!is_null($nbPrix)){
+		         $valuePrix = 'value="' . $nbPrix . '"';
+		     }
+		 }
+		  
+		 
+		 ?>
     	
     	<div class="pull-right">
     		<form method="POST" action="<?php echo site_url ("FicheEditeur/sauvegarderReservation?idFicheEditeur=" . $idFicheEditeur)?>">
     			<label for="nbTableReservees">Nombre de table reservées :</label>
-    			<input type="number" step="0.5"<?php
-        		      // Si le réservation existe pas, on doit disabled 
-    			if (!isset($reservationDTO)) {
-        		    echo (' value="0" ');
-        		} else {
-
-        		    // On regarde si nb d'emplacement n'est pas null
-        		    $nbEmplacement = $reservationDTO->getNbEmplacement();
-        		    if ($nbEmplacement == null) {
-        		        echo (' value="0" ');
-        		    }
-        		    else {
-        		        echo (' value="' . $reservationDTO->getNbEmplacement() .'" ');
-        		    }
-        		}
-        		      
-        		      ?> id="nbTableReservees" name="nbTableReservees">
-    			<label for="prixTotReservation">Prix total négotié</label>
-        		<input type="number" <?php
-        		      // Si le réservation existe pas, on doit disabled 
-        		if (!isset($reservationDTO)) {
-        		    echo (' value="0" ');
-        		} else {
-        		    echo (' value="' . $reservationDTO->getPrixNegociationReservation() .'" ');
-        		}
-        		      
-        		      ?> id="prixTotReservation" name="prixTotReservation">
+    			<input type="number" step="0.5" id="nbTableReservees" name="nbTableReservees" <?php echo ($valueEmplacement)?>>
+    			<label for="prixTotReservation">Prix total négocié</label>
+        		<input type="number" <?php echo ($valuePrix) ?> id="prixTotReservation" name="prixTotReservation">
         		<label>€</label>
         		
-        		<button type="submit" class="btn btn-primary">
-            		<span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
-        		</button>
+        		<button type="submit" class="btn btn-success">Sauvegarder</button>
     		</form>
     		
     	</div>

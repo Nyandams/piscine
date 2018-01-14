@@ -162,10 +162,8 @@
         </tbody>
     </table>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterJeuModal">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    </button>
-   
+   	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#ajouterJeuModal" title="Ajouter un contact">Ajouter un jeu</button>
+    
     <script type="text/javascript" >        
         $(document).ready(function() {
             // Javascript de la table de base
