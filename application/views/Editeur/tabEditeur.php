@@ -35,7 +35,7 @@
 <!-- selection filtre suivi -->
 <div class="row">
 	<div class="col-sm-6 col-xs-12">
-   		<button type="button" class="btn btn-success" data-toggle="modal" title="Ajouter un éditeur ?" data-target="#ajouterEditeurModal">Ajouter un editeur</button>
+   		<button type="button" class="btn btn-success" data-toggle="modal" title="Ajouter un éditeur ?" data-target="#ajouterEditeurModal">Ajouter un éditeur</button>
    	</div>
    	
    	<div class="col-sm-6 col-xs-12 pull-right">
@@ -51,7 +51,7 @@
             <option value="6" <?php if(isset($filtreAff) && $filtreAff == 6) {echo ('selected="selected"');}?>>Absent</option>
                 
         </select>
-        <button type="submit" class="btn btn-secondary">Appliquer filtre</button>
+        <button type="submit" class="btn btn-success">Appliquer filtre</button>
     </form>
     </div>
     </div>
@@ -65,18 +65,18 @@
 <table id="tabEditeur" class="table table-striped table-bordered col-sm-12 text-left" cellspacing="0" width="100%">
     <thead>
         <tr>
-            <th>Editeur</th>
+            <th>Éditeur</th>
             <th>Contact principal</th>
-            <th>Telephone</th>
+            <th>Téléphone</th>
             <th>Mail</th>
             <th>Suivi rapide</th>
         </tr>
     </thead>
     <tfoot>
         <tr>
-            <th>Editeur</th>
+            <th>Éditeur</th>
             <th>Contact principal</th>
-            <th>Telephone</th>
+            <th>Téléphone</th>
             <th>Mail</th>
             <th>Suivi rapide</th>
         </tr>
