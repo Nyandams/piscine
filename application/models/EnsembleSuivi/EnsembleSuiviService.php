@@ -154,9 +154,9 @@ class EnsembleSuiviService extends CI_Model
             $premierContact = $suiviDTO->getPremierContact();
             $secondContact = $suiviDTO->getSecondContact();
             $reponseEditeur = $suiviDTO->getReponseEditeur();
-
-            if ($premierContact!=null and $secondContact==null and $reponseEditeur== -1) {
-
+            
+            if (!is_null($premierContact) and is_null($secondContact) and ($reponseEditeur == -1 or is_null($reponseEditeur))) {
+                
                 $editeurContactDTO = $this->editeurContactDAO->getEditeurContactByIdEditeur($suiviDTO->getIdEditeur());
             
                 $ensembleSuiviTmp->setSuiviDTO($suiviDTO);
@@ -184,7 +184,7 @@ class EnsembleSuiviService extends CI_Model
             $secondContact = $suiviDTO->getSecondContact();
             $reponseEditeur = $suiviDTO->getReponseEditeur();
 
-            if ($secondContact!=null and $reponseEditeur== -1) {
+            if (!is_null($secondContact) and ($reponseEditeur== -1 or is_null($reponseEditeur))) {
 
                 $editeurContactDTO = $this->editeurContactDAO->getEditeurContactByIdEditeur($suiviDTO->getIdEditeur());
             
