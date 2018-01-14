@@ -22,7 +22,7 @@ class ZoneReserverService extends CI_Model
         
         
         $ensembleReserverDAO = $this->EnsembleReserverFactory->getInstance();
-        print_r ($zonesDTO);
+   
         foreach ($zonesDTO as $key => $zoneDTO) {
             $zoneReserverDTO = new ZoneReserverDTO();
             $ensembleJeuEditeur = new EnsembleJeuEditeurReserverDTO();

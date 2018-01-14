@@ -514,7 +514,6 @@ class FicheEditeur extends CI_Controller {
 	    $idEditeur = $this->input->get("idFicheEditeur");
 	    
 	    $reserveDTO = new ReserverDTO();
-	    $reserveDTO->
 	    
 	    
 	    $this->redirection();
