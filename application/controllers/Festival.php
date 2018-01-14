@@ -20,6 +20,8 @@ class Festival extends CI_Controller {
             $this->load->model("Suivi/SuiviFactory");
             $this->load->model("Editeur/EditeurFactory");
             $this->load->model("Reservation/ReservationFactory");
+            
+            $this->load->model('Zone/ZoneFactory');
         }
     }
     
@@ -79,6 +81,28 @@ class Festival extends CI_Controller {
                 try{
                     $festivalDTO = $dao->getFestivalActuel();
                     $this->session->set_userdata('idFestival', $festivalDTO->getIdFestival());
+                    
+                    $zoneDAO = $this->ZoneFactory->getInstance();
+                    $zoneFamille = new ZoneDTO();
+                    $zoneFamille->setIdFestival($festivalDTO->getIdFestival());
+                    $zoneFamille->setNomZone("Famille");
+                    $zoneDAO->saveZone($zoneFamille);
+                    
+                    $zoneAmbiance = new ZoneDTO();
+                    $zoneAmbiance->setIdFestival($festivalDTO->getIdFestival());
+                    $zoneAmbiance->setNomZone("Ambiance");
+                    $zoneDAO->saveZone($zoneAmbiance);
+                    
+                    $zoneExpert = new ZoneDTO();
+                    $zoneExpert->setIdFestival($festivalDTO->getIdFestival());
+                    $zoneExpert->setNomZone("Expert");
+                    $zoneDAO->saveZone($zoneExpert);
+                    
+                    $zoneEnfant = new ZoneDTO();
+                    $zoneEnfant->setIdFestival($festivalDTO->getIdFestival());
+                    $zoneEnfant->setNomZone("Enfant");
+                    $zoneDAO->saveZone($zoneEnfant);
+                    
                 }catch(Exception $e){
                 }
             redirect('/festival');
