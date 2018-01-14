@@ -17,7 +17,7 @@ class FicheEditeur extends CI_Controller {
 		} else {
 		    // Récupération des données de l'Editeur
 		    $this->load->model("Editeur/EditeurFactory");
-		    
+		    $this->load->library('form_validation');
 
 		    // Récupération des données pour l'editeur associé au contact
 		    $this->load->model("EditeurContact/EditeurContactFactory");
@@ -35,6 +35,7 @@ class FicheEditeur extends CI_Controller {
 		    // Récupération des données pour les réservations de l'éditeur
 		    $this->load->model("Reserver/ReserverFactory");
 		    
+		    $this->load->model("Festival/FestivalFactory");
 		    
 		    // Récupération des données pour les commentaires de l'éditeur
 		    $this->load->model("Suivi/SuiviFactory");
@@ -72,7 +73,11 @@ class FicheEditeur extends CI_Controller {
 	    $idFicheEditeur = $this->input->get("idFicheEditeur");
 	    // Récupératio du nom de l'éditeur à afficher
 	    $editeurDAO = $this->EditeurFactory->getInstance();
-	    $editeurDTO= $editeurDAO->getEditeurById($idFicheEditeur);
+	    try{
+	        $editeurDTO= $editeurDAO->getEditeurById($idFicheEditeur);
+	    } catch(Exception $e){
+	        redirect(site_url("Editeur"));
+	    }
 	    $data["nomEditeur"] = $editeurDTO->getLibelleEditeur();
 	    
 	    // Création de tout les morceaux de la page
@@ -118,17 +123,15 @@ class FicheEditeur extends CI_Controller {
 	    try {
 	        $reservationDAO = $this->ReservationFactory->getInstance();
 	        $data['reservationDTO'] = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	        // Envoie des données pour choisir la zone d'un jeu
+	        $zoneDAO = $this->ZoneFactory->getInstance();
+	        $data["zones"] = $zoneDAO->getZones();
+	        return $this->load->view("FicheEditeur/tabReservation", $data, true);
 	    } catch (Exception $e) {
-	        
+	        return $this->load->view("FicheEditeur/reservationVide", $data, true);
 	    }
 	    
-	    // Envoie des données pour choisir la zone d'un jeu
-	    $zoneDAO = $this->ZoneFactory->getInstance();
-	    $data["zones"] = $zoneDAO->getZones();
 	    
-	    
-	    
-		return $this->load->view("FicheEditeur/tabReservation", $data, true);
 
 	}
 	
@@ -318,11 +321,16 @@ class FicheEditeur extends CI_Controller {
 	    $idEditeur = $this->input->get("idFicheEditeur");
 	    
 	    $reservationDAO = $this->ReservationFactory->getInstance();
-	    $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
-	    $idReservation = $reservationDTO->getIdReservation();
-	    $factureDAO = $this->FactureFactory->getInstance();
-	    $data['factureDTO'] = $factureDAO->getFactureByIdReservation($idReservation);
-	    return $this->load->view("FicheEditeur/suiviPerso", $data, true);
+	    try{
+	        $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	        $idReservation = $reservationDTO->getIdReservation();
+	        $factureDAO = $this->FactureFactory->getInstance();
+	        $data['factureDTO'] = $factureDAO->getFactureByIdReservation($idReservation);
+	        return $this->load->view("FicheEditeur/suiviPerso", $data, true);
+	    }catch(Exception $e){
+	        return $this->load->view("FicheEditeur/suiviPersoReservationVide",$data, true);
+	    }
+	    
 	}
 	
 	
@@ -530,5 +538,38 @@ class FicheEditeur extends CI_Controller {
 	    $dto = $this->recuperationJeu();
 	    $jeuDao->updateJeu($dto);
 	    $this->redirection();
+	}
+	
+	public function creerReservation(){
+	    
+	
+
+	        $nbEmplacement = $this->input->post('nbEmplacement');
+	        $prix = $this->input->post('prix');
+	        if ($prix == ""){
+	            
+	            $festivalDAO = $this->FestivalFactory->getInstance();
+	            
+	            try{
+	                $festivalDto = $festivalDAO->getFestivalById($this->session->userdata("idFestival"));
+	                $prix = number_format($nbEmplacement * $festivalDto->getPrixEmplacementFestival());
+	                
+	                //si aucun festival n'est stocké en session
+	            }catch(Exception $e){
+	                $this->redirection();
+	            }
+	            $reservationDAO = $this->ReservationFactory->getInstance();
+	            $reservationDto = new ReservationDTO();
+	            $reservationDto->setIdEditeur($this->input->get("idFicheEditeur"));
+	            $reservationDto->setPrixNegociationReservation($prix);
+	            $reservationDto->setIdFestival($this->session->userdata("idFestival"));
+	            $reservationDto->setNbEmplacement($nbEmplacement);
+	            
+	            $reservationDAO->saveReservation($reservationDto);
+	            $this->redirection();
+	        }
+
+	
+	
 	}
 }

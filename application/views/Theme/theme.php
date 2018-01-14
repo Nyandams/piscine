@@ -31,7 +31,8 @@
         <li><a href="<?php echo site_url('Festival')?>">Festivals</a></li>
         <li><a href="<?php echo site_url('Editeur'); ?>">Editeurs</a></li>
         <li><a href="<?php echo site_url('Contact');?>">Contacts</a></li>
-        <li><a href="<?php echo site_url('organisateur'); ?>">Organisateur</a></li>
+	<li><a href="<?php echo site_url('Jeux');?>">Jeux</a></li>
+        <li><a href="<?php echo site_url('Organisateur'); ?>">Organisateur</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<li><a href="#"><span class="glyphicon glyphicon-bell"><span class="badge alarmeSuivi">4</span></span></a></li>

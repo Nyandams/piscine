@@ -1,0 +1,141 @@
+<h3><label class="label label-default">Suivis</label></h3>
+
+
+<section class="row">
+    <form action="<?php echo site_url('FicheEditeur/sauvegarderSuivi?idFicheEditeur=' . $idFicheEditeur); ?>" method="POST">
+        <div class="col-lg-6 well">  
+        	<div class="checkbox">
+        		<label><input type="checkbox" <?php if ($suivi->getPresenceEditeur()) {echo ('checked="checked"');}?> name="presentContact" id="presentContact">Editeur présent physiquement</label>       	
+        	</div>
+        	<div class="checkbox">
+        		<label><input type="checkbox" <?php if ($suivi->getLogementSuivi()) {echo ('checked="checked"');}?> name="hebergementContact" id="hebergementContact">Editeur hébergé</label>
+        	</div>
+        	
+           
+        </div>
+         <?php 
+         $reponseEditeur = $suivi->getReponseEditeur();
+         
+         ?>
+        <div class="col-lg-6">
+            <div class="well">
+            	<label class="label label-default">Suivi des échanges</label>
+        		<div class="row">
+        			<div class="col-md-6">
+            			<div class="checkbox">
+                        	<label><input <?php 
+                        
+                        	
+                        	if ($suivi->getPremierContact() !== null) {
+                        	    echo ('checked="checked"');
+                        	}
+                        	if (!is_null($suivi->getSecondContact())) {
+                        	    echo (' disabled="disabled" ');
+                        	}
+                        	?> name="premierContact" id="premierContact" type="checkbox">1er contact</label> <?php 
+                        	   if($suivi->getPremierContact() != null){echo('<label class="pull-right">('. $suivi->premierContactToString(). ')</label>');}
+                        	?>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                    	<label for="selectReponse1">Réponse :</label><?php 
+                    	//on ne peut pas le selectionner on a contacté une deuxieme fois
+                    	echo getListeDeroulante(!is_null($suivi->getSecondContact()), "selectReponse1", $suivi);
+                    ?>
+                    </div>
+                </div>
+                
+                <div class="row">
+        			<div class="col-md-6">
+            			<div class="checkbox">
+                        	<label><input <?php 
+                        	if (!is_null($suivi->getSecondContact())) {
+                        	    echo ('checked="checked"');
+                        	}
+                        	// Si pas encore contacté ou si y a une réponse, pas besoin de ce bouton
+                        	if (is_null($suivi->getPremierContact()) or !($reponseEditeur == null or $reponseEditeur == -1)) {
+                        	    echo (' disabled="disabled" ');
+                        	}
+                        	?> name="deuxiemeContact" id="deuxiemeContact" type="checkbox">2eme contact</label> <?php 
+                        	if(!is_null($suivi->getSecondContact())){echo('<label class="pull-right">('. $suivi->secondContactToString(). ')</label>');}
+                        	?>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                    	<label for="selectReponse2">Réponse :</label><?php 
+                    	//on ne peut pas le selectionner on a contacté une deuxieme fois
+                    	echo getListeDeroulante(is_null($suivi->getPremierContact()) or is_null($suivi->getSecondContact()), "selectReponse2", $suivi);
+                    ?>
+                    </div>
+                </div>
+            </div>
+            <div class="pull-right">
+            	<button type="submit" class="btn btn-success">Sauvegarder</button>
+          	</div>
+        </div>	
+     </form>
+</section>
+
+
+<?php 
+
+function getListeDeroulante ($estDisabled, $idName, $suivi) {
+    // Création de la liste déroulante
+    /* Correspondance pour la réponse Editeur
+     * - -1 = Pas de réponse
+     * -  1 = Absent
+     * -  2 = Hésite
+     * -  3 = Présent
+     */
+    
+    $selectionReponseEditeur = '';
+    
+    $selectionReponseEditeur = '
+                         <option ';
+    $selected = '';
+    if ($suivi->getReponseEditeur() == -1) {
+        $selected = 'selected="selected"';
+    }
+    $selectionReponseEditeur = $selectionReponseEditeur . $selected .' value="'. -1 . '">Pas de réponse</option>';
+    
+    $selectionReponseEditeur = $selectionReponseEditeur .'
+                         <option ';
+    $selected = '';
+    
+    if ($suivi->getReponseEditeur() == 1) {
+        
+        $selected = 'selected="selected"';
+    }
+    $selectionReponseEditeur = $selectionReponseEditeur . $selected .' value="'. 1 . '">Absent</option>';
+    
+    $selectionReponseEditeur = $selectionReponseEditeur .'<option ';
+    $selected = '';
+    
+    if ($suivi->getReponseEditeur() == 2) {
+        $selected = 'selected="selected"';
+    }
+    $selectionReponseEditeur = $selectionReponseEditeur . $selected .' value="'. 2 . '">Hésite</option>';
+    
+    $selectionReponseEditeur = $selectionReponseEditeur .'<option ';
+    $selected = '';
+    if ($suivi->getReponseEditeur() == 3) {
+        $selected = 'selected="selected"';
+    }
+    $selectionReponseEditeur = $selectionReponseEditeur . $selected . ' value="'. 3 . '">Présent</option>';
+    
+    // Préparation du blocage de la sélection
+    $disabled = '';
+    if ($estDisabled) {
+        $disabled  = 'disabled="disabled"';
+    }
+    // On ajoute le bouton supprimer et modifier dans la dernière colonne.
+    $listeDeroulante = '<td class="row">
+                        <div class ="pull-left">
+                             <select '. $disabled .' class=' . $idName .' name=' . $idName .'>' . $selectionReponseEditeur .'</select>
+                            </form>
+                        </div>';
+    return $listeDeroulante;
+}
+?>
