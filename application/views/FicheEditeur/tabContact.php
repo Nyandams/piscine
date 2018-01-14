@@ -246,9 +246,7 @@
         </tbody>
     </table>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterContactModal" title="Ajouter un contact">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    </button>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ajouterContactModal" title="Ajouter un contact">Ajouter un contact</button>
    
     <script type="text/javascript" >        
         $(document).ready(function() {

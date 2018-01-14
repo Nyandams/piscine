@@ -1,7 +1,8 @@
-<h1 id="titreInterface">Festivals : </h1>
+<h1 id="titreInterface">Editeurs : </h1>
 <!-- js pour les tableaux-->
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+
 
 <!-- Modal -->
 <div class="modal fade" id="ajouterEditeurModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -33,12 +34,11 @@
 
 <!-- selection filtre suivi -->
 <div class="row">
-	<div class="col-lg-3">
-	<button type="button" class="btn btn-primary" data-toggle="modal" title="Ajouter un éditeur ?" data-target="#ajouterEditeurModal">
-    	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-   	</button>
+	<div class="col-sm-6 col-xs-12">
+   		<button type="button" class="btn btn-success" data-toggle="modal" title="Ajouter un éditeur ?" data-target="#ajouterEditeurModal">Ajouter un éditeur</button>
    	</div>
    	
+   	<div class="col-sm-6 col-xs-12 pull-right">
    	<div class="pull-right">
 	<form method="POST" class="form-inline" action="<?php echo site_url('Editeur/choixFiltre'); ?>">
 		<select id="selectFiltre" name="selectFiltre">
@@ -51,9 +51,9 @@
             <option value="6" <?php if(isset($filtreAff) && $filtreAff == 6) {echo ('selected="selected"');}?>>Absent</option>
                 
         </select>
-        
-        <button type="submit" class="btn btn-secondary">Appliquer filtre</button>
+        <button type="submit" class="btn btn-success">Appliquer filtre</button>
     </form>
+    </div>
     </div>
 </div>
 
@@ -65,18 +65,18 @@
 <table id="tabEditeur" class="table table-striped table-bordered col-sm-12 text-left" cellspacing="0" width="100%">
     <thead>
         <tr>
-            <th>Editeur</th>
+            <th>Éditeur</th>
             <th>Contact principal</th>
-            <th>Telephone</th>
+            <th>Téléphone</th>
             <th>Mail</th>
             <th>Suivi rapide</th>
         </tr>
     </thead>
     <tfoot>
         <tr>
-            <th>Editeur</th>
+            <th>Éditeur</th>
             <th>Contact principal</th>
-            <th>Telephone</th>
+            <th>Téléphone</th>
             <th>Mail</th>
             <th>Suivi rapide</th>
         </tr>

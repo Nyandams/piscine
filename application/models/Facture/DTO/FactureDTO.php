@@ -94,6 +94,17 @@ class FactureDTO extends CI_Model
             $this->dateEmissionFacture = $dateEmissionFacture;
         }
     }
+    
+    public function unsetDateEmissionFacture()
+    {
+       
+           $this->dateEmissionFacture = null;
+    }
+    
+    public function unsetDatePaiementFacture()
+    {
+        $this->datePaiementFacture = NULL;
+    }
 
     /**
      * @param DateTime $datePaiementFacture
