@@ -3,13 +3,6 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
- <!-- <style type="text/css">
-     [class*="col-"] {
-  background-color: lightgreen;
-  border: 2px solid black;
-  border-radius: 6px;
- }
-</style> -->
 
 <!-- Modal -->
 <div class="modal fade" id="ajouterEditeurModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -42,9 +35,7 @@
 <!-- selection filtre suivi -->
 <div class="row">
 	<div class="col-sm-6 col-xs-12">
-	<button type="button" class="btn btn-primary" data-toggle="modal" title="Ajouter un éditeur ?" data-target="#ajouterEditeurModal">
-    	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-   	</button>
+   		<button type="button" class="btn btn-success" data-toggle="modal" title="Ajouter un éditeur ?" data-target="#ajouterEditeurModal">Ajouter un editeur</button>
    	</div>
    	
    	<div class="col-sm-6 col-xs-12 pull-right">

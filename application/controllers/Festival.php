@@ -8,6 +8,8 @@ class Festival extends CI_Controller {
         
         // Permet de gérer les urls
         $this->load->helper('url');
+        $this->load->library('session');
+        
         
         if (!$this->session->has_userdata('connexionOrganisateur')){
             redirect('/welcome');
@@ -85,6 +87,11 @@ class Festival extends CI_Controller {
         }
     
     
+    }
+    
+    public function changerFestival() {
+       $this->session->set_userdata("idFestival", $this->input->get("idFestival"));
+       redirect(site_url("Festival"));
     }
     
     

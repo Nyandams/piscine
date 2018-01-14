@@ -35,11 +35,19 @@
 
 
 <?php 
+
+
 foreach($festivalCollection as $festival){
+    // Changement de la couleur du panel
+    $couleur= "";
+    if ($festival->getIdFestival() == $this->session->userdata("idFestival")) {
+        $couleur = 'style ="background-color: green"';
+
+    }
     $panel = 
-           '<a href="#">
+           '<a href="' . site_url("Festival/changerFestival?idFestival=" . $festival->getIdFestival() .'"') . '">
                 <div class="panel panel-default vignetteFestival col-sm-3">
-                    <div class="panel-heading">
+                    <div class="panel-heading" ' . $couleur .'>
                         <h3 class="panel-title">'.$festival->getAnneeFestival().'</h3>
                     </div>
       		        <div class="panel-body">
