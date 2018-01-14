@@ -1,6 +1,6 @@
 <!-- formulaire de modification -->
 
-	<h2><?php echo $organisateur->getLoginOrganisateur(); ?></h2>
+	<h1><?php echo $organisateur->getLoginOrganisateur(); ?></h1>
 	 <form method="post" action="Organisateur/modificationOrganisateur">
 	 
 	 	<label for="nom">Nom</label>
@@ -19,7 +19,7 @@
         <input type="password" id="verifmdp" name="verifmdp" class="form-control" placeholder="mot de passe" value="">
         <?php echo form_error('verifmdp'); ?>
         
-		<button type="submit" class="btn btn-secondary">Modifier</button>
+		<button type="submit" class="btn btn-secondary modifierOrga">Modifier</button>
 	
 	</form>
 

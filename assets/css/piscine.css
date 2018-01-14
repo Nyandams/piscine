@@ -28,6 +28,36 @@ footer {
     .row.content {height:auto;} 
 }
 
+#titreInterface{
+	margin-top : 0;
+}
+
+.dataTables_wrapper{
+}
+
+.btn-secondary{
+    background-color :#777;
+    border-color : #777;
+    color : white;
+}
+
+.btn-primary{
+    margin : 2px;
+    background-color :#777;
+    border-color : #777;
+}
+
+.pagination > .active > a{
+	background-color :#777;
+    border-color : #777;
+    color : white;
+}
+
+.modifierOrga{
+   margin-top: 10px;
+   margin-bottom : 10px;
+}
+
 #contenuPage{
 	padding : 15px;
 	font-family: Helvetica Neue;

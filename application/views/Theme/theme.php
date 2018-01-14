@@ -5,9 +5,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link type="text/css" href="<?php echo base_url('assets/css/bootstrap.min.css');?>" rel="stylesheet">
+  <link type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
   <link type="text/css" href="<?php echo base_url('assets/css/piscine.css');?>" rel="stylesheet">
   <link type="text/css" href="<?php echo base_url('assets/css/navbar.css');?>" rel="stylesheet">
-  <link type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet">
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="icon" href="https://www.festivaldujeu-montpellier.org/wp-content/uploads/2017/03/cropped-Logo_carre-192x192.png">
