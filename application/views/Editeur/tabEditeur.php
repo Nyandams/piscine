@@ -1,4 +1,4 @@
-<h1 id="titreInterface">Festivals : </h1>
+<h1 id="titreInterface">Editeurs : </h1>
 <!-- js pour les tableaux-->
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
