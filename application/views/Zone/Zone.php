@@ -6,7 +6,6 @@
 <?php
 $javaScript = '';
 
-
 foreach ($zoneReserverCollection as $key => $zoneReserverDTO) {
     // Parcours de toute les zones
     $zoneDTO = $zoneReserverDTO->getZoneDTO();

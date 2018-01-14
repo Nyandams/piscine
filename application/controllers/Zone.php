@@ -37,7 +37,6 @@ class Zone extends CI_Controller {
         
         $zoneReserverDAO = $this->ZoneReserverFactory->getInstance();
         $data["zoneReserverCollection"] = $zoneReserverDAO->getZoneReserverService($idFestival) ;
-        print_r ($data["zoneReserverCollection"] );
-        //return $this->load->view("Zone/Zone", $data, TRUE);
+        return $this->load->view("Zone/Zone", $data, TRUE);
     }
 }
