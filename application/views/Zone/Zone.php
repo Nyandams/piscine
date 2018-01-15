@@ -25,12 +25,6 @@ foreach ($zoneReserverCollection as $key => $zoneReserverDTO) {
             <th>Editeur</th> 
          </tr>
      </thead>
-     <tfoot>
-         <tr>
-            <th>Jeu</th>
-            <th>Editeur</th>      
-         </tr>
-     </tfoot>
      <tbody>';
     
     // Pourcours de chaque jeu de la zone pour remplir le tableau

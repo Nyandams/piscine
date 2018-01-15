@@ -72,15 +72,6 @@
             <th>Suivi rapide</th>
         </tr>
     </thead>
-    <tfoot>
-        <tr>
-            <th>Éditeur</th>
-            <th>Contact principal</th>
-            <th>Téléphone</th>
-            <th>Mail</th>
-            <th>Suivi rapide</th>
-        </tr>
-    </tfoot>
     <tbody>
 
         <!-- Insertion des données de manière dynamique -->

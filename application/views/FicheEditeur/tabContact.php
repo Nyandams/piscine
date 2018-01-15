@@ -110,13 +110,6 @@
                 <th>Email</th>   
             </tr>
         </thead>
-        <tfoot>
-            <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Email</th>
-            </tr>
-        </tfoot>
         <tbody>
         
         <!-- Insertion des données de manière dynamique -->

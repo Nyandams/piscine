@@ -15,15 +15,6 @@
             <th>Prix total négocié</th>
         </tr>
     </thead>
-    <tfoot>
-        <tr>
-            <th>Editeur</th>
-            <th>Année</th>
-            <th>Liste jeux réservés</th>
-            <th>Nombre de tables réservées</th>
-            <th>Prix total négocié</th>
-        </tr>
-    </tfoot>
     <tbody>
 
         <!-- Insertion des données de manière dynamique -->

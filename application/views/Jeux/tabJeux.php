@@ -16,7 +16,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Ajouter un jeu</h5>
             </div>
 
-            <form method="POST" action="<?php site_url('Jeux/ajouterJeu') ?>">
+            <form method="POST" action="<?php echo site_url('Jeux/ajouterJeu') ?>">
                 <div class="container-fluid">
                     <div class="form-row">
                         <div class="form-group col-sm-12">
@@ -87,23 +87,14 @@
         <thead>
             <tr>
                 <th>Nom du jeu</th>
-                <th>Zone</th>
+
                 <th>Nombre Joueur Min</th>
                 <th>Nombre Joueur Max</th>
 		<th>Notice</th>
                 <th>Appartient à</th> <!-- Nom de l'édtieur -->
             </tr>
         </thead>
-        <tfoot>
-            <tr>
-                <th>Nom du jeu</th>
-                <th>Zone</th>
-                <th>Nombre Joueur Min</th>
-                <th>Nombre Joueur Max</th>
-		<th>Notice</th>
-                <th>Appartient à</th> <!-- Nom de l'édtieur -->
-            </tr>
-        </tfoot>
+
         <tbody>
             
             <!-- Insertion des données de manière dynamique -->
@@ -113,26 +104,25 @@
                 $ligne = ''; // Stocke une ligne le temps de la créer
 
                 foreach ($JeuxEditeursDto as $key => $EditJeu) {
-		    $idJeu = $EditJeu->getIdJeu();
-                    $libelleJeu = $EditJeu->getLibelleJeu();
-                    /*$idZone = $EditJeu->getIdZone();*/
-                    $nbMinJoueurJeu = $EditJeu->getNbMinJoueurJeu();
-                    $nbMaxJoueurJeu = $EditJeu->getNbMaxJoueurJeu();
-		    $noticeJeu = $EditJeu->getNoticeJeu();
-                    $idEditeurJeu = $EditJeu->getIdEditeur();
-
-		    foreach ($EditeurDto as $key => $Edit){
-			$idEditeur = $Edit->getIdEditeur();
-			if ($idEditeur==$idEditeurJeu){
-
-			    $libelleEditeur = $Edit->getLibelleEditeur();
-			}
-		    }
+        		    $idJeu = $EditJeu->getIdJeu();
+                            $libelleJeu = $EditJeu->getLibelleJeu();
+                            /*$idZone = $EditJeu->getIdZone();*/
+                            $nbMinJoueurJeu = $EditJeu->getNbMinJoueurJeu();
+                            $nbMaxJoueurJeu = $EditJeu->getNbMaxJoueurJeu();
+        		    $noticeJeu = $EditJeu->getNoticeJeu();
+                            $idEditeurJeu = $EditJeu->getIdEditeur();
+        
+        		    foreach ($EditeurDto as $key => $Edit){
+            			$idEditeur = $Edit->getIdEditeur();
+            			if ($idEditeur==$idEditeurJeu){
+            
+            			    $libelleEditeur = $Edit->getLibelleEditeur();
+            			}
+		              }
 
                     // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un jeu.
                     $ligne = '<tr>';
                     $ligne = $ligne . '<td>' . $libelleJeu     . '</td>';
-		    $ligne = $ligne . '<td>' .   '</td>';
                     $ligne = $ligne . '<td>' . $nbMinJoueurJeu . '</td>';
                     $ligne = $ligne . '<td>' . $nbMaxJoueurJeu . '</td>';
                     $ligne = $ligne . '<td>' . $noticeJeu      . '</td>';
@@ -142,7 +132,6 @@
                     $ligne = $ligne . '<td class="row">
                         <label class="col-lg-6">' . $libelleEditeur . '</label>
                         <span class="pull-right">
-                        <a class="btn btn-primary" data-toggle="modal" data-target="#modifierJeuModal_'. $idJeu .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         <a class="btn btn-primary" href="'.site_url('Jeux/supprimerJeu?idJeu='.$idJeu).'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </span>
                         </td>';
@@ -161,10 +150,6 @@
 
         </tbody>
     </table>
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterJeuModal">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    </button>
    
     <script type="text/javascript" >        
         $(document).ready(function() {

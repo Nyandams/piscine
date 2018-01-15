@@ -92,13 +92,6 @@
                 <th>Joueur max</th>
             </tr>
         </thead>
-        <tfoot>
-            <tr>
-                <th>Jeu</th>
-                <th>Type</th>
-                <th>Joueur max</th>
-            </tr>
-        </tfoot>
         <tbody>
             
             <!-- Insertion des données de manière dynamique -->
