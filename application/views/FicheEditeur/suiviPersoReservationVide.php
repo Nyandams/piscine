@@ -66,7 +66,7 @@
                     <div class="col-md-6">
                     	<label for="selectReponse2">Réponse :</label><?php 
                     	//on ne peut pas le selectionner on a contacté une deuxieme fois
-                    	echo getListeDeroulante(is_null($suivi->getPremierContact()) or is_null($suivi->getSecondContact()), "selectReponse2", $suivi);
+                    	echo getListeDeroulante(is_null($suivi->getSecondContact()), "selectReponse2", $suivi);
                     ?>
                     </div>
                 </div>

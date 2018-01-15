@@ -328,8 +328,12 @@ class FicheEditeur extends CI_Controller {
 	    try{
 	        $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
 	        $idReservation = $reservationDTO->getIdReservation();
-	        $factureDAO = $this->FactureFactory->getInstance();
-	        $data['factureDTO'] = $factureDAO->getFactureByIdReservation($idReservation);
+	        try {
+	            $factureDAO = $this->FactureFactory->getInstance();
+	            $data['factureDTO'] = $factureDAO->getFactureByIdReservation($idReservation);
+	        }catch (Exception $e) {
+	           
+	        }
 	        return $this->load->view("FicheEditeur/suiviPerso", $data, true);
 	    }catch(Exception $e){
 	        return $this->load->view("FicheEditeur/suiviPersoReservationVide",$data, true);
@@ -343,6 +347,7 @@ class FicheEditeur extends CI_Controller {
 	    // obtention du suivi de l'edtieur actuel
 	    $suiviDAO =  $this->SuiviFactory->getInstance();
 	    $suiviDTO = $this->getSuivi();
+	    $suiviPrecedent = $this->getSuivi();
 	   
 	    $idFestival = $this->session->userdata("idFestival");
 	    $idEditeur = $this->input->get("idFicheEditeur");
@@ -352,30 +357,41 @@ class FicheEditeur extends CI_Controller {
 	    $suiviDTO->setReponseEditeur($reponseEditeur);
 	    
 	    // Obtention de la bonne facture
-	    $reservationDAO = $this->ReservationFactory->getInstance();
-	    $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
-	    $idReservation = $reservationDTO->getIdReservation();
-	    $factureDAO = $this->FactureFactory->getInstance();
-	    $factureDTO = $factureDAO->getFactureByIdReservation($idReservation);
+	    try {
+	        $reservationDAO = $this->ReservationFactory->getInstance();
+	        $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	        
+	        try {
+	            $idReservation = $reservationDTO->getIdReservation();
+	            $factureDAO = $this->FactureFactory->getInstance();
+	            $factureDTO = $factureDAO->getFactureByIdReservation($idReservation);
+	            // Enregistrement pour la facture et du paiement
+	            if (null !==($this->input->post("factureEnvoye"))) {
+	                $factureDTO->setDateEmissionFacture(new DateTime());
+	            }
+	            else if (null == $this->input->post("factureEnvoye") and !is_null($factureDTO->getDateEmissionFacture())) {
+	                $factureDTO->unsetDateEmissionFacture();
+	            }
+	            if (null !==($this->input->post("paiementEnvoye"))) {
+	                $factureDTO->setDatePaiementFacture(new DateTime());
+	            }
+	            else if (null == $this->input->post("paiementEnvoye") and !is_null($factureDTO->getDatePaiementFacture())) {
+	                $factureDTO->unsetDatePaiementFacture();
+	            }
+	            
+	            $factureDAO->updateFacture($factureDTO);
+	            
+	        } catch (Exception $e) {
+	            $factureDTO = new FactureDTO();
+	            $factureDTO->setIdReservation($idReservation);
+	            $factureDTO->setDateEmissionFacture(new DateTime());
+	            $factureDAO->saveFacture($factureDTO);      
+	        }
 	    
-	    
-	    // Enregistrement pour la facture et du paiement
-	    if (null !==($this->input->post("factureEnvoye"))) {
-	        $factureDTO->setDateEmissionFacture(new DateTime());
-	    }
-	    else if (null == $this->input->post("factureEnvoye") and !is_null($factureDTO->getDateEmissionFacture())) {
-	        $factureDTO->unsetDateEmissionFacture();
-	    }
-	    if (null !==($this->input->post("paiementEnvoye"))) {
-	        $factureDTO->setDatePaiementFacture(new DateTime());
-	    }
-	    else if (null == $this->input->post("paiementEnvoye") and !is_null($factureDTO->getDatePaiementFacture())) {
-	        $factureDTO->unsetDatePaiementFacture();
+	    }catch (Exception $e) {
+	        
 	    }
 	    
-	    $factureDAO->updateFacture($factureDTO);
-	    
-	    // Utilise directement le dao sans passer par le dto
 	    // Si on coche et que c'etait pas coché avant	    
 	    if (null !== $this->input->post("presentContact")){
 	        $suiviDTO->setPresenceEditeur(1);
@@ -390,42 +406,48 @@ class FicheEditeur extends CI_Controller {
 	    }
 	    $reponseEditeur = $suiviDTO->getReponseEditeur();
 	    
+	    // Set de la réponse de l'éditeur 
+	    if (NULL !== $this->input->post("selectReponse1")){
+	        $reponseEditeurSelected = $this->input->post("selectReponse1");
+	        $suiviDTO->setReponseEditeur($reponseEditeurSelected);   
+	    }
+	    else if (NULL !== $this->input->post("selectReponse2")) {
+	        $reponseEditeurSelected = $this->input->post("selectReponse2");
+	        $suiviDTO->setReponseEditeur($reponseEditeurSelected);
+	    }
+	    
 	    $check1 = $this->input->post ("premierContact");
 	    $check2 = $this->input->post ("deuxiemeContact");
 	    
-	    
-	    $contact1 = $suiviDTO->getPremierContact();
-	    $contact2 = $suiviDTO->getSecondContact();
+	    $contact1 = $suiviPrecedent->getPremierContact();
+	    $contact2 = $suiviPrecedent->getSecondContact();
 	    
 	    $disabled1 = !is_null($suiviDTO->getSecondContact());
-	    $disabled2 = is_null($suiviDTO->getPremierContact()) or !( $reponseEditeur == null or $reponseEditeur == -1);
+	    $disabled2 = is_null($suiviDTO->getSecondContact());
+	    $disabledCheck1 = !is_null($suiviDTO->getSecondContact());
+	    $disabledCheck2 = is_null($suiviPrecedent->getPremierContact()) or !($suiviPrecedent->getReponseEditeur() == null or $suiviPrecedent->getReponseEditeur() == -1);
 	    
-	    $reponseEditeurSelected = NULL;
-	    // Les deux réponses ne peuvent pas ^etre disabled en meme temps, on prend la réponse de celle qui ne l'est pas
-	    if (NULL !== $this->input->post("selectReponse1")){
-	        $reponseEditeurSelected = $this->input->post("selectReponse1");
-	        
+	    if ($disabledCheck2) {
+	        echo ("le 2 est disabled");
 	    }
 	    else {
-	        $reponseEditeurSelected = $this->input->post("selectReponse2");
+	        echo("le 2 est touchable" . $suiviPrecedent->getReponseEditeur()  );
 	    }
-	    
-	    $suiviDTO->setReponseEditeur($reponseEditeurSelected);
-	    
 	    $suiviDAO->updateSuivi($suiviDTO);
 	    
 	       
 	    if ($check1 !== NULL and $contact1 == NULL){
 	        $suiviDAO->setPremierContact($idEditeur, $idFestival);
 	        // Si décoché et que c'était coché avant et qu'on doit décoché le deux (probleme de lecture avec disabled
-	    } else if ($check1 == null and $contact1 !== NULL and disabled1) {
+	    } else if ($check1 == null and $contact1 !== NULL and !$disabledCheck1) {
 	        $suiviDAO->unsetPremierContact($idEditeur, $idFestival);
 	    }
 	    
 	    if ($check2!=null and $contact2 == NULL){
 	        $suiviDAO->setSecondContact($idEditeur, $idFestival);
+	        
 	        // Si décoché et que c'était coché avant
-	    } else if ($check2 == null and $contact2 !== NULL and !$disabled2) {
+	    } else if ($check2 == null and $disabledCheck2) {
 	        $suiviDAO->unsetSecondContact($idEditeur, $idFestival);
 	    }
 	    
