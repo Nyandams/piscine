@@ -114,6 +114,20 @@ class Editeur extends CI_Controller {
 	}
 
 
+	public function modifierEditeur() {
+	    $editeurDao = $this->EditeurFactory->getInstance();
+	    
+	   
+	    $dto = new EditeurDTO();
+	    $dto->setIdEditeur($this->input->get('idEditeur'));
+	    $dto->setLibelleEditeur($this->input->post('nomEditeur'));
+	    $editeurDao->updateEditeur($dto);
+	    
+	    redirect(site_url('Editeur'));
+	}
+	
+	
+	
 	/*
 choixFiltre peut etre appelé d 2 facons : soit par défaut on on affiche donc tous les editeus, soit par le choix du filtre et on affiche les editeurs en fct du filtre.
 	*/
