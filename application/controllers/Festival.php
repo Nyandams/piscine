@@ -79,27 +79,27 @@ class Festival extends CI_Controller {
                 
                 //mise en session du festival le plus récent
                 try{
-                    $festivalDTO = $dao->getFestivalActuel();
-                    $this->session->set_userdata('idFestival', $festivalDTO->getIdFestival());
+                    $idFestival = $dao->getLastFestivalId()->getIdFestival();
+                    $this->session->set_userdata('idFestival', $idFestival);
                     
                     $zoneDAO = $this->ZoneFactory->getInstance();
                     $zoneFamille = new ZoneDTO();
-                    $zoneFamille->setIdFestival($festivalDTO->getIdFestival());
+                    $zoneFamille->setIdFestival($idFestival);
                     $zoneFamille->setNomZone("Famille");
                     $zoneDAO->saveZone($zoneFamille);
                     
                     $zoneAmbiance = new ZoneDTO();
-                    $zoneAmbiance->setIdFestival($festivalDTO->getIdFestival());
+                    $zoneAmbiance->setIdFestival($idFestival);
                     $zoneAmbiance->setNomZone("Ambiance");
                     $zoneDAO->saveZone($zoneAmbiance);
                     
                     $zoneExpert = new ZoneDTO();
-                    $zoneExpert->setIdFestival($festivalDTO->getIdFestival());
+                    $zoneExpert->setIdFestival($idFestival);
                     $zoneExpert->setNomZone("Expert");
                     $zoneDAO->saveZone($zoneExpert);
                     
                     $zoneEnfant = new ZoneDTO();
-                    $zoneEnfant->setIdFestival($festivalDTO->getIdFestival());
+                    $zoneEnfant->setIdFestival($idFestival);
                     $zoneEnfant->setNomZone("Enfant");
                     $zoneDAO->saveZone($zoneEnfant);
                     
