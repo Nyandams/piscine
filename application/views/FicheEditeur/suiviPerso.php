@@ -5,16 +5,20 @@
 $factureCheck = '';
 $paiementCheck = '';
 
-if (!is_null($factureDTO->getDateEmissionFacture())) 
-{
-   $factureCheck =('checked="checked"');
-   $factureValue = $factureDTO->getDateEmissionFacture()->format('d/m/Y');
+if (isset ($factureDTO)) {
+    if (!is_null($factureDTO->getDateEmissionFacture()))
+    {
+        $factureCheck =('checked="checked"');
+        $factureValue = $factureDTO->getDateEmissionFacture()->format('d/m/Y');
+    }
+    
+    if (!is_null($factureDTO->getDatePaiementFacture()))
+    {
+        $paiementCheck = ('checked="checked"');
+        $paiementValue = $factureDTO->getDatePaiementFacture()->format('d/m/Y');
+    }
 }
 
-if (!is_null($factureDTO->getDatePaiementFacture())) 
-{
-    $paiementCheck = ('checked="checked"');
-    $paiementValue = $factureDTO->getDatePaiementFacture()->format('d/m/Y');
 
 ?>
 <section class="row">

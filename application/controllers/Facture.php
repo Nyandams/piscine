@@ -28,7 +28,8 @@ class Facture extends CI_Controller {
         $data['factureAffichageCollection'] = $factureAffichageService->getFactureByIdFestival($idFestival);
         $data['page'] = $this->load->view('Facture/tabFacture', $data, true);
         $data['title']= 'Factures';
-        $this->load->view("Theme/theme", $data);
         
+        //print_r($data['factureAffichageCollection']);
+        $this->load->view("Theme/theme", $data);
     }
 }

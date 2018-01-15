@@ -328,8 +328,12 @@ class FicheEditeur extends CI_Controller {
 	    try{
 	        $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
 	        $idReservation = $reservationDTO->getIdReservation();
-	        $factureDAO = $this->FactureFactory->getInstance();
-	        $data['factureDTO'] = $factureDAO->getFactureByIdReservation($idReservation);
+	        try {
+	            $factureDAO = $this->FactureFactory->getInstance();
+	            $data['factureDTO'] = $factureDAO->getFactureByIdReservation($idReservation);
+	        }catch (Exception $e) {
+	           
+	        }
 	        return $this->load->view("FicheEditeur/suiviPerso", $data, true);
 	    }catch(Exception $e){
 	        return $this->load->view("FicheEditeur/suiviPersoReservationVide",$data, true);
@@ -356,26 +360,33 @@ class FicheEditeur extends CI_Controller {
 	    try {
 	        $reservationDAO = $this->ReservationFactory->getInstance();
 	        $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
-	        $idReservation = $reservationDTO->getIdReservation();
-	        $factureDAO = $this->FactureFactory->getInstance();
-	        $factureDTO = $factureDAO->getFactureByIdReservation($idReservation);
-	    
-
-	    // Enregistrement pour la facture et du paiement
-	    if (null !==($this->input->post("factureEnvoye"))) {
-	        $factureDTO->setDateEmissionFacture(new DateTime());
-	    }
-	    else if (null == $this->input->post("factureEnvoye") and !is_null($factureDTO->getDateEmissionFacture())) {
-	        $factureDTO->unsetDateEmissionFacture();
-	    }
-	    if (null !==($this->input->post("paiementEnvoye"))) {
-	        $factureDTO->setDatePaiementFacture(new DateTime());
-	    }
-	    else if (null == $this->input->post("paiementEnvoye") and !is_null($factureDTO->getDatePaiementFacture())) {
-	        $factureDTO->unsetDatePaiementFacture();
-	    }
-	    
-	    $factureDAO->updateFacture($factureDTO);
+	        
+	        try {
+	            $idReservation = $reservationDTO->getIdReservation();
+	            $factureDAO = $this->FactureFactory->getInstance();
+	            $factureDTO = $factureDAO->getFactureByIdReservation($idReservation);
+	            // Enregistrement pour la facture et du paiement
+	            if (null !==($this->input->post("factureEnvoye"))) {
+	                $factureDTO->setDateEmissionFacture(new DateTime());
+	            }
+	            else if (null == $this->input->post("factureEnvoye") and !is_null($factureDTO->getDateEmissionFacture())) {
+	                $factureDTO->unsetDateEmissionFacture();
+	            }
+	            if (null !==($this->input->post("paiementEnvoye"))) {
+	                $factureDTO->setDatePaiementFacture(new DateTime());
+	            }
+	            else if (null == $this->input->post("paiementEnvoye") and !is_null($factureDTO->getDatePaiementFacture())) {
+	                $factureDTO->unsetDatePaiementFacture();
+	            }
+	            
+	            $factureDAO->updateFacture($factureDTO);
+	            
+	        } catch (Exception $e) {
+	            $factureDTO = new FactureDTO();
+	            $factureDTO->setIdReservation($idReservation);
+	            $factureDTO->setDateEmissionFacture(new DateTime());
+	            $factureDAO->saveFacture($factureDTO);      
+	        }
 	    
 	    }catch (Exception $e) {
 	        

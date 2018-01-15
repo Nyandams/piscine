@@ -39,12 +39,7 @@
                     $ligne = $ligne . '<td>'.$factureAffichageDto->getAnneeFestival().' </td>';
                     $ligne = $ligne . '<td>'.$factureAffichageDto->dateEmissionFactureToString().' </td>';
                     $ligne = $ligne . '<td>'.$factureAffichageDto->datePaiementFactureToString().' </td>';
-                    $ligne = $ligne . '<td>'.$factureAffichageDto->getPrixNegociationReservation().' </td>';
-                    
-                    
-                    
-
-                    
+                    $ligne = $ligne . '<td>'.$factureAffichageDto->getPrixNegociationReservation().' </td>';     
                     $ligne = $ligne . '</tr>';
                     
                     echo  $ligne;

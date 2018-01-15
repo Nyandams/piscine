@@ -32,17 +32,15 @@ class FactureAffichageService extends CI_Model
      * @param int $idFestival
      */
     public function getFactureByIdFestival($idFestival){
-        try{
-            $festivalDto = $this->festivalDao->getFestivalById($idFestival);
-        }catch(Exception $e){
-            $festivalDto = new FestivalDTO();
-        }
+        $festivalDAO = $this->FestivalFactory->getInstance();
+        $festivalDto = $festivalDAO->getFestivalById($idFestival);
         $reservationCollection = $this->reservationDao->getReservationByIdFestival($idFestival);
         $factureAffichageCollection = new FactureAffichageCollection();
+        
         foreach ($reservationCollection as $reservationDto){
             try{
                 $factureDto = $this->factureDao->getFactureByIdReservation($reservationDto->getIdReservation());
-                $editeurDto = $this->editeurDao->getEditeurById($reservationDto->getIdReservation());
+                $editeurDto = $this->editeurDao->getEditeurById($reservationDto->getIdEditeur());
                 $factureAffichageDto = new FactureAffichageDTO();
                 $factureAffichageDto->setIdEditeur($reservationDto->getIdEditeur());
                 $factureAffichageDto->setLibelleEditeur($editeurDto->getLibelleEditeur());
