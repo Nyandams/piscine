@@ -597,6 +597,11 @@ class FicheEditeur extends CI_Controller {
 	        
 	        $idReservation = $reservationDAO->getLastIdReservation()->getIdReservation();
 	        
+	        $factureDAO = $this->FactureFactory->getInstance();
+	        $factureDto = new FactureDTO();
+	        $factureDto->setIdReservation($idReservation);
+	        $factureDAO->saveFacture($factureDto);
+	        
 	    }
 	    
 	    $reserverDTO->setIdReservation($idReservation);
