@@ -192,7 +192,7 @@
                                     
                                     '
                                     
-                                    <div class="col-lg-6 well">
+                                    <div class="col-sm-6 well">
                                         <div><strong>Suivi du Jeu</strong></div>
                                         <div class="checkbox">
                                             <label><input ' . $recu .' name="recuBox" id="recuBox" type="checkbox">Reçu</label>
@@ -208,7 +208,7 @@
                                     
                                     '
             
-                                    <div class="col-lg-6 well">
+                                    <div class="col-sm-6 well">
                                         <div><strong>Modification du jeu</strong></div>
                                         <div class="form-row">
                                             <div class="col-sm-11">
