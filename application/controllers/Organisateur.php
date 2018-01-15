@@ -67,12 +67,7 @@ class Organisateur extends CI_Controller
     
     
     public function ajoutOrganisateur(){
-        $this->form_validation->set_rules('pseudo', '"Pseudo"', 'trim|min_length[3]|required|max_length[52]|alpha_dash|encode_php_tags');
-        $this->form_validation->set_rules('mdp', '"Mot de passe"', 'min_length[3]|required|max_length[52]|alpha_dash|encode_php_tags');
-        $this->form_validation->set_rules('verifmdp', '"Verification mot de passe"', 'min_length[3]|required|max_length[52]|alpha_dash|encode_php_tags');
-        $this->form_validation->set_rules('nom', '"Nom"', 'trim|min_length[3]|required|max_length[52]|alpha_dash|encode_php_tags');
-        
-        if($this->form_validation->run()) {
+       
             $organisateurDTO = new OrganisateurDTO();
             $organisateurDTO->setLoginOrganisateur($this->input->post('pseudo'));
             $organisateurDTO->setMotDePasseOrganisateur($this->input->post('mdp'));
@@ -82,9 +77,6 @@ class Organisateur extends CI_Controller
             
             
             redirect('/organisateur');
-        } else {
-            redirect('/organisateur');
-        }
         
         
     }

@@ -22,6 +22,7 @@ foreach ($zoneReserverCollection as $key => $zoneReserverDTO) {
     <thead>
          <tr>
             <th>Jeu</th>
+            <th>Nombre de jeux</th>
             <th>Editeur</th> 
          </tr>
      </thead>
@@ -32,6 +33,7 @@ foreach ($zoneReserverCollection as $key => $zoneReserverDTO) {
     $ensembleJeuEditeurReserverCollection = $zoneReserverDTO->getEnsembleJeuEditeur();
     
     foreach ($ensembleJeuEditeurReserverCollection as $key => $JeuEditDTO) {
+        $nbTable = $JeuEditDTO->getReserverDTO()->getQuantiteJeuReserver();
         $jeuDTO = $JeuEditDTO->getJeuDTO();
         $editeurDTO = $JeuEditDTO->getEditeurDTO();
         
@@ -39,8 +41,14 @@ foreach ($zoneReserverCollection as $key => $zoneReserverDTO) {
             <tr>';
         $ligne = $ligne . '
                 <td>' . $jeuDTO->getLibelleJeu() . '</td>';
+        
+        $ligne = $ligne . '
+                <td>' . $nbTable . '</td>';
         $ligne = $ligne . '
                 <td><a href="'.site_url('ficheEditeur?idFicheEditeur='.$editeurDTO->getIdEditeur()).'">' . $editeurDTO->getLibelleEditeur() . '</a></td>';
+       
+        
+        
         $ligne = $ligne . '
             </tr>';
 

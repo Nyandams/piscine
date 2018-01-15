@@ -66,7 +66,7 @@
                                 // Affichage des différents éditeurs.
                                 $selection = '';
                                 foreach ($EditeurDto as $key => $EditContact) {
-                                    $selection = $selection . "<option>";
+                                    $selection = $selection . "<option value=". $EditContact->getIdEditeur() . ">";
                                     $libEditeur = $EditContact->getLibelleEditeur();
                                     $selection = $selection . $libEditeur . "</option>";
                                 }
@@ -76,8 +76,8 @@
                             </select>
                             <label for="selectEditeur">Contact principal ?</label>
                             <select class="selectPrincipal" name="selectPrincipal">
-                                <option>Oui</option>
-                                <option>Non</option>  
+                                <option value="1">Oui</option>
+                                <option value="0">Non</option>  
                             </select>
 
                         </div>
