@@ -23,7 +23,9 @@ if (isset ($factureDTO)) {
 ?>
 <section class="row">
     <form action="<?php echo site_url('FicheEditeur/sauvegarderSuivi?idFicheEditeur=' . $idFicheEditeur); ?>" method="POST">
-        <div class="col-lg-6 well">  
+        <div class="col-lg-12">
+        <div class="well">
+        <label class="label label-default">Suivi de l'éditeur</label>
         	<div class="checkbox">
         		<label><input type="checkbox" <?php if ($suivi->getPresenceEditeur()) {echo ('checked="checked"');}?> name="presentContact" id="presentContact">Editeur présent physiquement</label>       	
         	</div>
@@ -54,39 +56,53 @@ if (isset ($factureDTO)) {
         		?>
         	</div>            
         </div>
+        </div>  
+        
+        
          <?php 
          $reponseEditeur = $suivi->getReponseEditeur();
          ?>
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="well">
             	<label class="label label-default">Suivi des échanges</label>
         		<div class="row">
-        			<div class="col-md-6">
-            			<div class="checkbox">
-                        	<label><input <?php 
-                        
-                        	
-                        	if ($suivi->getPremierContact() !== null) {
-                        	    echo ('checked="checked"');
-                        	}
-                        	if (!is_null($suivi->getSecondContact())) {
-                        	    echo (' disabled="disabled" ');
-                        	}
-                        	?> name="premierContact" id="premierContact" type="checkbox">1er contact</label> <?php 
-                        	   if($suivi->getPremierContact() != null){echo('<label class="pull-right">('. $suivi->premierContactToString(). ')</label>');}
-                        	?>
+        		
+        		<!-- PREMIERE LIGNE -->
+            			<div class="col-md-6">
+                			<div class="checkbox">
+                            	<label><input <?php 
+                            
+                            	
+                            	if ($suivi->getPremierContact() !== null) {
+                            	    echo ('checked="checked"');
+                            	}
+                            	if (!is_null($suivi->getSecondContact())) {
+                            	    echo (' disabled="disabled" ');
+                            	}
+                            	?> name="premierContact" id="premierContact" type="checkbox">1er contact</label> <?php 
+                            	   if($suivi->getPremierContact() != null){echo('<label class="pull-right">('. $suivi->premierContactToString(). ')</label>');}
+                            	?>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="col-md-6">
-                    	<label for="selectReponse1">Réponse :</label><?php 
-                    	//on ne peut pas le selectionner on a contacté une deuxieme fois
-                    	echo getListeDeroulante(!is_null($suivi->getSecondContact()), "selectReponse1", $suivi);
-                    ?>
-                    </div>
+    
+                        <div class="col-md-6">
+                        	<div class="pull-left">
+                        		<label for="selectReponse1">Réponse :</label>
+                        	</div>
+                        	
+                        	<div class="pull-right">
+                        	<?php 
+                            	//on ne peut pas le selectionner on a contacté une deuxieme fois
+                            	echo getListeDeroulante(!is_null($suivi->getSecondContact()), "selectReponse1", $suivi);
+                            ?>
+                        	</div>
+                        	
+                        </div>
+                       
                 </div>
                 
                 <div class="row">
+                <!-- DEUXIEME LIGNE -->
         			<div class="col-md-6">
             			<div class="checkbox">
                         	<label><input <?php 
@@ -104,13 +120,22 @@ if (isset ($factureDTO)) {
                     </div>
 
                     <div class="col-md-6">
-                    	<label for="selectReponse2">Réponse :</label><?php 
+                    	<div class="pull-left">
+                    		<label for="selectReponse2">Réponse :</label>
+                    	</div>
+                    	<div class="pull-right">
+                    	<?php 
                     	//On ne peut toujours séléectionner uine réponse
                     	echo getListeDeroulante(is_null($suivi->getSecondContact()), "selectReponse2", $suivi);
                     ?>
+                    	
+                    	</div>
+                    	
                     </div>
+                    
                 </div>
-            </div>
+                    
+                </div>
             <div class="pull-right">
             	<button type="submit" class="btn btn-success">Sauvegarder</button>
           	</div>
