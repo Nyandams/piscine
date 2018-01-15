@@ -31,26 +31,12 @@
                 // Récupération des données
                 $ligne = ''; // Stocke une ligne le temps de la créer
 
-		$listeJeuxReservation = "";
                 foreach ($reservationAffichageCollection as $reservationAffichageDto) {
                     // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un éditeur.
                     $ligne = '<tr>';
                     $ligne = $ligne . '<td><a  href="' . site_url('ficheEditeur?idFicheEditeur='. $reservationAffichageDto->getIdEditeur() ). '" >' . $reservationAffichageDto->getLibelleEditeur() . '</a></td>';
                     $ligne = $ligne . '<td>'.$reservationAffichageDto->getAnneeFestival().' </td>';
-
-		    $libelleJeuReservation = $reservationAffichageDto->getLibelleJeu();
-		    foreach ($JeuxReservation as $key => $Jeux){
-
-		        $libelleJeu = $Jeux->getLibelleJeu();
-
-			if ($libelleJeu==$libelleJeuReservation){
-
-				$listeJeuxReservation .= $libelleJeu . ", ";
-			}
-		    }
-
-
-                    $ligne = $ligne . '<td>'. $listeJeuxReservation . ' </td>'; 
+                    $ligne = $ligne . '<td>'.$reservationAffichageDto->getLibelleJeu(). ' </td>'; 
                     $ligne = $ligne . '<td>'.$reservationAffichageDto->getNbEmplacement().' </td>';
                     $ligne = $ligne . '<td>'.$reservationAffichageDto->getPrixNegociationReservation().' </td>';
 
