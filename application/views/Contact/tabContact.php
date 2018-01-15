@@ -149,7 +149,7 @@
                         <label class="col-lg-6">' . $libelleEditeur . '</label>
                         <span class="pull-right">
                         <a class="btn btn-primary" data-toggle="modal" data-target="#modifierContactModal_'. $idContact .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                        <a class="btn btn-primary" href="supprimerContact?idContact='.$idContact .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" href="'.site_url("Contact/supprimerContact?idContact=".$idContact).'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </span>
                         </td>';
                     $ligne = $ligne . '</tr>';

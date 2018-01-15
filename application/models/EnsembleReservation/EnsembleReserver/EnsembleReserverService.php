@@ -102,8 +102,8 @@ class EnsembleReserverService extends CI_Model
             //récupération à partir de TypeJeuDTO
             try{
                 $jeuDTO = $ensembleReserverTmp->getJeuDTO();
-                $typeJeuDto = $this->typeJeuDAO->getTypeJeuById($jeuDTO->getIdTypeJeu());
-                $ensembleReserverTmp->setTypeJeu($typeJeuDto);
+                //$typeJeuDto = $this->typeJeuDAO->getTypeJeuById($jeuDTO->getIdTypeJeu());
+                //$ensembleReserverTmp->setTypeJeu($typeJeuDto);
             }catch (Exception $e){
                 
             }

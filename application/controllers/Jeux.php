@@ -87,6 +87,22 @@ class Jeux extends CI_Controller {
 		$instanceDao->saveJeu($dto);
 		redirect('/Jeu/JeuListe');
 	}
+	
+	/* Supprime un jeu via une requete
+	 @param : idContact : int
+	 */
+	public function supprimerJeu() {
+	    $idJeu = $this->input->get('idJeu');
+	    $instanceDao = $this->fact->getInstance();
+	    try{
+	        $supp = $instanceDao->getJeuById($idJeu);
+	        $instanceDao->deleteJeu($supp);
+	    }catch(Exception $e){
+	        
+	    }
+	   
+	    redirect(site_url('Jeux'));
+	}
 
 
 }

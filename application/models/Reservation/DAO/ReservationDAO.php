@@ -162,10 +162,10 @@ class ReservationDAO extends CI_Model
      */
     public function getLastIdReservation(){
         $resultat = $this->db->select()
-        ->from($this->table)
-        ->order_by('idReservation', 'desc')
-        ->get()
-        ->result();
+                             ->from($this->table)
+                             ->order_by('idReservation', 'desc')
+                             ->get()
+                             ->result();
         
         if (!empty($resultat)){
             $dto = $this->hydrateFromDatabase($resultat[0]);

@@ -10,6 +10,8 @@ class ReservationAffichageService extends CI_Model
         parent::__construct();
         $this->load->model('ReservationAffichage/DTO/ReservationAffichageDTO');
         $this->load->model('ReservationAffichage/DTO/ReservationAffichageCollection');
+        $this->load->model('Reserver/ReserverFactory');
+        $this->load->model('Jeu/JeuFactory');
     }
     
     /**
@@ -48,15 +50,30 @@ class ReservationAffichageService extends CI_Model
                 $jeuDto = $this->jeuDao->getJeuById($reservationDto->getIdReservation());        
                 $editeurDto = $this->editeurDao->getEditeurById($reservationDto->getIdReservation());
 
-		$reservationAffichageDto = new ReservationAffichageDTO();
-		$reservationAffichageDto->setIdEditeur($reservationDto->getIdEditeur());
-		$reservationAffichageDto->setLibelleEditeur($editeurDto->getLibelleEditeur());
-		$reservationAffichageDto->setIdFestival($festivalDto->getIdFestival());
-		$reservationAffichageDto->setAnneeFestival($festivalDto->getAnneeFestival());
-		$reservationAffichageDto->setPrixNegociationReservation($reservationDto->getPrixNegociationReservation());
-		$reservationAffichageDto->setNbEmplacement($reservationDto->getNbEmplacement());
+        		$reservationAffichageDto = new ReservationAffichageDTO();
+        		$reservationAffichageDto->setIdEditeur($reservationDto->getIdEditeur());
+        		$reservationAffichageDto->setLibelleEditeur($editeurDto->getLibelleEditeur());
+        		$reservationAffichageDto->setIdFestival($festivalDto->getIdFestival());
+        		$reservationAffichageDto->setAnneeFestival($festivalDto->getAnneeFestival());
+        		$reservationAffichageDto->setPrixNegociationReservation($reservationDto->getPrixNegociationReservation());
+        		$reservationAffichageDto->setNbEmplacement($reservationDto->getNbEmplacement());
                 $reservationAffichageDto->setIdJeu($jeuDto->getLibelleJeu());
-		$reservationAffichageDto->setLibelleJeu($jeuDto->getLibelleJeu());
+                
+                $reserverDao = $this->ReserverFactory->getInstance();
+                $jeuDao      = $this->JeuFactory->getInstance();
+                $reserverCollection = $reserverDao->getReserverByIdReservation($reservationDto->getIdReservation());
+                $listeJeu = "";
+                $stringVide = "";
+                foreach ($reserverCollection as $reserver){
+                    if($listeJeu == $stringVide){
+                        $listeJeu .= $jeuDao->getJeuById($reserver->getIdJeu())->getLibelleJeu();
+                    }else{
+                        $listeJeu .= ', ' .$jeuDao->getJeuById($reserver->getIdJeu())->getLibelleJeu();
+                    }
+                }
+                
+                
+        		$reservationAffichageDto->setLibelleJeu($listeJeu);
  
                 $reservationAffichageCollection->append($reservationAffichageDto);
 

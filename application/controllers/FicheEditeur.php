@@ -550,7 +550,7 @@ class FicheEditeur extends CI_Controller {
 	    $lastJeu = $jeuDAO->getLastIdJeu();
 	    
 	    $reserverDTO->setIdJeu($lastJeu->getIdJeu());
-	    $reserverDTO->setQuantiteJeuReserver(0);
+	    $reserverDTO->setQuantiteJeuReserver(1);
 	    $reserverDTO->setReceptionJeuReserver(0);
 	    $reserverDTO->setRenvoiJeuReserver(0);
 	    $reserverDTO->setDotationJeuReserver(0);
@@ -573,14 +573,12 @@ class FicheEditeur extends CI_Controller {
 	        
 	        $reservationDAO->saveReservation($reservationDTO);
 	        
-	        $idReservation= $reservationDAO->getLastIdReservation()->getIdReservation();
+	        $idReservation = $reservationDAO->getLastIdReservation()->getIdReservation();
 	        
 	    }
 	    
 	    $reserverDTO->setIdReservation($idReservation);
 	    $reserverDAO->saveReserver($reserverDTO);
-	    
-	    $reserveDTO = new ReserverDTO();
 	    
 	    
 	    $this->redirection();
@@ -631,6 +629,16 @@ class FicheEditeur extends CI_Controller {
 	        $reservationDto->setNbEmplacement($nbEmplacement);
 	        
 	        $reservationDAO->saveReservation($reservationDto);
+	        $factureDAO = $this->FactureFactory->getInstance();
+	        try{
+	            $lastReservation = $reservationDAO->getLastIdReservation();
+	            $idRes = $lastReservation->getIdReservation();
+	            $factureDto = new FactureDTO();
+	            $factureDto->setIdReservation($idRes);
+	            $factureDAO->saveFacture($factureDto);
+	        }catch(Exception $e){
+	        }
+	        
 	        $this->redirection();
 
 	

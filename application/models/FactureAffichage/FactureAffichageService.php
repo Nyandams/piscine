@@ -38,6 +38,7 @@ class FactureAffichageService extends CI_Model
             $festivalDto = new FestivalDTO();
         }
         $reservationCollection = $this->reservationDao->getReservationByIdFestival($idFestival);
+        
         $factureAffichageCollection = new FactureAffichageCollection();
         foreach ($reservationCollection as $reservationDto){
             try{
@@ -59,7 +60,7 @@ class FactureAffichageService extends CI_Model
                 
             }
         }
-        
+     
         return $factureAffichageCollection;        
     }
     

@@ -45,7 +45,6 @@ class ReservationAffichageDTO extends CI_Model
 	private $libelleJeu = "";
 
 
-
         /**
         * @return the $idEditeur
         */

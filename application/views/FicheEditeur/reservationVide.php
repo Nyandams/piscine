@@ -18,7 +18,7 @@
                         <label for="nbEmplacement">Nombre d'emplacement</label>
                         <input type="text" class="form-control" id="nbEmplacement" name="nbEmplacement" placeholder="nombre d'emplacement">
                                 
-                        <label for="prix">Prix de l'emplacement</label>
+                        <label for="prix">Prix négocié ?</label>
                         <input type="text" class="form-control" id="prix" name="prix">
                     </div>
                 </div>

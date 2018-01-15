@@ -16,7 +16,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Ajouter un jeu</h5>
             </div>
 
-            <form method="POST" action="Jeu/ajouterJeu">
+            <form method="POST" action="<?php site_url('Jeux/ajouterJeu') ?>">
                 <div class="container-fluid">
                     <div class="form-row">
                         <div class="form-group col-sm-12">
@@ -143,7 +143,7 @@
                         <label class="col-lg-6">' . $libelleEditeur . '</label>
                         <span class="pull-right">
                         <a class="btn btn-primary" data-toggle="modal" data-target="#modifierJeuModal_'. $idJeu .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                        <a class="btn btn-primary" href="supprimerJeu?idJeu='.$idJeu .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" href="'.site_url('Jeux/supprimerJeu?idJeu='.$idJeu).'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </span>
                         </td>';
                     $ligne = $ligne . '</tr>';

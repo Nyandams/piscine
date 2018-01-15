@@ -46,7 +46,7 @@ class FactureDAO extends CI_Model
      * @param FactureDTO $factureDTO
      */
     public function saveFacture($factureDTO){
-        $bdd = hydrateFromDTO($factureDTO);
+        $bdd = $this->hydrateFromDTO($factureDTO);
         $this->db->set($bdd)
                  ->insert($this->table);
     }
