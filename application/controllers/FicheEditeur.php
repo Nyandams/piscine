@@ -616,21 +616,22 @@ class FicheEditeur extends CI_Controller {
 	            try{
 	                $festivalDto = $festivalDAO->getFestivalById($this->session->userdata("idFestival"));
 	                $prix = number_format($nbEmplacement * $festivalDto->getPrixEmplacementFestival());
-	                
+	              
 	                //si aucun festival n'est stocké en session
 	            }catch(Exception $e){
 	                $this->redirection();
 	            }
-	            $reservationDAO = $this->ReservationFactory->getInstance();
-	            $reservationDto = new ReservationDTO();
-	            $reservationDto->setIdEditeur($this->input->get("idFicheEditeur"));
-	            $reservationDto->setPrixNegociationReservation($prix);
-	            $reservationDto->setIdFestival($this->session->userdata("idFestival"));
-	            $reservationDto->setNbEmplacement($nbEmplacement);
 	            
-	            $reservationDAO->saveReservation($reservationDto);
-	            $this->redirection();
 	        }
+	        $reservationDAO = $this->ReservationFactory->getInstance();
+	        $reservationDto = new ReservationDTO();
+	        $reservationDto->setIdEditeur($this->input->get("idFicheEditeur"));
+	        $reservationDto->setPrixNegociationReservation($prix);
+	        $reservationDto->setIdFestival($this->session->userdata("idFestival"));
+	        $reservationDto->setNbEmplacement($nbEmplacement);
+	        
+	        $reservationDAO->saveReservation($reservationDto);
+	        $this->redirection();
 
 	
 	
