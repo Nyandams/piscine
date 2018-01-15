@@ -106,16 +106,6 @@
                 <th>Editeur</th> <!-- Nom de l'édtieur -->
             </tr>
         </thead>
-        <tfoot>
-            <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Email</th>
-                <th>Téléphone</th>
-                <th>Adresse</th>
-                <th>Editeur</th> <!-- Nom de l'édtieur -->
-            </tr>
-        </tfoot>
         <tbody>
             
             <!-- Insertion des données de manière dynamique -->

@@ -15,15 +15,6 @@
             <th>Prix facture</th>
         </tr>
     </thead>
-    <tfoot>
-        <tr>
-            <th>Editeur</th>
-            <th>Année</th>
-            <th>Envoi facture</th>
-            <th>Paiement facture</th>
-            <th>Prix facture</th>
-        </tr>
-    </tfoot>
     <tbody>
 
         <!-- Insertion des données de manière dynamique -->

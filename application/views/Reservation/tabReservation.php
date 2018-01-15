@@ -15,22 +15,12 @@
             <th>Prix total négocié</th>
         </tr>
     </thead>
-    <tfoot>
-        <tr>
-            <th>Editeur</th>
-            <th>Année</th>
-            <th>Liste jeux réservés</th>
-            <th>Nombre de tables réservées</th>
-            <th>Prix total négocié</th>
-        </tr>
-    </tfoot>
     <tbody>
 
         <!-- Insertion des données de manière dynamique -->
         <?php
                 // Récupération des données
                 $ligne = ''; // Stocke une ligne le temps de la créer
-
                 foreach ($reservationAffichageCollection as $reservationAffichageDto) {
                     // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un éditeur.
                     $ligne = '<tr>';

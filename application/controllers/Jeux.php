@@ -75,17 +75,18 @@ class Jeux extends CI_Controller {
 		// création du dto qu'on va envoyer
 		$dto = new JeuDTO();
 		$dto->setIdJeu(null);
-                $dto->setLibelleJeu($this->input->post('libelleJeu'));
+        $dto->setLibelleJeu($this->input->post('nomJeu'));
 /*		$dto->setIdZone($this->input->post('idZone'));*/
-                $dto->setNbMinJoueurJeu($this->input->post('nbMinJoueurJeu'));
-                $dto->setNbMaxJoueurJeu($this->input->post('nbMaxJoueurJeu'));
-                $dto->setNoticeJeu($this->input->post('noticeJeu'));
-                $dto->setIdEditeur($this->input->post('selectEditeur'));
-
+        $dto->setNbMinJoueurJeu($this->input->post('nbMinJoueurJeu'));
+        $dto->setNbMaxJoueurJeu($this->input->post('nbMaxJoueurJeu'));
+        $dto->setNoticeJeu($this->input->post('noticeJeu'));
+        
+        $dto->setIdEditeur($this->input->post('selectEditeur'));
+        $dto->setIdTypeJeu(0);
 		// Envoie du dto
 		$instanceDao = $this->fact->getInstance();
 		$instanceDao->saveJeu($dto);
-		redirect('/Jeu/JeuListe');
+		redirect(site_url('/Jeux'));
 	}
 	
 	/* Supprime un jeu via une requete

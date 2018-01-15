@@ -71,14 +71,7 @@
                 <th>Renvoyé</th> 
             </tr>
         </thead>
-        <tfoot>
-            <tr>
-               <th>Jeu</th>
-                <th>Quantité</th> 
-                <th>Reçu</th>
-                <th>Renvoyé</th> 
-            </tr>
-        </tfoot>
+
         <tbody>
             
             <!-- Insertion des données de manière dynamique -->
