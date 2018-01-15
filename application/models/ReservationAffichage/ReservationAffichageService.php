@@ -44,16 +44,17 @@ class ReservationAffichageService extends CI_Model
 
         $reservationCollection = $this->reservationDao->getReservationByIdFestival($idFestival);
         $reservationAffichageCollection = new ReservationAffichageCollection();
+        
+       
         foreach ($reservationCollection as $reservationDto){
             try{
-
                 $jeuDto = $this->jeuDao->getJeuById($reservationDto->getIdReservation());        
-                $editeurDto = $this->editeurDao->getEditeurById($reservationDto->getIdReservation());
+                $editeurDto = $this->editeurDao->getEditeurById($reservationDto->getIdEditeur());
 
         		$reservationAffichageDto = new ReservationAffichageDTO();
         		$reservationAffichageDto->setIdEditeur($reservationDto->getIdEditeur());
         		$reservationAffichageDto->setLibelleEditeur($editeurDto->getLibelleEditeur());
-        		$reservationAffichageDto->setIdFestival($festivalDto->getIdFestival());
+        		$reservationAffichageDto->setIdFestival($idFestival);
         		$reservationAffichageDto->setAnneeFestival($festivalDto->getAnneeFestival());
         		$reservationAffichageDto->setPrixNegociationReservation($reservationDto->getPrixNegociationReservation());
         		$reservationAffichageDto->setNbEmplacement($reservationDto->getNbEmplacement());
@@ -62,6 +63,7 @@ class ReservationAffichageService extends CI_Model
                 $reserverDao = $this->ReserverFactory->getInstance();
                 $jeuDao      = $this->JeuFactory->getInstance();
                 $reserverCollection = $reserverDao->getReserverByIdReservation($reservationDto->getIdReservation());
+                
                 $listeJeu = "";
                 $stringVide = "";
                 foreach ($reserverCollection as $reserver){
@@ -74,7 +76,7 @@ class ReservationAffichageService extends CI_Model
                 
                 
         		$reservationAffichageDto->setLibelleJeu($listeJeu);
- 
+        		
                 $reservationAffichageCollection->append($reservationAffichageDto);
 
             }catch(Exception $e){

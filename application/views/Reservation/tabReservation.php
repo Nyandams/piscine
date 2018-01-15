@@ -21,7 +21,6 @@
         <?php
                 // Récupération des données
                 $ligne = ''; // Stocke une ligne le temps de la créer
-
                 foreach ($reservationAffichageCollection as $reservationAffichageDto) {
                     // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un éditeur.
                     $ligne = '<tr>';

@@ -29,7 +29,6 @@ class Reservation extends CI_Controller {
     public function reservationFestival(){
         $reservationAffichageService = $this->ReservationAffichageFactory->getInstance();
         $idFestival = $this->session->userdata('idFestival');
-
         $data['reservationAffichageCollection'] = $reservationAffichageService->getReservationByIdFestival($idFestival);
         $data['page'] = $this->load->view('Reservation/tabReservation', $data, true);
         $data['title']= 'Reservations';

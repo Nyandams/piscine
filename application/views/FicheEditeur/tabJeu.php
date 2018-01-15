@@ -88,7 +88,6 @@
         <thead>
             <tr>
                 <th>Jeu</th>
-                <th>Type</th>
                 <th>Joueur max</th>
             </tr>
         </thead>
@@ -103,7 +102,6 @@
                 foreach ($jeux as $key => $jeu) {
                     $idJeu = $jeu->getIdJeu();
                     $nomJeu = $jeu->getLibelleJeu();
-                    $typeJeu = $jeu->getIdTypeJeu();
                     $nbPlaceMax = $jeu->getNbMaxJoueurJeu();
                     $nbPlaceMin = $jeu->getNbMinJoueurJeu();
                     $noticeJeu = $jeu->getNoticeJeu();
@@ -112,7 +110,6 @@
                     $ligne = '<tr>';
 
                     $ligne = $ligne . '<td>' . $nomJeu . '</td>';
-                    $ligne = $ligne . '<td>' . $typeJeu . '</td>';
                     
 
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
