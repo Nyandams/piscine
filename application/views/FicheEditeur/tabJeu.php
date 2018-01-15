@@ -61,7 +61,7 @@
                         </div>
                         
                         <div class="col-xs-6">
-                        <label for="creerZone">Créer zone ?</label>     
+                        <label for="nomCreerZone">Créer zone ?</label>     
                             <div class="form-row">
                                 <input type="text" value="" class="form-control" id="nomCreerZone" name="nomCreerZone" placeholder="Saisir son nom">
                             </div>

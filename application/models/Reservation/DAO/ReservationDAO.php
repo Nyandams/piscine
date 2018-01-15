@@ -160,7 +160,7 @@ class ReservationDAO extends CI_Model
      * retourne le dernier reservation créée dans la BDD
      * @return ReservationDTO
      */
-    public function getLastIdJeu(){
+    public function getLastIdReservation(){
         $resultat = $this->db->select()
         ->from($this->table)
         ->order_by('idReservation', 'desc')

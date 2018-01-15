@@ -516,10 +516,39 @@ class FicheEditeur extends CI_Controller {
 	    $reserverDAO = $this->ReserverFactory->getInstance();
 	    $idFestival = $this->session->userdata("idFestival");
 	    $idEditeur = $this->input->get("idFicheEditeur");
-	    
-	    $lastJeu = $jeuDAO->getLastIdJeu();
 	    // Création du dto
 	    $reserverDTO = new ReserverDTO();
+	    
+	    // Création de la nouvelle zone si besoin
+	    // Si on ne souhaite pas créer une zone, on met à jour la zone selectionnée
+	    $nomCreerZone = $this->input->post("nomCreerZone");
+	    if ($nomCreerZone == "") {
+	        $idZoneSelection = $this->input->post("selectZone");
+	        
+	        // Si on a choisi de pas mettre de zone
+	        if ($idZoneSelection == 0) {
+	            $reserverDTO->setIdZone(NULL);
+	        }
+	        else {
+	            $reserverDTO->setIdZone($idZoneSelection);
+	        }
+	    } else {
+	        // Création de la nouvelle zone pour l'éditeur
+	        $zoneDTO = new ZoneDTO();
+	        $zoneDTO->setIdZone(NULL);
+	        $zoneDTO->setNomZone($nomCreerZone);
+	        $zoneDTO->setIdFestival($this->session->userdata("idFestival"));
+	        $zoneDAO = $this->ZoneFactory->getInstance();
+	        $zoneDAO->saveZone($zoneDTO);
+	        
+	        // Et ajout de l'id de la zone dans la reserver du jeu
+	        $lastZoneDTO = $zoneDAO->getLastIdZone();
+	        $reserverDTO->setIdZone($lastZoneDTO->getIdZone());
+	    }
+	    
+	    
+	    $lastJeu = $jeuDAO->getLastIdJeu();
+	    
 	    $reserverDTO->setIdJeu($lastJeu->getIdJeu());
 	    $reserverDTO->setQuantiteJeuReserver(0);
 	    $reserverDTO->setReceptionJeuReserver(0);
@@ -549,8 +578,6 @@ class FicheEditeur extends CI_Controller {
 	    }
 	    
 	    $reserverDTO->setIdReservation($idReservation);
-	    
-	    
 	    $reserverDAO->saveReserver($reserverDTO);
 	    
 	    $reserveDTO = new ReserverDTO();
