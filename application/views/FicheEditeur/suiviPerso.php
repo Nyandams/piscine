@@ -15,7 +15,6 @@ if (!is_null($factureDTO->getDatePaiementFacture()))
 {
     $paiementCheck = ('checked="checked"');
     $paiementValue = $factureDTO->getDatePaiementFacture()->format('d/m/Y');
-}
 
 ?>
 <section class="row">
@@ -28,7 +27,7 @@ if (!is_null($factureDTO->getDatePaiementFacture()))
         		<label><input type="checkbox" <?php if ($suivi->getLogementSuivi()) {echo ('checked="checked"');}?> name="hebergementContact" id="hebergementContact">Editeur hébergé</label>
         	</div>
         	<div class="checkbox">
-        		
+        	
         		<label><input type="checkbox" <?php echo ($factureCheck) ?> name="factureEnvoye" id="factureEnvoye">Facture envoyée</label>
         		<?php
         		if (isset($factureValue)){
@@ -53,7 +52,6 @@ if (!is_null($factureDTO->getDatePaiementFacture()))
         </div>
          <?php 
          $reponseEditeur = $suivi->getReponseEditeur();
-         
          ?>
         <div class="col-lg-6">
             <div class="well">
@@ -103,8 +101,8 @@ if (!is_null($factureDTO->getDatePaiementFacture()))
 
                     <div class="col-md-6">
                     	<label for="selectReponse2">Réponse :</label><?php 
-                    	//on ne peut pas le selectionner on a contacté une deuxieme fois
-                    	echo getListeDeroulante(is_null($suivi->getPremierContact()) or is_null($suivi->getSecondContact()), "selectReponse2", $suivi);
+                    	//On ne peut toujours séléectionner uine réponse
+                    	echo getListeDeroulante(is_null($suivi->getSecondContact()), "selectReponse2", $suivi);
                     ?>
                     </div>
                 </div>

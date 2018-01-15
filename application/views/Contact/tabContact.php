@@ -99,21 +99,21 @@
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>Prenom</th>
-                <th>Adresse email</th>
+                <th>Prénom</th>
+                <th>Email</th>
                 <th>Téléphone</th>
                 <th>Adresse</th>
-                <th>Travail chez</th> <!-- Nom de l'édtieur -->
+                <th>Editeur</th> <!-- Nom de l'édtieur -->
             </tr>
         </thead>
         <tfoot>
             <tr>
                 <th>Nom</th>
-                <th>Prenom</th>
-                <th>Adresse email</th>
+                <th>Prénom</th>
+                <th>Email</th>
                 <th>Téléphone</th>
                 <th>Adresse</th>
-                <th>Travail chez</th> <!-- Nom de l'édtieur -->
+                <th>Editeur</th> <!-- Nom de l'édtieur -->
             </tr>
         </tfoot>
         <tbody>
