@@ -117,8 +117,25 @@ class JeuDAO extends CI_Model
         
     }
     
+    /**
+     * retourne le dernier festival créée dans la BDD
+     * @return EditeurDTO
+     */
+    public function getLastIdJeu(){
+        $resultat = $this->db->select()
+        ->from($this->table)
+        ->order_by('idjeu', 'desc')
+        ->get()
+        ->result();
+        
+        if (!empty($resultat)){
+            $dto = $this->hydrateFromDatabase($resultat[0]);
+            return $dto;
+        } else {
+            throw new NotFoundJeuException();
+        }
+    }
     
-     
     /**
      * @param JeuDTO $dto
      * @return array('id' => value)

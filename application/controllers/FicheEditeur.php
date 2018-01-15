@@ -125,7 +125,7 @@ class FicheEditeur extends CI_Controller {
 	        $data['reservationDTO'] = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
 	        // Envoie des données pour choisir la zone d'un jeu
 	        $zoneDAO = $this->ZoneFactory->getInstance();
-	        $data["zones"] = $zoneDAO->getZones();
+	        $data["zones"] = $zoneDAO->getZonesByIdFestival($this->session->userdata("idFestival"));
 	        return $this->load->view("FicheEditeur/tabReservation", $data, true);
 	    } catch (Exception $e) {
 	        return $this->load->view("FicheEditeur/reservationVide", $data, true);
@@ -144,6 +144,10 @@ class FicheEditeur extends CI_Controller {
 	    // Récupération du dao Editeur pour le modal d'ajout d'un jeu
 	    $editDAO = $this->EditeurFactory->getInstance();
 	    $data['EditeurDto'] = $editDAO->getEditeurs();
+	    
+	    // Récupération des zones
+	    $zoneDAO = $this->ZoneFactory->getInstance();
+	    $data["zones"] = $zoneDAO->getZonesByIdFestival($this->session->userdata("idFestival"));
 	    
 	    return $this->load->view("FicheEditeur/tabJeu", $data, true);
 	}
@@ -505,13 +509,49 @@ class FicheEditeur extends CI_Controller {
 	    $dto = $this->recuperationJeu();
 	    
 	    // Envoie du dto
-	    $instanceDao = $this->JeuFactory->getInstance();
-	    $instanceDao->saveJeu($dto);
+	    $jeuDAO = $this->JeuFactory->getInstance();
+	    $jeuDAO->saveJeu($dto);
 	    
 	    // On ajoute directement un reserver pour le jeu
 	    $reserverDAO = $this->ReserverFactory->getInstance();
 	    $idFestival = $this->session->userdata("idFestival");
 	    $idEditeur = $this->input->get("idFicheEditeur");
+	    
+	    $lastJeu = $jeuDAO->getLastIdJeu();
+	    // Création du dto
+	    $reserverDTO = new ReserverDTO();
+	    $reserverDTO->setIdJeu($lastJeu->getIdJeu());
+	    $reserverDTO->setQuantiteJeuReserver(0);
+	    $reserverDTO->setReceptionJeuReserver(0);
+	    $reserverDTO->setRenvoiJeuReserver(0);
+	    $reserverDTO->setDotationJeuReserver(0);
+	    
+	    $idFestival = $this->session->userdata("idFestival");
+	    $idEditeur = $this->input->get("idFicheEditeur");
+	    
+	    $reservationDAO = $this->ReservationFactory->getInstance();
+	    try {
+	        // S'il n'y a pas de réservation pour cet éditeur il faut lui en créer une.
+	        $reservationDTO = $reservationDAO->getReservationByIdEditeurFestival($idEditeur, $idFestival);
+	        $idReservation = $reservationDTO->getIdReservation();
+	        
+	    }catch (Exception $e) {
+	        $reservationDTO = new ReservationDTO();
+	        $reservationDTO->setNbEmplacement(0);
+	        $reservationDTO->setPrixNegociationReservation(0);
+	        $reservationDTO->setIdFestival($idFestival);
+	        $reservationDTO->setIdEditeur($idEditeur);
+	        
+	        $reservationDAO->saveReservation($reservationDTO);
+	        
+	        $idReservation= $reservationDAO->getLastIdReservation()->getIdReservation();
+	        
+	    }
+	    
+	    $reserverDTO->setIdReservation($idReservation);
+	    
+	    
+	    $reserverDAO->saveReserver($reserverDTO);
 	    
 	    $reserveDTO = new ReserverDTO();
 	    
@@ -540,9 +580,6 @@ class FicheEditeur extends CI_Controller {
 	}
 	
 	public function creerReservation(){
-	    
-	
-
 	        $nbEmplacement = $this->input->post('nbEmplacement');
 	        $prix = $this->input->post('prix');
 	        if ($prix == ""){

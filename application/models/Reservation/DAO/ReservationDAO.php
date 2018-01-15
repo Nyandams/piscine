@@ -49,6 +49,8 @@ class ReservationDAO extends CI_Model
                  ->insert($this->table);
     }
     
+    
+    
     /**
      * Supprime le reservationDTO de la BDD
      * @param ReservationDTO $reservationDTO
@@ -152,6 +154,25 @@ class ReservationDAO extends CI_Model
         } else {
             throw new NotFoundReservationException();
         }                             
+    }
+    
+    /**
+     * retourne le dernier reservation créée dans la BDD
+     * @return ReservationDTO
+     */
+    public function getLastIdJeu(){
+        $resultat = $this->db->select()
+        ->from($this->table)
+        ->order_by('idReservation', 'desc')
+        ->get()
+        ->result();
+        
+        if (!empty($resultat)){
+            $dto = $this->hydrateFromDatabase($resultat[0]);
+            return $dto;
+        } else {
+            throw new NotFoundJeuException();
+        }
     }
 
     /**
