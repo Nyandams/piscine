@@ -40,7 +40,7 @@ foreach ($zoneReserverCollection as $key => $zoneReserverDTO) {
         $ligne = $ligne . '
                 <td>' . $jeuDTO->getLibelleJeu() . '</td>';
         $ligne = $ligne . '
-                <td>' . $editeurDTO->getLibelleEditeur() . '</td>';
+                <td><a href="'.site_url('ficheEditeur?idFicheEditeur='.$editeurDTO->getIdEditeur()).'">' . $editeurDTO->getLibelleEditeur() . '</a></td>';
         $ligne = $ligne . '
             </tr>';
 

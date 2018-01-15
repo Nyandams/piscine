@@ -11,10 +11,10 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h5 class="modal-title" id="exampleModalLabel">Ajouter éditeur</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Ajouter contact</h5>
             </div>
 
-            <form method="POST" action="Contact/ajouterContact">
+            <form method="POST" action="<?php echo site_url("Contact/ajouterContact") ?>">
                 <div class="container-fluid">
                     <div class="form-row">
                         <div class="form-group col-sm-6">

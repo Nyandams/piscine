@@ -44,11 +44,9 @@ class ReservationAffichageService extends CI_Model
 
         $reservationCollection = $this->reservationDao->getReservationByIdFestival($idFestival);
         $reservationAffichageCollection = new ReservationAffichageCollection();
-        
        
         foreach ($reservationCollection as $reservationDto){
-            try{
-                $jeuDto = $this->jeuDao->getJeuById($reservationDto->getIdReservation());        
+            try{       
                 $editeurDto = $this->editeurDao->getEditeurById($reservationDto->getIdEditeur());
 
         		$reservationAffichageDto = new ReservationAffichageDTO();
@@ -58,7 +56,6 @@ class ReservationAffichageService extends CI_Model
         		$reservationAffichageDto->setAnneeFestival($festivalDto->getAnneeFestival());
         		$reservationAffichageDto->setPrixNegociationReservation($reservationDto->getPrixNegociationReservation());
         		$reservationAffichageDto->setNbEmplacement($reservationDto->getNbEmplacement());
-                $reservationAffichageDto->setIdJeu($jeuDto->getLibelleJeu());
                 
                 $reserverDao = $this->ReserverFactory->getInstance();
                 $jeuDao      = $this->JeuFactory->getInstance();
@@ -80,7 +77,6 @@ class ReservationAffichageService extends CI_Model
                 $reservationAffichageCollection->append($reservationAffichageDto);
 
             }catch(Exception $e){
-                
             }
         }
         

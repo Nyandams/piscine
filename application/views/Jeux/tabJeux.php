@@ -125,7 +125,12 @@
                     $ligne = $ligne . '<td>' . $libelleJeu     . '</td>';
                     $ligne = $ligne . '<td>' . $nbMinJoueurJeu . '</td>';
                     $ligne = $ligne . '<td>' . $nbMaxJoueurJeu . '</td>';
-                    $ligne = $ligne . '<td>' . $noticeJeu      . '</td>';
+                    if($noticeJeu == ""){
+                        $ligne = $ligne . '<td>  </td>';
+                    }else{
+                        $ligne = $ligne . '<td>  <a href="'.$noticeJeu.'"> ici  </a></td>';
+                    }
+                    
 
 
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.

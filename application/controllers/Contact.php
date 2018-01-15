@@ -118,8 +118,8 @@ class Contact extends CI_Controller {
 		$dto->setVilleContact($this->input->post('ville'));
 		$dto->setCpContact($this->input->post('codePostal'));
 		$dto->setIdEditeur($this->input->post('selectEditeur'));
-
-
+        print_r($dto);exit;
+        
 		// Envoie du dto
 		$instanceDao = $this->fact->getInstance();
 		$instanceDao->saveContact($dto);
