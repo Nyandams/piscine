@@ -23,6 +23,7 @@ class Festival extends CI_Controller {
             $this->load->model("EnsembleReservation/EnsembleReservationFactory");
             $this->load->model('Zone/ZoneFactory');
             $this->load->model('Reservation/ReservationFactory');
+            $this->load->model('Festival/FestivalFactory');
         }
     }
     

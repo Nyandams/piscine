@@ -1,4 +1,4 @@
-<h1 id="titreInterface">Festivals : </h1>
+<h1 id="titreInterface">Festivals :</h1>
 <!-- Modal -->
 <div class="modal fade" id="ajouterFestivalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -41,26 +41,28 @@ foreach($festivalCollection as $festival){
     // Changement de la couleur du panel
     $couleur= "";
     if ($festival->getIdFestival() == $this->session->userdata("idFestival")) {
-        $couleur = 'style ="background-color: green"';
+        $couleur = 'style ="background-color: green;"';
 
     }
-    $panel = 
-           '
-            <a href="' . site_url("Festival/changerFestival?idFestival=" . $festival->getIdFestival() .'"') . '">
-                <div class="panel panel-default vignetteFestival col-sm-3">
-                    <div class="panel-heading " ' . $couleur .'>
-                        <h3 class="panel-title">'.$festival->getAnneeFestival().'</h3>
-                   
+    $panel ='<div class="panel panel-default vignetteFestival col-lg-2 col-sm-3">
+                    <div class="panel-heading" ' . $couleur .'">
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <h3 class="panel-title text-center">'.$festival->getAnneeFestival().'</h3>
+                            </div>
+                            <div class="col-xs-4">
+                                <a class="btn btn-primary btn-xs" href="'. site_url('Festival/changerFestival?idFestival='. $festival->getIdFestival()) .'" role="button"><span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span></a>
+                                <a class="btn btn-primary btn-xs" href="'. site_url('Festival/supprimerFestival?idFestival='. $festival->getIdFestival()) .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            </div>
+                        </div>                    
                     </div>
-      		        <div class="panel-body">
+                    <div class="panel-body">
                        <p>Nb Emplacements : '.$festival->getNbEmplacementTotal().'</p>
                        <p>Prix de l\'emplacement : '.$festival->getPrixEmplacementFestival().'</p>
                        <p>Emplacements restants : '. $festival->getNbEmplacementsRestant() .'</p>
                     </div>
                 </div>
-            </a>
-            <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="'. site_url('Festival/supprimerFestival?idFestival='. $festival->getIdFestival()) .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>';
-    
+            ';
     echo $panel;
 }
 ?>
