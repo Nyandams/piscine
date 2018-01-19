@@ -95,7 +95,6 @@ class OrganisateurDAO extends CI_Model
      * @param OrganisateurDTO $organisateurDTO
      */
     public function updateOrganisateur($dto){
-        $dto->setMotDePasseOrganisateur(md5($dto->getMotDePasseOrganisateur()));
         $bdd = $this->hydrateFromDTO($dto);
         
         $this->db->replace($this->table, $bdd);

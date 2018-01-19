@@ -36,25 +36,27 @@ class Organisateur extends CI_Controller
     
     
     public function modificationOrganisateur(){
-        $this->form_validation->set_rules('mdp', '"Mot de passe"', 'max_length[52]|alpha_dash|encode_php_tags');
-        $this->form_validation->set_rules('verifmdp', '"Verification mot de passe"', 'max_length[52]|alpha_dash|encode_php_tags');
         $this->form_validation->set_rules('nom', '"Nom"', 'trim|min_length[3]|max_length[52]|alpha_dash|encode_php_tags');
         $this->form_validation->set_rules('prenom', '"Prenom"', 'trim|min_length[3]|max_length[52]|alpha_dash|encode_php_tags');
         
         if($this->form_validation->run()) {
-            $login = $this->session->userdata('connexionOrganisateur');
+            $login = $this->input->get('login');
             try{
                 $organisateurDTO = $this->dao->getOrganisateurByLogin($login);
                 
                 $organisateurDTO->setNomOrganisateur($this->input->post('nom'));
                 $organisateurDTO->setPrenomOrganisateur($this->input->post('prenom'));
+                $organisateurDTO->setAdmin($this->input->post('selectEstAdmin'));
                 $mdp = $this->input->post('mdp');
                 $verifMdp = $this->input->post('verifmdp');
+                
                 if (strlen($mdp) > 0 && strlen($verifMdp) > 0 && $mdp == $verifMdp){
-                    $organisateurDTO->setMotDePasseOrganisateur($mdp);
+                    $organisateurDTO->setMotDePasseOrganisateur(md5($mdp));
                 }
                 
                 $this->dao->updateOrganisateur($organisateurDTO);
+                
+                
                 
             }catch(Exception $e){
                 
@@ -64,9 +66,20 @@ class Organisateur extends CI_Controller
             $this->interfaceOrganisateur();
         }
         
-        redirect('/organisateur');
+        redirect(site_url('/organisateur'));
     }
     
+    
+    public function supprimerOrganisateur(){
+        $login = $this->input->post('idSuppEditeur');
+        try{
+            $dto = $this->dao->getOrganisateurByLogin($login);
+            $this->dao->deleteOrganisateur($dto);
+        }catch(Exception $e){
+            
+        }
+        redirect(site_url('/organisateur'));
+    }
     
     public function ajoutOrganisateur(){
        

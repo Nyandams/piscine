@@ -133,6 +133,7 @@ class Festival extends CI_Controller {
             $festivalDao->deleteFestival($festivalDto);
         }catch(Exception $e){
         }
+        redirect(site_url("Festival"));
     }
     
     public function changerFestival() {
