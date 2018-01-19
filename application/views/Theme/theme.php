@@ -15,7 +15,7 @@
 
 </head>
 <body>
-
+<?php $admin = $this->session->userdata('admin');?>
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -29,10 +29,16 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li><a href="<?php echo site_url('Festival')?>">Festivals</a></li>
-        <li><a href="<?php echo site_url('Editeur'); ?>">Editeurs</a></li>
-        <li><a href="<?php echo site_url('Contact');?>">Contacts</a></li>
-	<li><a href="<?php echo site_url('Jeux');?>">Jeux</a></li>
-        <li><a href="<?php echo site_url('Organisateur'); ?>">Organisateur</a></li>
+        <li><a href="<?php echo site_url('Jeux');?>">Jeux</a></li>
+        <?php if ($admin == 1){
+        echo '
+        <li><a href="'. site_url('Editeur') .'">Editeurs</a></li>
+        <li><a href="'. site_url('Contact') .'">Contacts</a></li>
+        <li><a href="'. site_url('Organisateur') .'">Organisateur</a></li>';
+        }
+        
+        ?>
+        
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<li style="visibility: hidden;"><a href="#"><span class="glyphicon glyphicon-bell"><span class="badge alarmeSuivi">4</span></span></a></li>
@@ -58,11 +64,15 @@
       </button>      
     </div>
     <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav listeMenuGauche">
 		<li><a href="<?php echo site_url('/Reservation')?>">Reservation<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-duplicate"></span></a></li>
-        <li><a href=<?php echo site_url('/Zone');?>>Zones<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-large"></span></a></li>
-        <li><a href="<?php echo site_url('/facture');?>">Factures<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-duplicate"></span></a></li>
+        <li><a href="<?php echo site_url('/Zone');?>">Zones<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-large"></span></a></li>
+        <?php if ($admin == 1){
+            echo '
+            <li><a href="'. site_url('/facture') .'">Factures<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-duplicate"></span></a></li>';
+        }
         
+        ?>
       </ul>
     </div>
   </div>

@@ -9,8 +9,9 @@ class OrganisateurDAO extends CI_Model
         'idOrganisateur'            => 'idOrganisateur',
         'loginOrganisateur'         => 'loginOrganisateur',
         'motDePasseOrganisateur'    => 'motDePasseOrganisateur',
+        'admin'                     => 'admin',
         'nomOrganisateur'           => 'nomOrganisateur',
-        'prenomOrganisateur'        => 'prenomOrganisateur'
+        'prenomOrganisateur'                    => 'prenomOrganisateur'
     );
     
     public function __construct(){
@@ -93,6 +94,12 @@ class OrganisateurDAO extends CI_Model
             return false;
         }
         if(md5($mdp) == $organisateurDto->getMotDePasseOrganisateur()){
+            if ($organisateurDto->getAdmin() == 1){
+                $this->session->set_userdata('admin', 1);
+            }else{
+                $this->session->set_userdata('admin', 0);
+                
+            }
             return true;
         }else{
             return false;

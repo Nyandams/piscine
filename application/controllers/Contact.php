@@ -11,8 +11,7 @@ class Contact extends CI_Controller {
 
 		//Permet de gérer les formulaires
 		 $this->load->helper('form');
-		
-		if (!$this->session->has_userdata('connexionOrganisateur')){
+		 if (!$this->session->has_userdata('connexionOrganisateur') || $this->session->userdata('admin') != 1){
 		    redirect('/welcome');
 		} else {
 		    // Récupération des données de Contact

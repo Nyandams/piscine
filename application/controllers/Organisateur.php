@@ -6,7 +6,7 @@ class Organisateur extends CI_Controller
         parent::__construct();
         
         $this->load->helper('url');
-        if (!$this->session->has_userdata('connexionOrganisateur')){
+        if (!$this->session->has_userdata('connexionOrganisateur')|| $this->session->userdata('admin') != 1){
             redirect('/welcome');
         } else {
             $this->load->library('form_validation');
@@ -38,13 +38,14 @@ class Organisateur extends CI_Controller
     public function modificationOrganisateur(){
         $this->form_validation->set_rules('mdp', '"Mot de passe"', 'max_length[52]|alpha_dash|encode_php_tags');
         $this->form_validation->set_rules('verifmdp', '"Verification mot de passe"', 'max_length[52]|alpha_dash|encode_php_tags');
-        $this->form_validation->set_rules('nom', '"Nom"', 'trim|min_length[3]|required|max_length[52]|alpha_dash|encode_php_tags');
-        $this->form_validation->set_rules('prenom', '"Prenom"', 'trim|required|min_length[3]|max_length[52]|alpha_dash|encode_php_tags');
+        $this->form_validation->set_rules('nom', '"Nom"', 'trim|min_length[3]|max_length[52]|alpha_dash|encode_php_tags');
+        $this->form_validation->set_rules('prenom', '"Prenom"', 'trim|min_length[3]|max_length[52]|alpha_dash|encode_php_tags');
         
         if($this->form_validation->run()) {
             $login = $this->session->userdata('connexionOrganisateur');
             try{
                 $organisateurDTO = $this->dao->getOrganisateurByLogin($login);
+                
                 $organisateurDTO->setNomOrganisateur($this->input->post('nom'));
                 $organisateurDTO->setPrenomOrganisateur($this->input->post('prenom'));
                 $mdp = $this->input->post('mdp');

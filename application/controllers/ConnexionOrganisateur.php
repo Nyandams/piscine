@@ -32,6 +32,7 @@ class ConnexionOrganisateur extends CI_Controller
                 
                 if( $connexionValide ) {
                     $this->session->set_userdata('connexionOrganisateur', $login);
+
                     
                     $festivalDAO = $this->FestivalFactory->getInstance();
                     try{
@@ -60,6 +61,7 @@ class ConnexionOrganisateur extends CI_Controller
             redirect('/welcome');
         } else {
             $this->session->unset_userdata('connexionOrganisateur');
+            $this->session->unset_userdata('admin');
             redirect('/connexionOrganisateur');
         }
     }

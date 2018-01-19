@@ -2,14 +2,6 @@
 
 	<h1><?php echo $organisateur->getLoginOrganisateur(); ?></h1>
 	 <form method="post" action="Organisateur/modificationOrganisateur">
-	 
-	 	<label for="nom">Nom</label>
-        <input type="text" id="nom" name="nom" class="form-control" placeholder="nom" value="<?php echo $organisateur->getNomOrganisateur(); ?>">
-        <?php echo form_error('nom'); ?>
-        
-        <label for="prenom">Prenom</label>
-        <input type="text" id="prenom" name="prenom" class="form-control" placeholder="prenom" value="<?php echo $organisateur->getPrenomOrganisateur(); ?>">
-        <?php echo form_error('prenom'); ?>
         
     	<label for="mdp">Mot de passe</label>
         <input type="password" id="mdp" name="mdp" class="form-control" placeholder="mot de passe" value="">
@@ -18,6 +10,14 @@
 		<label for="verifmdp">Vérification mot de passe</label>
         <input type="password" id="verifmdp" name="verifmdp" class="form-control" placeholder="mot de passe" value="">
         <?php echo form_error('verifmdp'); ?>
+        
+        <label for="nom">Nom</label>
+        <input type="text" id="nom" name="nom" class="form-control" placeholder="nom" value="<?php echo $organisateur->getNomOrganisateur(); ?>">
+        <?php echo form_error('nom'); ?>
+        
+        <label for="prenom">Prenom</label>
+        <input type="text" id="prenom" name="prenom" class="form-control" placeholder="prenom" value="<?php echo $organisateur->getPrenomOrganisateur(); ?>">
+        <?php echo form_error('prenom'); ?>
         
 		<button type="submit" class="btn btn-secondary modifierOrga">Modifier</button>
 	
@@ -48,6 +48,10 @@
             <input type="text" id="pseudo" name="pseudo" class="form-control" placeholder="pseudo" value="">
             <?php echo form_error('pseudo'); ?>
             
+        	<label for="mdp">Mot de passe</label>
+            <input type="password" id="mdp" name="mdp" class="form-control" placeholder="mot de passe" value="">
+            <?php echo form_error('mdp'); ?>
+            
             <label for="nom">Nom</label>
             <input type="text" id="nom" name="nom" class="form-control" placeholder="nom" value="">
             <?php echo form_error('nom'); ?>
@@ -55,10 +59,6 @@
             <label for="prenom">Prenom</label>
             <input type="text" id="prenom" name="prenom" class="form-control" placeholder="prenom" value="">
             <?php echo form_error('prenom'); ?>
-            
-        	<label for="mdp">Mot de passe</label>
-            <input type="password" id="mdp" name="mdp" class="form-control" placeholder="mot de passe" value="">
-            <?php echo form_error('mdp'); ?>
           
         </div>
 

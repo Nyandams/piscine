@@ -2,7 +2,7 @@
 <!-- js pour les tableaux-->
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-
+<?php $admin = $this->session->userdata('admin');?>
 
 <!-- Table Reservation -->
 <table id="tabReservation" class="table table-striped table-bordered col-sm-12 text-left" cellspacing="0" width="100%">
@@ -24,7 +24,11 @@
                 foreach ($reservationAffichageCollection as $reservationAffichageDto) {
                     // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un éditeur.
                     $ligne = '<tr>';
-                    $ligne = $ligne . '<td><a  href="' . site_url('ficheEditeur?idFicheEditeur='. $reservationAffichageDto->getIdEditeur() ). '" >' . $reservationAffichageDto->getLibelleEditeur() . '</a></td>';
+                    if ($admin == 1){
+                        $ligne = $ligne . '<td><a  href="' . site_url('ficheEditeur?idFicheEditeur='. $reservationAffichageDto->getIdEditeur() ). '" >' . $reservationAffichageDto->getLibelleEditeur() . '</a></td>';
+                    }else{
+                        $ligne = $ligne . '<td>' . $reservationAffichageDto->getLibelleEditeur() . '</td>';
+                    }
                     $ligne = $ligne . '<td>'.$reservationAffichageDto->getAnneeFestival().' </td>';
                     $ligne = $ligne . '<td>'.$reservationAffichageDto->getLibelleJeu(). ' </td>'; 
                     $ligne = $ligne . '<td>'.$reservationAffichageDto->getNbEmplacement().' </td>';
