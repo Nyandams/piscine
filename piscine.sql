@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Ven 19 Janvier 2018 à 17:00
+-- Généré le :  Ven 19 Janvier 2018 à 17:07
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -198,8 +198,6 @@ CREATE TABLE `organisateur` (
   `idOrganisateur` int(50) NOT NULL,
   `loginOrganisateur` varchar(100) NOT NULL,
   `motDePasseOrganisateur` varchar(100) NOT NULL,
-  `nomOrganisateur` varchar(100) DEFAULT NULL,
-  `prenomOrganisateur` varchar(100) DEFAULT NULL,
   `admin` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -207,9 +205,9 @@ CREATE TABLE `organisateur` (
 -- Contenu de la table `organisateur`
 --
 
-INSERT INTO `organisateur` (`idOrganisateur`, `loginOrganisateur`, `motDePasseOrganisateur`, `nomOrganisateur`, `prenomOrganisateur`, `admin`) VALUES
-(2, 'piscine', '64f847250ae222f2fd892bc6810b294f', 'nomRandom', 'piscine', 1),
-(3, 'alia', '86c8c6c90abd00c209e39736da1ec1fd', 'alia', 'alia', 0);
+INSERT INTO `organisateur` (`idOrganisateur`, `loginOrganisateur`, `motDePasseOrganisateur`, `admin`) VALUES
+(2, 'piscine', '64f847250ae222f2fd892bc6810b294f', 1),
+(3, 'alia', '86c8c6c90abd00c209e39736da1ec1fd', 0);
 
 -- --------------------------------------------------------
 
