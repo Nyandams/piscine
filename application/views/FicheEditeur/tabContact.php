@@ -145,7 +145,7 @@
                         <label class="col-lg-6">' . $mailContact . '</label>
                         <span class="pull-right">
                         <a class="btn btn-primary" data-toggle="modal" data-target="#modifierContactModal_' . $idContact .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                        <a class="btn btn-primary" href="FicheEditeur/supprimerContact?idContact='.$idContact . '&idFicheEditeur=' . $idFicheEditeur . '" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" data-toggle="modal" data-target="#supprimerContactModal_' . $idContact .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </span>
                         </td>';
                     $ligne = $ligne . '</tr>';
@@ -236,6 +236,31 @@
                         </div>
                     </div>';
                     echo ($modalModif);
+
+		    $modalSuppressionContact =
+		    '<div class="modal fade" id="supprimerContactModal_'. $idContact . '" tabindex="-1" role="dialog">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title"><b>Attention !</b></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                       
+                          </div>
+                          <div class="modal-body">
+                            <p>Etes-vous sûr de vouloir supprimer ce contact ?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+			    <a class="btn btn-primary" href="FicheEditeur/supprimerContact?idContact='.$idContact . '&idFicheEditeur=' . $idFicheEditeur . '" role="button">Valider</a>
+			    
+                          </div>
+                        </div>
+                      </div>
+                    </div>';
+		    echo ($modalSuppressionContact);	
+
                 }
             ?>
             
