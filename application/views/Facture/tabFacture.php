@@ -46,19 +46,52 @@
 	</table>
     
     <div class="prixFacture">
-   		<div class="panel panel-default col-sm-2 pull-right">
- 			<div class="panel-body">
-            
-          	</div>
+
+        <div class="panel panel-default pull-left">
+
+                        <div class="panel-heading">Montant total factures</div>
+                        <div class="panel-body">
+                                <?php
+                                $prixTotalFactures = 0;
+                                foreach ($factureAffichageCollection as $factureAffichageDto) {
+                                        $prixTotalFactures += ($factureAffichageDto->getPrixNegociationReservation());
+                                } 
+                                echo $prixTotalFactures;
+                                ?>
+                        </div>
         </div>
-        
-        <div class="panel panel-default col-sm-2 pull-right">
- 			<div class="panel-body">
-            
-          	</div>
+
+        <div class="panel panel-default pull-left">
+                        <div class="panel-heading">Montant total payé</div>
+
+                        <div class="panel-body">
+                                <?php
+                                $prixTotalPaye = 0;
+                                foreach ($factureAffichageCollection as $factureAffichageDto) {
+                                        $datePaiement = $factureAffichageDto->getdatePaiementFacture();
+                                        if ($datePaiement!=null) {
+ 
+                                                $prixTotalPaye += ($factureAffichageDto->getPrixNegociationReservation());
+                                        } 
+                                }
+                                echo $prixTotalPaye;
+                                ?>
+                        </div>
         </div>
+
+
+        <div class="panel panel-default pull-left">
+                        <div class="panel-heading">Montant total NON payé</div>
+
+                        <div class="panel-body">
+				<?php 
+				echo ($prixTotalFactures - $prixTotalPaye);
+				?>
+			</div>
+        </div>
+
+
     </div>
-    
 </div>
 
 <script type="text/javascript" >        
