@@ -48,6 +48,33 @@
                             </select>
                          </div>
                     </div>
+                    
+                    <div class="row">
+                    	<div class="col-xs-6">
+                    	<label for="selectZone">Choisir la zone du jeu</label>
+                    	<select class="selectZone" name="selectZone"> 
+                    	<?php
+                            $choixZone = '<option value="0">Choisir zone</option>';
+                            foreach ($zones as $key => $zone) {
+                                // Si le jeu a une zone on affiche dans la liste déroulante sa zone en premier
+                                $choixZone = $choixZone . '<option value="'. $zone->getIdZone() . '">';
+                                $choixZone = $choixZone . $zone->getNomZone() . "</option>";
+                            }
+                            
+                            echo ($choixZone);
+                        ?>
+                                                    
+                        </select>
+                        </div>
+                        
+                        <div class="col-xs-6">
+                        <label for="nomCreerZone">Créer zone ?</label>     
+                            <div class="form-row">
+                                <input type="text" value="" class="form-control" id="nomCreerZone" name="nomCreerZone" placeholder="Saisir son nom">
+                            </div>
+                         </div>
+                       
+                    </div>
                 </div>
 
                 <div class="modal-footer">

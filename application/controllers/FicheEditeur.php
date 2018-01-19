@@ -188,8 +188,36 @@ class FicheEditeur extends CI_Controller {
 	    $quantiteJeu = $this->input->post("selectQuantite");
 	    $dotationJeu = $this->input->post("selectDotation");
 	    
-	    // Création du dto
+	    
 	    $reserverDTO = new ReserverDTO();
+	    
+	    $nomCreerZone = $this->input->post("nomCreerZone");
+	    if ($nomCreerZone == "") {
+	        $idZoneSelection = $this->input->post("selectZone");
+	        
+	        // Si on a choisi de pas mettre de zone
+	        if ($idZoneSelection == 0) {
+	            $reserverDTO->setIdZone(NULL);
+	        }
+	        else {
+	            $reserverDTO->setIdZone($idZoneSelection);
+	        }
+	    } else {
+	        // Création de la nouvelle zone pour l'éditeur
+	        $zoneDTO = new ZoneDTO();
+	        $zoneDTO->setIdZone(NULL);
+	        $zoneDTO->setNomZone($nomCreerZone);
+	        $zoneDTO->setIdFestival($this->session->userdata("idFestival"));
+	        $zoneDAO = $this->ZoneFactory->getInstance();
+	        $zoneDAO->saveZone($zoneDTO);
+	        
+	        // Et ajout de l'id de la zone dans la reserver du jeu
+	        $lastZoneDTO = $zoneDAO->getLastIdZone();
+	        $reserverDTO->setIdZone($lastZoneDTO->getIdZone());
+	    }
+	    
+	    
+	    // Création du dto
 	    $reserverDTO->setIdJeu($idJeu);
 	    $reserverDTO->setQuantiteJeuReserver($quantiteJeu);
 	    $reserverDTO->setReceptionJeuReserver(0);
