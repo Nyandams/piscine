@@ -45,10 +45,12 @@ foreach($festivalCollection as $festival){
 
     }
     $panel = 
-           '<a href="' . site_url("Festival/changerFestival?idFestival=" . $festival->getIdFestival() .'"') . '">
+           '
+            <a href="' . site_url("Festival/changerFestival?idFestival=" . $festival->getIdFestival() .'"') . '">
                 <div class="panel panel-default vignetteFestival col-sm-3">
-                    <div class="panel-heading" ' . $couleur .'>
+                    <div class="panel-heading " ' . $couleur .'>
                         <h3 class="panel-title">'.$festival->getAnneeFestival().'</h3>
+                   
                     </div>
       		        <div class="panel-body">
                        <p>Nb Emplacements : '.$festival->getNbEmplacementTotal().'</p>
@@ -56,7 +58,8 @@ foreach($festivalCollection as $festival){
                        <p>Emplacements restants : '. $festival->getNbEmplacementsRestant() .'</p>
                     </div>
                 </div>
-            </a>';
+            </a>
+            <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="'. site_url('Festival/supprimerFestival?idFestival='. $festival->getIdFestival()) .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>';
     
     echo $panel;
 }

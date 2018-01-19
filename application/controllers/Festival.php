@@ -22,6 +22,7 @@ class Festival extends CI_Controller {
             $this->load->model("Reservation/ReservationFactory");
             $this->load->model("EnsembleReservation/EnsembleReservationFactory");
             $this->load->model('Zone/ZoneFactory');
+            $this->load->model('Reservation/ReservationFactory');
         }
     }
     
@@ -112,11 +113,25 @@ class Festival extends CI_Controller {
     }
     
     
-    
+    //supprime un festival et tout ce qui est lié
     public function supprimerFestival(){
-        
+        $reservationDao = $this->ReservationFactory->getInstance();
         $ensembleReservationDAO = $this->EnsembleReservationFactory->getInstance();
-        $ensembleReservationDAO->supprimerReservation($idReservation);
+        $idFestival = $this->input->get('idFestival');
+        
+        //suppression des réservations
+        $reservationCollection = $reservationDao->getReservationByIdFestival($idFestival);
+        foreach($reservationCollection as $reservationDto){
+            $ensembleReservationDAO->supprimerReservation($reservationDto->getIdReservation());
+        }
+        
+        //suppression du festival
+        $festivalDao = $this->FestivalFactory->getInstance();
+        try{
+            $festivalDto = $festivalDao->getFestivalById();
+            $festivalDao->deleteFestival($festivalDto);
+        }catch(Exception $e){
+        }
     }
     
     public function changerFestival() {

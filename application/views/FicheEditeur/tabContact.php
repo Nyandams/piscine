@@ -104,8 +104,8 @@
 
 
 <!-- Table Jeu -->
--<h3><label class="label label-default">Contact</label></h3>
--<table id="tabContact" class="table table-striped table-bordered col-sm-12 text-left" cellspacing="0" width="100%">
+<h3><label class="label label-default">Contact</label></h3>
+<table id="tabContact" class="table table-striped table-bordered col-sm-12 text-left" cellspacing="0" width="100%">
         <!-- Entete du tableau -->
         <thead>
             <tr>
@@ -130,12 +130,11 @@
                     $telContact = $EditContact->getTelephoneContact();
                     $rueContact = $EditContact->getRueContact();
                     $villeContact= $EditContact->getVilleContact();
-                    $cpContact = $EditContact->getCpContact();
-- 
--
+                    $cpContact = $EditContact->getCpContact(); 
+
                     // Chaque tour de boucle crée une ligne pour la table, avec les informations d'un contact.
                     $ligne = '<tr>';
--  
+ 
                     $ligne = $ligne . '<td>' . $nomContact . '</td>';
                     $ligne = $ligne . '<td>' . $prenomContact . '</td>';
                     
