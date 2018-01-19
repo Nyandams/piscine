@@ -117,7 +117,7 @@
                         <label class="col-lg-6">' . $nbPlaceMax . '</label>
                         <span class="pull-right">
                         <a class="btn btn-primary" data-toggle="modal" data-target="#modifierJeuModal_' . $idJeu . '" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                        <a class="btn btn-primary" href="FicheEditeur/supprimerJeu?idJeu='.$idJeu . '&idFicheEditeur=' . $idFicheEditeur .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        <a class="btn btn-primary" data-toggle="modal" data-target="#supprimerJeuModal_' . $idJeu . '"  role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </span>
                         </td>';
                     $ligne = $ligne . '</tr>';
@@ -174,6 +174,30 @@
                         </div>
                     </div>';
                     echo ($modalModifJeu);
+
+		    $modalSuppressionJeu =
+		    '<div class="modal fade" id="supprimerJeuModal_'. $idJeu . '" tabindex="-1" role="dialog">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title"><b>Attention !</b></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                       
+                          </div>
+                          <div class="modal-body">
+                            <p>Etes-vous sûr de vouloir supprimer ce jeu ?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+			    <a class="btn btn-primary" href="FicheEditeur/supprimerJeu?idJeu='.$idJeu . '&idFicheEditeur=' . $idFicheEditeur .'" role="button">Valider</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>';
+		    echo ($modalSuppressionJeu);	
+
                 }
 
             ?>

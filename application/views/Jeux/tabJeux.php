@@ -143,13 +143,13 @@ $admin = $this->session->userdata('admin');?>
                     
 
 
-                    // On ajoute le bouton supprimer et modifier dans la dernière colonne.
+                    // On ajoute le bouton supprimer dans la dernière colonne.
                     $ligne = $ligne . '<td class="row">
                         <label class="col-lg-6">' . $libelleEditeur . '</label>';
                         
                         if ($admin == 1){
                             $ligne = $ligne . '<span class="pull-right">
-                                    <a class="btn btn-primary" href="'.site_url('Jeux/supprimerJeu?idJeu='.$idJeu).'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    <a class="btn btn-primary" data-toggle="modal" data-target="#supprimerJeuModal_'. $idJeu .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                  <span>';
                         }
                        
@@ -160,6 +160,30 @@ $admin = $this->session->userdata('admin');?>
                     $ligne = $ligne . '</tr>';
                     
                     echo  $ligne;
+
+
+		    $modalSuppressionJeu =
+		    '<div class="modal fade" id="supprimerJeuModal_'. $idJeu . '" tabindex="-1" role="dialog">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title"><b>Attention !</b></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                       
+                          </div>
+                          <div class="modal-body">
+                            <p>Etes-vous sûr de vouloir supprimer ce jeu ?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+			    <a class="btn btn-primary" href="'.site_url('Jeux/supprimerJeu?idJeu='.$idJeu).'" role="button">Valider</a>	
+                          </div>
+                        </div>
+                      </div>
+                    </div>';
+		    echo ($modalSuppressionJeu);	
                     
 
 		}

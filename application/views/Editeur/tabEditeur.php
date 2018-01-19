@@ -189,7 +189,7 @@
 
                     $ligne = $ligne . '<span class="pull-right">
                     <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#modifierEditeurModal_' . $idEditeur .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                    <a class="btn btn-primary pull-right" href="'. $lienSupp .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+		    <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#supprimerEditeurModal_' . $idEditeur .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                     </span>
                     </td>';
                     
@@ -226,10 +226,36 @@
                         </div>
                     </div>';
                     echo $modalModifEditeur;
+
+		    $modalSuppressionEditeur =
+		    '<div class="modal fade" id="supprimerEditeurModal_' . $idEditeur .'" tabindex="-1" role="dialog">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title"><b>Attention !</b></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                       
+                          </div>
+                          <div class="modal-body">
+                            <p>Etes-vous sûr de vouloir supprimer cet éditeur ?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+			    <a class="btn btn-primary pull-right" href="'. $lienSupp .'" role="button">Valider</a>			   
+                          </div>
+                        </div>
+                      </div>
+                    </div>';
+		    echo ($modalSuppressionEditeur);	
+
+
                 }
                 
 
                 ?>
+
 
 
             </tbody>

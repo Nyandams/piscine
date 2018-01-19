@@ -20,7 +20,7 @@ class Festival extends CI_Controller {
             $this->load->model("Suivi/SuiviFactory");
             $this->load->model("Editeur/EditeurFactory");
             $this->load->model("Reservation/ReservationFactory");
-            
+            $this->load->model("EnsembleReservation/EnsembleReservationFactory");
             $this->load->model('Zone/ZoneFactory');
         }
     }
@@ -109,8 +109,14 @@ class Festival extends CI_Controller {
         } else {
             redirect('/festival');
         }
+    }
     
     
+    
+    public function supprimerFestival(){
+        
+        $ensembleReservationDAO = $this->EnsembleReservationFactory->getInstance();
+        $ensembleReservationDAO->supprimerReservation($idReservation);
     }
     
     public function changerFestival() {
