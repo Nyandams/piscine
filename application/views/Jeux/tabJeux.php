@@ -145,15 +145,16 @@ $admin = $this->session->userdata('admin');?>
 
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
                     $ligne = $ligne . '<td class="row">
-                        <label class="col-lg-6">' . $libelleEditeur . '</label>
-                        <span class="pull-right">';
-
-                        if ($admin == 1){
-                            echo '<a class="btn btn-primary" href="'.site_url('Jeux/supprimerJeu?idJeu='.$idJeu).'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>';
-                        }
+                        <label class="col-lg-6">' . $libelleEditeur . '</label>';
                         
-                        $ligne = $ligne . '</span>
-                        </td>';
+                        if ($admin == 1){
+                            $ligne = $ligne . '<span class="pull-right">
+                                    <a class="btn btn-primary" href="'.site_url('Jeux/supprimerJeu?idJeu='.$idJeu).'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                 <span>';
+                        }
+                       
+                        
+                        $ligne = $ligne . '</td>';
                     
                     
                     $ligne = $ligne . '</tr>';

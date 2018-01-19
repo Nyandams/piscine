@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Ven 19 Janvier 2018 à 17:07
+-- Généré le :  Ven 19 Janvier 2018 à 20:02
 -- Version du serveur :  5.7.20-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
@@ -50,7 +50,6 @@ INSERT INTO `contact` (`idContact`, `estPrincipalContact`, `nomContact`, `prenom
 (9, 0, 'lacour', 'Martial', 'lacourmartiale@gmail.com', '0468587456', '12 rue de la prison', 'Lille', '98600', 3),
 (10, 1, 'Roïd', 'Paula', 'polaroid@photo.com', '0458236745', '26 rue de l\'ambiance', 'St jean de Cuculles', '26800', 5),
 (11, 0, 'Masse', 'Sarah', 'çaramasse@gmail.com', '075823687', '32 rue de la liberté', 'Montpellier', '34000', 5),
-(12, 1, 'Golo', 'Thierry', 'tirigolo@gmail.com', '0478295842', '26 rue de la pluie', 'Quimper', '8500', 1),
 (13, 1, 'Ochon', 'Paul', 'polochon@hotmail.fr', '0685741258', '2 rue de la nuit', 'Grabels', '34700', 4),
 (19, 1, 'Michel', 'Jean', 'jeanmichel@gmail.com', '00000000000', '26 rue de la ville', 'Mtp', '34100', 15),
 (20, 1, 'Michel', 'Jean', 'jeanmichel@gmail.com', '', '', '', '', 10);
@@ -97,11 +96,7 @@ CREATE TABLE `facture` (
 --
 
 INSERT INTO `facture` (`idFacture`, `dateEmissionFacture`, `datePaiementFacture`, `idReservation`) VALUES
-(19, '2018-01-15', NULL, 15),
-(20, '2017-01-19', '2017-03-23', 16),
-(21, '2017-02-03', '2017-02-28', 17),
-(22, '2017-02-13', '2017-04-06', 18),
-(25, '2018-01-15', NULL, 19);
+(26, NULL, NULL, 19);
 
 -- --------------------------------------------------------
 
@@ -121,8 +116,8 @@ CREATE TABLE `festival` (
 --
 
 INSERT INTO `festival` (`idFestival`, `anneeFestival`, `nbEmplacementTotal`, `prixEmplacementFestival`) VALUES
-(20, 2017, NULL, NULL),
-(21, 2018, NULL, NULL);
+(22, 2018, 250, 25),
+(23, 2019, 150, 23);
 
 -- --------------------------------------------------------
 
@@ -170,7 +165,9 @@ INSERT INTO `jeu` (`idJeu`, `libelleJeu`, `nbMinJoueurJeu`, `nbMaxJoueurJeu`, `n
 (24, 'Little Big Fish', 2, 2, '', 4, 0),
 (25, 'Fight For Olympus', 2, 2, '', 5, 0),
 (26, 'Grand Austria Hot', 2, 4, '', 5, 0),
-(27, 'Viceroy', 1, 4, 'http://www.funforge.fr/FR/?portfolio=viceroy', 5, 0);
+(27, 'Viceroy', 1, 4, 'http://www.funforge.fr/FR/?portfolio=viceroy', 5, 0),
+(28, 'splu', 1, 5, '', 1, 0),
+(29, 'splash', 2, 5, '', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -198,16 +195,18 @@ CREATE TABLE `organisateur` (
   `idOrganisateur` int(50) NOT NULL,
   `loginOrganisateur` varchar(100) NOT NULL,
   `motDePasseOrganisateur` varchar(100) NOT NULL,
-  `admin` int(11) DEFAULT NULL
+  `admin` int(11) DEFAULT NULL,
+  `nomOrganisateur` varchar(100) DEFAULT NULL,
+  `prenomOrganisateur` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `organisateur`
 --
 
-INSERT INTO `organisateur` (`idOrganisateur`, `loginOrganisateur`, `motDePasseOrganisateur`, `admin`) VALUES
-(2, 'piscine', '64f847250ae222f2fd892bc6810b294f', 1),
-(3, 'alia', '86c8c6c90abd00c209e39736da1ec1fd', 0);
+INSERT INTO `organisateur` (`idOrganisateur`, `loginOrganisateur`, `motDePasseOrganisateur`, `admin`, `nomOrganisateur`, `prenomOrganisateur`) VALUES
+(2, 'piscine', '64f847250ae222f2fd892bc6810b294f', 1, NULL, NULL),
+(3, 'visiteur', 'dcaa6e60155776107c638af755498759', 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -228,10 +227,7 @@ CREATE TABLE `reservation` (
 --
 
 INSERT INTO `reservation` (`idReservation`, `prixNegociationReservation`, `idFestival`, `idEditeur`, `nbEmplacement`) VALUES
-(15, 55, 20, 1, 5),
-(16, 30, 20, 3, 2),
-(17, 55, 20, 4, 3),
-(18, 75, 20, 5, 6);
+(19, 250, 22, 1, 10);
 
 -- --------------------------------------------------------
 
@@ -254,17 +250,8 @@ CREATE TABLE `reserver` (
 --
 
 INSERT INTO `reserver` (`idJeu`, `idReservation`, `quantiteJeuReserver`, `dotationJeuReserver`, `receptionJeuReserver`, `renvoiJeuReserver`, `idZone`) VALUES
-(17, 15, 3, 0, 0, 0, 20),
-(18, 15, 5, 0, 0, 0, 20),
-(19, 15, 3, 0, 0, 0, 20),
-(20, 16, 2, 1, 1, 0, 21),
-(21, 16, 3, 0, 0, 0, 21),
-(22, 17, 3, 0, 0, 0, 19),
-(23, 17, 3, 0, 0, 0, 19),
-(24, 17, 1, 0, 0, 0, 16),
-(25, 18, 1, 0, 0, 0, 18),
-(26, 18, 2, 0, 0, 0, 18),
-(27, 18, 1, 0, 0, 0, 17);
+(28, 19, 1, 0, 0, 0, 41),
+(29, 19, 1, 0, 0, 0, 37);
 
 -- --------------------------------------------------------
 
@@ -288,20 +275,20 @@ CREATE TABLE `suivi` (
 --
 
 INSERT INTO `suivi` (`commentaireSuivi`, `premierContact`, `secondContact`, `presenceEditeur`, `idFestival`, `idEditeur`, `logementSuivi`, `reponseEditeur`) VALUES
-('', '2018-01-15', NULL, 0, 20, 1, 0, 3),
-('', NULL, NULL, 0, 20, 2, 0, NULL),
-('', '2018-01-15', NULL, 0, 20, 3, 0, 3),
-('', '2018-01-15', NULL, 0, 20, 4, 0, 1),
-('', '2018-01-15', NULL, 0, 20, 5, 0, 2),
-('', '2018-01-15', NULL, 0, 20, 6, 0, 3),
-('', '2018-01-15', '2018-01-15', 0, 20, 9, 0, -1),
-('', NULL, NULL, 0, 21, 1, 0, NULL),
-('', NULL, NULL, 0, 21, 2, 0, NULL),
-('', NULL, NULL, 0, 21, 3, 0, NULL),
-('', NULL, NULL, 0, 21, 4, 0, NULL),
-('', NULL, NULL, 0, 21, 5, 0, NULL),
-('', NULL, NULL, 0, 21, 6, 0, NULL),
-('', NULL, NULL, 0, 21, 9, 0, NULL);
+('', NULL, NULL, 0, 22, 1, 0, NULL),
+('', NULL, NULL, 0, 22, 2, 0, NULL),
+('', NULL, NULL, 0, 22, 3, 0, NULL),
+('', NULL, NULL, 0, 22, 4, 0, NULL),
+('', NULL, NULL, 0, 22, 5, 0, NULL),
+('', NULL, NULL, 0, 22, 6, 0, NULL),
+('', NULL, NULL, 0, 22, 9, 0, NULL),
+('', NULL, NULL, 0, 23, 1, 0, NULL),
+('', NULL, NULL, 0, 23, 2, 0, NULL),
+('', NULL, NULL, 0, 23, 3, 0, NULL),
+('', NULL, NULL, 0, 23, 4, 0, NULL),
+('', NULL, NULL, 0, 23, 5, 0, NULL),
+('', NULL, NULL, 0, 23, 6, 0, NULL),
+('', NULL, NULL, 0, 23, 9, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -332,42 +319,15 @@ CREATE TABLE `zone` (
 --
 
 INSERT INTO `zone` (`idZone`, `nomZone`, `idFestival`) VALUES
-(1, 'Famille', 8),
-(2, 'Ambiance', 8),
-(3, 'Expert', 8),
-(4, 'Enfant', 8),
-(5, 'Famille', 18),
-(6, 'Ambiance', 18),
-(7, 'Expert', 18),
-(8, 'Enfant', 18),
-(9, 'glof', 8),
-(10, 'sple', 8),
-(11, 'Famille', 19),
-(12, 'Ambiance', 19),
-(13, 'Expert', 19),
-(14, 'Enfant', 19),
-(15, 'blur', 19),
-(16, 'Famille', 20),
-(17, 'Ambiance', 20),
-(18, 'Expert', 20),
-(19, 'Enfant', 20),
-(20, 'Ankama', 20),
-(21, 'Asmodee', 20),
-(22, 'Famille', 21),
-(23, 'Ambiance', 21),
-(24, 'Expert', 21),
-(25, 'Enfant', 21),
-(26, 'AutrementZone', 21),
-(27, 'Famille', 22),
-(28, 'Ambiance', 22),
-(29, 'Expert', 22),
-(30, 'Enfant', 22),
-(31, 'AutrementZone', 22),
-(32, 'Famille', 21),
-(33, 'Ambiance', 21),
-(34, 'Expert', 21),
-(35, 'Enfant', 21),
-(36, 'peuImporteZone', 21);
+(37, 'Famille', 22),
+(38, 'Ambiance', 22),
+(39, 'Expert', 22),
+(40, 'Enfant', 22),
+(41, 'Ankama', 22),
+(42, 'Famille', 23),
+(43, 'Ambiance', 23),
+(44, 'Expert', 23),
+(45, 'Enfant', 23);
 
 --
 -- Index pour les tables exportées
@@ -469,17 +429,17 @@ ALTER TABLE `editeur`
 -- AUTO_INCREMENT pour la table `facture`
 --
 ALTER TABLE `facture`
-  MODIFY `idFacture` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idFacture` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT pour la table `festival`
 --
 ALTER TABLE `festival`
-  MODIFY `idFestival` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idFestival` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT pour la table `jeu`
 --
 ALTER TABLE `jeu`
-  MODIFY `idJeu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `idJeu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT pour la table `logement`
 --
@@ -494,7 +454,7 @@ ALTER TABLE `organisateur`
 -- AUTO_INCREMENT pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `idReservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idReservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT pour la table `typeJeu`
 --
@@ -504,7 +464,7 @@ ALTER TABLE `typeJeu`
 -- AUTO_INCREMENT pour la table `zone`
 --
 ALTER TABLE `zone`
-  MODIFY `idZone` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `idZone` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
