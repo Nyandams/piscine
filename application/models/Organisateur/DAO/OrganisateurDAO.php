@@ -92,6 +92,12 @@ class OrganisateurDAO extends CI_Model
             return false;
         }
         if(md5($mdp) == $organisateurDto->getMotDePasseOrganisateur()){
+            if ($organisateurDto->getAdmin() == 1){
+                $this->session->set_userdata('admin', 1);
+            }else{
+                $this->session->set_userdata('admin', 0);
+                
+            }
             return true;
         }else{
             return false;

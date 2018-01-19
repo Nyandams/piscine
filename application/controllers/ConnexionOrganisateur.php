@@ -33,6 +33,9 @@ class ConnexionOrganisateur extends CI_Controller
                 if( $connexionValide ) {
                     $this->session->set_userdata('connexionOrganisateur', $login);
                     
+                    
+                    
+                    
                     $festivalDAO = $this->FestivalFactory->getInstance();
                     try{
                         $festivalDTO = $festivalDAO->getFestivalActuel();
