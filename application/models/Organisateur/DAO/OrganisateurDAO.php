@@ -42,6 +42,26 @@ class OrganisateurDAO extends CI_Model
     }
     
     
+    // Renvoie tout les organisateurs.
+    public function getOrganisateurs(){
+        $resultat = $this->db->select()
+        ->from($this->table)
+        ->get()
+        ->result();
+        
+        $orgaCollection = new OrganisateurCollection();
+        
+        foreach($resultat as $element){
+            $dto = $this->hydrateFromDatabase($element);
+            $orgaCollection->append($dto);
+        }
+        
+        return $orgaCollection;
+        
+        
+    }
+    
+    
     /**
      * sauvegarde un organisateur dans la BDD
      * @param OrganisateurDTO $organisateurDTO

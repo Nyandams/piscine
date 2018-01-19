@@ -24,10 +24,10 @@ class Organisateur extends CI_Controller
     public function interfaceOrganisateur(){
         $login = $this->session->userdata('connexionOrganisateur');
         try{
-            $organisateurDTO = $this->dao->getOrganisateurByLogin($login);
-            $data['organisateur'] = $organisateurDTO;
+            $organisateurCollection = $this->dao->getOrganisateurs($login);
+            $data['organisateurCollection'] = $organisateurCollection;
         } catch(Exception $e){
-            $data['organisateur'] = new OrganisateurDTO();
+            $data['$organisateurCollection'] = new OrganisateurDTO();
         }
         $data['page'] = $this->load->view('Organisateur/interfaceOrganisateur', $data, true);
         $data['title']= 'Organisateur';
