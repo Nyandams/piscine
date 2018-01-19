@@ -6,6 +6,11 @@
 
 
 <!--Modal -->
+<?php 
+$admin = $this->session->userdata('admin');?>
+<?php 
+    if ($admin == 1){
+        echo '
 <div class="modal fade" id="ajouterJeuModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -16,7 +21,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Ajouter un jeu</h5>
             </div>
 
-            <form method="POST" action="<?php echo site_url('Jeux/ajouterJeu') ?>">
+            <form method="POST" action="'.site_url('Jeux/ajouterJeu') .'">
                 <div class="container-fluid">
                     <div class="form-row">
                         <div class="form-group col-sm-12">
@@ -49,19 +54,19 @@
                     <div class="form-row">
                         <div class="col-sm-8">
                             <label for="selectEditeur">A quel éditeur appartient ce jeu ?</label>
-                            <select class="selectEditeur" name="selectEditeur">
+                            <select class="selectEditeur" name="selectEditeur">';
 
-                                <?php
-                                // Affichage des différents éditeurs.
-                                $selection = '';
-                                foreach ($EditeurDto as $key => $EditJeu) {
-                                    $selection = $selection . "<option>";
-                                    $libEditeur = $EditJeu->getLibelleEditeur();
-                                    $selection = $selection . $libEditeur . "</option>";
-                                }
-                                echo ($selection);
-                                ?>
-                            </select>
+                                
+                // Affichage des différents éditeurs.
+                $selection = '';
+                foreach ($EditeurDto as $key => $EditJeu) {
+                    $selection = $selection . "<option>";
+                    $libEditeur = $EditJeu->getLibelleEditeur();
+                    $selection = $selection . $libEditeur . "</option>";
+                }
+                echo ($selection);
+
+             echo '</select>
 
 
 			</div>
@@ -75,7 +80,12 @@
             </form>
         </div>
     </div>
-</div>
+</div>';
+    }
+
+
+?>
+
 
 
 
@@ -136,10 +146,16 @@
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
                     $ligne = $ligne . '<td class="row">
                         <label class="col-lg-6">' . $libelleEditeur . '</label>
-                        <span class="pull-right">
-                        <a class="btn btn-primary" href="'.site_url('Jeux/supprimerJeu?idJeu='.$idJeu).'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                        </span>
+                        <span class="pull-right">';
+
+                        if ($admin == 1){
+                            echo '<a class="btn btn-primary" href="'.site_url('Jeux/supprimerJeu?idJeu='.$idJeu).'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>';
+                        }
+                        
+                        $ligne = $ligne . '</span>
                         </td>';
+                    
+                    
                     $ligne = $ligne . '</tr>';
                     
                     echo  $ligne;

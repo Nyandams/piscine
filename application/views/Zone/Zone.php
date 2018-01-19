@@ -5,7 +5,7 @@
 
 <?php
 $javaScript = '';
-
+$admin = $this->session->userdata('admin');
 foreach ($zoneReserverCollection as $key => $zoneReserverDTO) {
     // Parcours de toute les zones
     $zoneDTO = $zoneReserverDTO->getZoneDTO();
@@ -44,8 +44,14 @@ foreach ($zoneReserverCollection as $key => $zoneReserverDTO) {
         
         $ligne = $ligne . '
                 <td>' . $nbTable . '</td>';
-        $ligne = $ligne . '
-                <td><a href="'.site_url('ficheEditeur?idFicheEditeur='.$editeurDTO->getIdEditeur()).'">' . $editeurDTO->getLibelleEditeur() . '</a></td>';
+        
+        if ($admin == 1){
+            $ligne = $ligne . '<td><a href="'.site_url('ficheEditeur?idFicheEditeur='.$editeurDTO->getIdEditeur()).'">' . $editeurDTO->getLibelleEditeur() . '</a></td>';
+        }else{
+            $ligne = $ligne . '<td>'.$editeurDTO->getLibelleEditeur() . '</td>';
+            
+        }
+       
        
         
         
