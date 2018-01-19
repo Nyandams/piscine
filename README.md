@@ -36,10 +36,11 @@
     'failover' => array(),
     'save_queries' => TRUE
     );
-
+    ```
     
     7. enfin, dans application/config/config.php, modifiez la ligne
     ```php
     $config['base_url'] = 'http://localhost/piscine/';
+    ```
     
     en changeant le localhost par le nom de domaine de votre site
