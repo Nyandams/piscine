@@ -78,8 +78,11 @@ class FicheEditeur extends CI_Controller {
 	    } catch(Exception $e){
 	        redirect(site_url("Editeur"));
 	    }
-	    $data["nomEditeur"] = $editeurDTO->getLibelleEditeur();
 	    
+	    $idFestival = $this->session->userdata("idFestival");
+	    
+	    $data["nomEditeur"] = $editeurDTO->getLibelleEditeur();
+	    $data['idFestival'] = $idFestival;
 	    // Création de tout les morceaux de la page
 	    $data["tabContact"] = $this->tabContact($idFicheEditeur);
 	    $data["tabJeu"] = $this->tabJeu($idFicheEditeur);

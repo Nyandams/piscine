@@ -113,6 +113,11 @@
                      * -  2 = Hésite
                      * -  3 = Présent
                      */
+                    
+                    
+                    
+                    
+                    
                     $suiviEditeur = $ensembleSuiviDTO->getSuiviDTO();
                     $selectionReponseEditeur = '';
                        
@@ -165,7 +170,9 @@
                          $lienModifSuivi = site_url ('Editeur/sauvegardeSuiviRapideEditeur?idEditeur=' . $idEditeur);
                      }
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
-                    $ligne = $ligne . '<td class="row">
+                    
+                    if(!is_null($idFestival)){
+                    $ligne = $ligne . '
                     <div class ="pull-left">
                         <form method="POST" action="'. $lienModifSuivi .'">
                             <label><input ' . $cocheDejaContacte . ' name="contactFait" id="contactFait" type="checkbox"> Contacté</label>
@@ -174,12 +181,20 @@
             		          <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
         		            </button>
                         </form>
-                    </div>
-                    <span class="pull-right">
+                    </div>';
+                    }else{
+                        $ligne = $ligne . '<td class="row">';
+                    }
+    
+
+
+                    $ligne = $ligne . '<span class="pull-right">
                     <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#modifierEditeurModal_' . $idEditeur .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                     <a class="btn btn-primary pull-right" href="'. $lienSupp .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                     </span>
                     </td>';
+                    
+                    
                     $ligne = $ligne . '</tr>';
                     
                     echo  $ligne;
