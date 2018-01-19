@@ -93,6 +93,8 @@
     </div>
 </div>
 
+
+
 <!-- Table Contact -->
 <table id="tabContact" class="table table-striped table-bordered col-sm-12 text-left" cellspacing="0" width="100%">
         <!-- Entete du tableau -->
@@ -139,7 +141,7 @@
                         <label class="col-lg-6">' . $libelleEditeur . '</label>
                         <span class="pull-right">
                         <a class="btn btn-primary" data-toggle="modal" data-target="#modifierContactModal_'. $idContact .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                        <a class="btn btn-primary" href="'.site_url("Contact/supprimerContact?idContact=".$idContact).'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+			<a class="btn btn-primary" data-toggle="modal" data-target="#supprimerContactModal_'. $idContact .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a
                         </span>
                         </td>';
                     $ligne = $ligne . '</tr>';
@@ -230,8 +232,31 @@
                         </div>
                     </div>';
                     echo ($modalModif);
-                }
-                ?>
+
+		    $modalSuppression =
+		    '<div class="modal fade" id="supprimerContactModal_'. $idContact . '" tabindex="-1" role="dialog">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title"><b>Attention !</b></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                       
+                          </div>
+                          <div class="modal-body">
+                            <p>Etes-vous sûr de vouloir supprimer ce contact ?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+			    <a class="btn btn-primary" href="'.site_url("Contact/supprimerContact?idContact=".$idContact).'" role="button">Valider</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>';
+		    echo ($modalSuppression);		    
+               }
+               ?>
 
         </tbody>
     </table>
@@ -239,8 +264,8 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterContactModal">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>
-   
-    <script type="text/javascript" >        
+
+    <script type="text/javascript" >
         $(document).ready(function() {
             // Javascript de la table de base
             $('#tabContact').DataTable();

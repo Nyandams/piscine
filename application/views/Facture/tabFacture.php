@@ -49,7 +49,7 @@
 
         <div class="panel panel-default pull-left">
 
-                        <div class="panel-heading">Montant total factures</div>
+                        <div class="panel-heading">Montant Total factures</div>
                         <div class="panel-body">
                                 <?php
                                 $prixTotalFactures = 0;
