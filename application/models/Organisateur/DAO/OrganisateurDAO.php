@@ -10,7 +10,8 @@ class OrganisateurDAO extends CI_Model
         'loginOrganisateur'         => 'loginOrganisateur',
         'motDePasseOrganisateur'    => 'motDePasseOrganisateur',
         'nomOrganisateur'           => 'nomOrganisateur',
-        'prenomOrganisateur'        => 'prenomOrganisateur'
+        'prenomOrganisateur'        => 'prenomOrganisateur',
+        'admin'                     => 'admin'
     );
     
     public function __construct(){

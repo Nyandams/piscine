@@ -30,9 +30,33 @@ class OrganisateurDTO extends CI_Model
     /**
      * @return the $idOrganisateur
      */
+    
+    /**
+     * 
+     * @var unknown
+     */
+    private $admin = null;
+    
+    
     public function getIdOrganisateur()
     {
         return $this->idOrganisateur;
+    }
+
+    /**
+     * @return the $admin
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
+     * @param unknown $admin
+     */
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
     }
 
     /**
