@@ -32,7 +32,7 @@
                     $ligne = $ligne . '<td>'.$factureAffichageDto->getAnneeFestival().' </td>';
                     $ligne = $ligne . '<td>'.$factureAffichageDto->dateEmissionFactureToString().' </td>';
                     $ligne = $ligne . '<td>'.$factureAffichageDto->datePaiementFactureToString().' </td>';
-                    $ligne = $ligne . '<td>'.$factureAffichageDto->getPrixNegociationReservation().' </td>';     
+                    $ligne = $ligne . '<td>'.$factureAffichageDto->getPrixNegociationReservation().' € </td>';     
                     $ligne = $ligne . '</tr>';
                     
                     echo  $ligne;
@@ -56,7 +56,7 @@
                                 foreach ($factureAffichageCollection as $factureAffichageDto) {
                                         $prixTotalFactures += ($factureAffichageDto->getPrixNegociationReservation());
                                 } 
-                                echo $prixTotalFactures;
+                                echo $prixTotalFactures . ' €';
                                 ?>
                         </div>
         </div>
@@ -74,7 +74,7 @@
                                                 $prixTotalPaye += ($factureAffichageDto->getPrixNegociationReservation());
                                         } 
                                 }
-                                echo $prixTotalPaye;
+                                echo $prixTotalPaye . ' €';
                                 ?>
                         </div>
         </div>
@@ -85,7 +85,7 @@
 
                         <div class="panel-body">
 				<?php 
-				echo ($prixTotalFactures - $prixTotalPaye);
+				echo ($prixTotalFactures - $prixTotalPaye) . ' €';
 				?>
 			</div>
         </div>
