@@ -115,10 +115,33 @@ class EnsembleReservationService extends CI_Model
                 $reserverDTO->setIdReservation($reservationDTO->getIdReservation());
                 $this->ensembleReserverService->saveReserver($reserverDTO);
             }
-        }catch (Exception $e){
-                
+        }catch (Exception $e){       
+        }  
+    }
+    
+    /**
+     * Supprime la une réservation + facture + reservers
+     * @param unknown $idReservation
+     */
+    public function supprimerReservation($idReservation){
+        //suppression facture
+        try{
+            $factureDto = $this->factureDao->getFactureByIdReservation($idReservation);
+            $this->factureDao->deleteFacture($factureDto);
+        
+        }catch(Exception $e){    
         }
         
+        //suppression reservers
+        $this->ensembleReserverService->supprimerReserverByIdReservation($idReservation);
         
+        //suppression reservation
+        try{
+            $reservationDTO = $this->reservationDao->getReservationById($idReservation);
+            $this->reservationDao->deleteReservation($reservationDTO);
+        }catch(Exception $e){
+            
+        }
     }
+    
 }

@@ -73,6 +73,17 @@ class EnsembleReserverService extends CI_Model
         return $ensembleReserverCollection; 
     }
     
+    /**
+     * supprime tout les réserver correspondant à une réservation
+     * @param unknown $idReservation
+     */
+    public function supprimerReserverByIdReservation($idReservation){
+        $ensembleReserverCollection = $this->getEnsembleReserverByIdReservation(idReservation);
+        foreach ($ensembleReserverCollection as $ensembleReserverDto){
+            $this->reserverDAO->deleteReserver($ensembleReserverDto);
+        }
+    }
+    
     // Renvoie tout une collection d'ensembleReserverDTO appartenant à une zone passée en argument
     public function getEnsembleReserverByZone ($idFestival, $idZone) {
         $reserverCollection = $this->reserverDAO->getReserverByZone($idZone);
