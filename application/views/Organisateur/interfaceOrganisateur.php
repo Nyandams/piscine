@@ -30,6 +30,14 @@
                     $loginOrga = $organisateurDTO->getLoginOrganisateur();
                     $estAdmin = $organisateurDTO->getAdmin();
                     
+                    // Préparation de est Admin
+                    $estAdminTxt = '';
+                    if ($estAdmin) {
+                        $estAdminTxt = "Oui";
+                    }else {
+                        $estAdminTxt = "Non";
+                    }
+                    
                   
  
                     $ligne = '<tr>';
@@ -40,7 +48,7 @@
                     
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
                     $ligne = $ligne . '<td class="row">
-                        <label class="col-lg-6">' . $estAdmin . '</label>
+                        <label class="col-lg-6">' . $estAdminTxt . '</label>
                         <span class="pull-right">
                         <a class="btn btn-primary" data-toggle="modal" data-target="#modifierOrganisateurModal_' . $idOrga .'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         <a class="btn btn-primary" data-toggle="modal" data-target="#supprimerVerifModal_' . $idOrga .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
@@ -61,7 +69,7 @@
                     }
                     
                     $modalModif = 
-'<div class="modal fade" id="ajouterContactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+'<div class="modal fade" id="modifierOrganisateurModal_'. $idOrga .'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -71,7 +79,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Ajouter un organisateur</h5>
             </div>
                             
-            <form id="formAjoutOrga" method="POST" action="organisateur/modifierOrganisateur">
+            <form id="formAjoutOrga" method="POST" action="organisateur/modificationOrganisateur">
                 <div class="container-fluid">
             
                     <div class="form-row">
@@ -145,11 +153,19 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h5 class="modal-title" id="exampleModalLabel">Ajouter Organisateur</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Ajouter un organisateur</h5>
       </div>
 
       <form method="POST" action="Organisateur/ajoutOrganisateur">
         <div class="modal-body">
+        
+        	<label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" class="form-control" placeholder="Entrer le nom" value="">
+            <?php echo form_error('nom'); ?>
+            
+            <label for="prenom">Prenom</label>
+            <input type="text" id="prenom" name="prenom" class="form-control" placeholder="Entrer le prénom" value="">
+            <?php echo form_error('prenom'); ?>
 
     		<label for="pseudo">Pseudo</label>
             <input type="text" id="pseudo" name="pseudo" class="form-control" placeholder="Entrer le pseudo" value="">
@@ -158,15 +174,12 @@
         	<label for="mdp">Mot de passe</label>
             <input type="password" id="mdp" name="mdp" class="form-control" placeholder="Entre le mot de passe" value="">
             <?php echo form_error('mdp'); ?>
-            
-            <label for="nom">Nom</label>
-            <input type="text" id="nom" name="nom" class="form-control" placeholder="Entrer le nom" value="">
-            <?php echo form_error('nom'); ?>
-            
-            <label for="prenom">Prenom</label>
-            <input type="text" id="prenom" name="prenom" class="form-control" placeholder="Entrer le prénom" value="">
-            <?php echo form_error('prenom'); ?>
-          
+
+             <label for="selectPrincipal">Est admin ?</label>
+             	<select class="selectEstAdmin" name="selectEstAdmin">
+                 	<option value="0">Non</option>
+                 	<option value="1">Oui</option>
+                </select> 
         </div>
 
         <div class="modal-footer">

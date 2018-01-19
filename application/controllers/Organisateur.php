@@ -53,6 +53,7 @@ class Organisateur extends CI_Controller
                 if (strlen($mdp) > 0 && strlen($verifMdp) > 0 && $mdp == $verifMdp){
                     $organisateurDTO->setMotDePasseOrganisateur($mdp);
                 }
+                
                 $this->dao->updateOrganisateur($organisateurDTO);
                 
             }catch(Exception $e){
@@ -74,6 +75,7 @@ class Organisateur extends CI_Controller
             $organisateurDTO->setMotDePasseOrganisateur($this->input->post('mdp'));
             $organisateurDTO->setNomOrganisateur($this->input->post('nom'));
             $organisateurDTO->setPrenomOrganisateur($this->input->post('prenom'));
+            $organisateurDTO->setAdmin($this->input->post('selectEstAdmin'));
             $save = $this->dao->saveOrganisateur($organisateurDTO);
             
             
