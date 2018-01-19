@@ -117,7 +117,6 @@ class Editeur extends CI_Controller {
 	public function modifierEditeur() {
 	    $editeurDao = $this->EditeurFactory->getInstance();
 	    
-	   
 	    $dto = new EditeurDTO();
 	    $dto->setIdEditeur($this->input->get('idEditeur'));
 	    $dto->setLibelleEditeur($this->input->post('nomEditeur'));
@@ -128,12 +127,13 @@ class Editeur extends CI_Controller {
 	
 	
 	
-	/*
-choixFiltre peut etre appelé d 2 facons : soit par défaut on on affiche donc tous les editeus, soit par le choix du filtre et on affiche les editeurs en fct du filtre.
-	*/
+	
+    //choixFiltre peut etre appelé d 2 facons : soit par défaut on on affiche donc tous les editeus, soit par le choix du filtre et on affiche les editeurs en fct du filtre.
 	public function choixFiltre(){
 
 		$idFestival = $this->session->userdata('idFestival');
+		
+		$data['idFestival'] = $idFestival;
 		$ensembleSuiviService=$this->EnsembleSuiviFactory->getInstance();
 		
 		// numFiltre peut venir de get (modif) mais aussi de post (choix direct de la vue)
@@ -144,7 +144,10 @@ choixFiltre peut etre appelé d 2 facons : soit par défaut on on affiche donc t
 		
 		
 		if (!isset($numFiltre)){
+		    
+		    //si le festival est null, les suivis seront null
 		    $data['ensembleSuiviCollection'] = $ensembleSuiviService->getEnsembleSuiviDTOByIdFestival($idFestival);
+		    
 			return $this->load->view("Editeur/tabEditeur", $data, true);
 		}
 

@@ -37,18 +37,27 @@ class EnsembleSuiviService extends CI_Model
         return $this;
     }
     
+    /**
+     * Retourne un EnsembleSuiviCollection contenant tous les ensembleSuiviDTO de chaque editeur
+     * si le festival est vide, les suiviDTO des ensembleSuiviDTO seront instancié vide
+     * @param int $idFestival
+     * @return EnsembleSuiviCollection
+     */
     public function getEnsembleSuiviDTOByIdFestival ($idFestival) {
-        $ensembleSuiviCollection = new EnsembleSuiviCollection();
-        $suiviCollection = $this->suiviDAO->getSuiviByIdFestival($idFestival);
+        $ensembleSuiviCollection  = new EnsembleSuiviCollection();
         
+        $editeurContactCollection = $this->editeurContactDAO->getEditeurContactPrincipal();
         
-        foreach ($suiviCollection as $key => $suiviDTO) {
+        foreach ($editeurContactCollection as $editeurContactDto){
             $ensembleSuiviTmp = new EnsembleSuiviDTO();
             
-            $editeurContactDTO = $this->editeurContactDAO->getEditeurContactByIdEditeur($suiviDTO->getIdEditeur());
-            
-            $ensembleSuiviTmp->setSuiviDTO($suiviDTO);
-            $ensembleSuiviTmp->setEditeurContactDTO($editeurContactDTO);
+            try{
+                $suiviDto = $this->suiviDAO->getSuiviByIdEditeurFestival($editeurContactDto->getIdEditeur(), $idFestival);  
+            }catch (Exception $e){
+                $suiviDto = new SuiviDTO();
+            }
+            $ensembleSuiviTmp->setSuiviDTO($suiviDto);
+            $ensembleSuiviTmp->setEditeurContactDTO($editeurContactDto);
             
             $ensembleSuiviCollection->append($ensembleSuiviTmp);
         }
