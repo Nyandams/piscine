@@ -6,7 +6,7 @@ class Organisateur extends CI_Controller
         parent::__construct();
         
         $this->load->helper('url');
-        if (!$this->session->has_userdata('connexionOrganisateur')){
+        if (!$this->session->has_userdata('connexionOrganisateur') || $this->session->userdata('connexionOrganisateur') != 1){
             redirect('/welcome');
         } else {
             $this->load->library('form_validation');
