@@ -10,8 +10,8 @@
     		<?php
     		    echo $tabJeu;
     		    if (!is_null($idFestival)){
-    			echo $suiviPerso;
-    			echo $zoneCommentaire;
+        			echo $suiviPerso;
+        			echo $zoneCommentaire;
     		    }
     		?>
     	</div>
@@ -20,7 +20,9 @@
     	<div class = "col-lg-6 col-md-12">
     		<?php
     		    echo $tabContact;
-    			echo $tabReserver;
+    			if(!is_null($idFestival)){
+    			    echo $tabReserver;
+    			}
     		?>
     	</div>
 	</div>

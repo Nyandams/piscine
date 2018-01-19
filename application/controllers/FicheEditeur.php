@@ -313,7 +313,11 @@ class FicheEditeur extends CI_Controller {
 	    //L'id du festival est mis en session
 	    $idFestival = $this->session->userdata("idFestival");
 	    $idEditeur = $this->input->get("idFicheEditeur");
-	    $suivi = $this->SuiviDAO->getSuiviByIdEditeurFestival($idEditeur, $idFestival);
+	    try{
+	        $suivi = $this->SuiviDAO->getSuiviByIdEditeurFestival($idEditeur, $idFestival);
+	    }catch(Exception $e){
+	        $suivi = new SuiviDTO();
+	    }
 	    return $suivi;
 	    
 	}
