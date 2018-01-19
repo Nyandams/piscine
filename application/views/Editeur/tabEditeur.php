@@ -170,20 +170,19 @@
                          $lienModifSuivi = site_url ('Editeur/sauvegardeSuiviRapideEditeur?idEditeur=' . $idEditeur);
                      }
                     // On ajoute le bouton supprimer et modifier dans la dernière colonne.
-                    
+                     $ligne = $ligne . '<td class="row">';
+
                     if(!is_null($idFestival)){
-                    $ligne = $ligne . '
-                    <div class ="pull-left">
-                        <form method="POST" action="'. $lienModifSuivi .'">
-                            <label><input ' . $cocheDejaContacte . ' name="contactFait" id="contactFait" type="checkbox"> Contacté</label>
-                            <select class="selectReponse" name="selectReponse">' . $selectionReponseEditeur .'</select>
-                            <button type="submit" class="btn btn-primary">
-            		          <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
-        		            </button>
-                        </form>
-                    </div>';
-                    }else{
-                        $ligne = $ligne . '<td class="row">';
+                        $ligne = $ligne . '
+                        <div class ="pull-left">
+                            <form method="POST" action="'. $lienModifSuivi .'">
+                                <label><input ' . $cocheDejaContacte . ' name="contactFait" id="contactFait" type="checkbox"> Contacté</label>
+                                <select class="selectReponse" name="selectReponse">' . $selectionReponseEditeur .'</select>
+                                <button type="submit" class="btn btn-primary">
+                		          <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span>
+            		            </button>
+                            </form>
+                        </div>';
                     }
     
 
