@@ -5,17 +5,19 @@
 
 
 <!-- Table Facture -->
-<table id="tabFacture" class="table table-striped table-bordered col-sm-12 text-left" cellspacing="0" width="100%">
-    <thead>
-        <tr>
-            <th>Editeur</th>
-            <th>Année</th>
-            <th>Envoi facture</th>
-            <th>Paiement facture</th>
-            <th>Prix facture</th>
-        </tr>
-    </thead>
-    <tbody>
+<div id="blocTabFacture">
+
+    <table id="tabFacture" class="table table-striped table-bordered col-sm-12 text-left" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Editeur</th>
+                <th>Année</th>
+                <th>Envoi facture</th>
+                <th>Paiement facture</th>
+                <th>Prix facture</th>
+            </tr>
+        </thead>
+        <tbody>
 
         <!-- Insertion des données de manière dynamique -->
         <?php
@@ -40,9 +42,24 @@
                 ?>
 
 
-            </tbody>
-        </table>
-
+       	</tbody>
+	</table>
+    
+    <div class="prixFacture">
+   		<div class="panel panel-default col-sm-2 pull-right">
+ 			<div class="panel-body">
+            
+          	</div>
+        </div>
+        
+        <div class="panel panel-default col-sm-2 pull-right">
+ 			<div class="panel-body">
+            
+          	</div>
+        </div>
+    </div>
+    
+</div>
 
 <script type="text/javascript" >        
     $(document).ready(function() {

@@ -33,7 +33,11 @@ class FactureAffichageService extends CI_Model
      */
     public function getFactureByIdFestival($idFestival){
         $festivalDAO = $this->FestivalFactory->getInstance();
+        try{
         $festivalDto = $festivalDAO->getFestivalById($idFestival);
+        }catch(Exception $e){
+            return new FactureAffichageCollection();
+        }
         $reservationCollection = $this->reservationDao->getReservationByIdFestival($idFestival);
         
         $factureAffichageCollection = new FactureAffichageCollection();
