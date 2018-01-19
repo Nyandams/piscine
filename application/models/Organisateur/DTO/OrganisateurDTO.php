@@ -23,6 +23,50 @@ class OrganisateurDTO extends CI_Model
     private $admin = null;
     
     /**
+     * @var string
+     */
+    private $nomOrganisateur = "";
+    
+    /**
+     * @var string
+     */
+    private $prenomOrganisateur = "";
+    
+
+
+    /**
+     * @return the $nomOrganisateur
+     */
+    public function getNomOrganisateur()
+    {
+        return $this->nomOrganisateur;
+    }
+
+    /**
+     * @return the $prenomOrganisateur
+     */
+    public function getPrenomOrganisateur()
+    {
+        return $this->prenomOrganisateur;
+    }
+
+    /**
+     * @param string $nomOrganisateur
+     */
+    public function setNomOrganisateur($nomOrganisateur)
+    {
+        $this->nomOrganisateur = $nomOrganisateur;
+    }
+
+    /**
+     * @param string $prenomOrganisateur
+     */
+    public function setPrenomOrganisateur($prenomOrganisateur)
+    {
+        $this->prenomOrganisateur = $prenomOrganisateur;
+    }
+
+    /**
      * @return the $idOrganisateur
      */
     public function getIdOrganisateur()
