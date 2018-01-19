@@ -17,30 +17,33 @@ class OrganisateurDTO extends CI_Model
      */
     private $motDePasseOrganisateur = '';
     
-    /**
-     * @var string
-     */
-    private $nomOrganisateur = '';
-    
-    /**
-     * @var string
-     */
-    private $prenomOrganisateur = '';
-
-    /**
-     * @return the $idOrganisateur
-     */
-    
-    /**
-     * 
-     * @var unknown
+    /** 
+     * @var int
      */
     private $admin = null;
     
-    
+    /**
+     * @return the $idOrganisateur
+     */
     public function getIdOrganisateur()
     {
         return $this->idOrganisateur;
+    }
+
+    /**
+     * @return the $loginOrganisateur
+     */
+    public function getLoginOrganisateur()
+    {
+        return $this->loginOrganisateur;
+    }
+
+    /**
+     * @return the $motDePasseOrganisateur
+     */
+    public function getMotDePasseOrganisateur()
+    {
+        return $this->motDePasseOrganisateur;
     }
 
     /**
@@ -52,51 +55,11 @@ class OrganisateurDTO extends CI_Model
     }
 
     /**
-     * @param unknown $admin
-     */
-    public function setAdmin($admin)
-    {
-        $this->admin = $admin;
-    }
-
-    /**
      * @param number $idOrganisateur
      */
     public function setIdOrganisateur($idOrganisateur)
     {
         $this->idOrganisateur = $idOrganisateur;
-    }
-
-    /**
-     * @return $loginOrganisateur
-     */
-    public function getLoginOrganisateur()
-    {
-        return $this->loginOrganisateur;
-    }
-
-    /**
-     * @return $motDePasseOrganisateur
-     */
-    public function getMotDePasseOrganisateur()
-    {
-        return $this->motDePasseOrganisateur;
-    }
-
-    /**
-     * @return $nomOrganisateur
-     */
-    public function getNomOrganisateur()
-    {
-        return $this->nomOrganisateur;
-    }
-
-    /**
-     * @return $prenomOrganisateur
-     */
-    public function getPrenomOrganisateur()
-    {
-        return $this->prenomOrganisateur;
     }
 
     /**
@@ -116,19 +79,13 @@ class OrganisateurDTO extends CI_Model
     }
 
     /**
-     * @param string $nomOrganisateur
+     * @param number $admin
      */
-    public function setNomOrganisateur($nomOrganisateur)
+    public function setAdmin($admin)
     {
-        $this->nomOrganisateur = $nomOrganisateur;
+        $this->admin = $admin;
     }
 
-    /**
-     * @param string $prenomOrganisateur
-     */
-    public function setPrenomOrganisateur($prenomOrganisateur)
-    {
-        $this->prenomOrganisateur = $prenomOrganisateur;
-    }
-
+    
+    
 }
