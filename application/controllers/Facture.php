@@ -9,7 +9,7 @@ class Facture extends CI_Controller {
         $this->load->helper('url');
         
         
-        if (!$this->session->has_userdata('connexionOrganisateur') || $this->session->userdata('connexionOrganisateur') != 1){
+        if (!$this->session->has_userdata('connexionOrganisateur')|| $this->session->userdata('admin') != 1){
             redirect(site_url('/welcome'));
         } else {
             // Récupération des données de l'Editeur
