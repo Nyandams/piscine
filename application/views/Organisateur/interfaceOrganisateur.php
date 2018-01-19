@@ -79,7 +79,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Ajouter un organisateur</h5>
             </div>
                             
-            <form id="formAjoutOrga" method="POST" action="organisateur/modificationOrganisateur">
+            <form id="formAjoutOrga" method="POST" action="'. site_url('organisateur/modificationOrganisateur?login=' . $loginOrga) .'">
                 <div class="container-fluid">
             
                     <div class="form-row">
@@ -95,8 +95,16 @@
                         <input type="text" id="prenom" name="prenom" class="form-control" placeholder="prenom" value="'. $prenomOrga .'">
                        '.form_error('prenom') .'
 
-                         
-                        <label for="selectPrincipal">Est admin ?</label>
+
+                        <label for="mdp">Mot de passe</label>
+                        <input type="password" id="mdp" name="mdp" class="form-control" placeholder="Entre le mot de passe" value="">
+                       '. form_error('mdp').'
+                        
+                        <label for="mdp">verifmdp</label>
+                        <input type="password" id="verifmdp" name="verifmdp" class="form-control" placeholder="Verification du mot de passe" value="">
+                       '. form_error('verifmdp').'
+ 
+                        <label for="selectEstAdmin">Est admin ?</label>
                         <select class="selectEstAdmin" name="selectEstAdmin">
                             ' . $choixOption . '
                         </select>                        
@@ -115,18 +123,18 @@
                     
                     $modalVerif= 
                     '<!-- Vérification de la suppression -->
-                        <div class="modal fade" id="supprimerVerifModal_' . $idOrga .' tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="supprimerVerifModal_' . $idOrga .'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
-                                        <h5 class="modal-title" id="exampleModalLabel">Supprimer l\'organisateur '. $nomOrga .' ?</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Supprimer l\'organisateur '. $loginOrga .' ?</h5>
                                     </div>
                         
-                                    <form id="formAjoutOrga" method="POST" action="organisateur/supprimerOrganisateur">
-                                         <input type="hidden" id="idSuppEditeur" name="idSuppEditeur" class="form-control" value="'. $idOrga .'">
+                                    <form id="formAjoutOrga" method="POST" action="'. site_url('organisateur/supprimerOrganisateur') .'">
+                                         <input type="hidden" id="idSuppEditeur" name="idSuppEditeur" class="form-control" value="'. $loginOrga .'">
                         
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -136,6 +144,8 @@
                                 </div>
                             </div>
                         </div>';
+                    
+                    echo $modalVerif;
                 }
             ?>
             
@@ -175,7 +185,7 @@
             <input type="password" id="mdp" name="mdp" class="form-control" placeholder="Entre le mot de passe" value="">
             <?php echo form_error('mdp'); ?>
 
-             <label for="selectPrincipal">Est admin ?</label>
+             <label for="selectEstAdmin">Est admin ?</label>
              	<select class="selectEstAdmin" name="selectEstAdmin">
                  	<option value="0">Non</option>
                  	<option value="1">Oui</option>
