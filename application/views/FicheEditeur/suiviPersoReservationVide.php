@@ -36,7 +36,7 @@
                             	}
                             	?> name="premierContact" id="premierContact" type="checkbox">1er contact</label> <?php 
                             	   if($suivi->getPremierContact() != null){
-                            	       echo '<input class="form-control col-sm-2" type="date" value="'. $suivi->premierContactFormat() .'" id="dateModifPremierContact">';
+                            	       echo '<input type="date" value="'. $suivi->premierContactFormat() .'" id="dateModifPremierContact" name="dateModifPremierContact">';
                             	   }
                             	?>
                             </div>
@@ -72,7 +72,7 @@
                         	}
                         	?> name="deuxiemeContact" id="deuxiemeContact" type="checkbox">2eme contact</label> <?php 
                         	if(!is_null($suivi->getSecondContact())){
-                        	    echo '<input class="form-control" type="date" value="'. $suivi->secondContactFormat() .'" id="dateModifSecondContact">';
+                        	    echo '<input type="date" value="'. $suivi->secondContactFormat() .'" id="dateModifSecondContact" name="dateModifSecondContact">';
                         	}
                         	?>
                         </div>

@@ -462,12 +462,20 @@ class FicheEditeur extends CI_Controller {
 	    $disabledCheck1 = !is_null($suiviDTO->getSecondContact());
 	    $disabledCheck2 = is_null($suiviPrecedent->getPremierContact()) or !($suiviPrecedent->getReponseEditeur() == null or $suiviPrecedent->getReponseEditeur() == -1);
 	    
-	    if ($disabledCheck2) {
-	        echo ("le 2 est disabled");
+	    $datePremierContact = $this->input->post("dateModifPremierContact");
+	    $dateSecondContact = $this->input->post("dateModifSecondContact");
+	    
+	    $datePremierContactPrecedent = $suiviPrecedent->premierContactFormat();
+	    $dateSecondContactPrecedent  = $suiviPrecedent->secondContactFormat();
+	    if (!is_null($datePremierContactPrecedent) && $datePremierContact !== $datePremierContactPrecedent){
+	        $suiviDTO->setPremierContact(new \DateTime($datePremierContact));
 	    }
-	    else {
-	        echo("le 2 est touchable" . $suiviPrecedent->getReponseEditeur()  );
+	    
+	    if (!is_null($dateSecondContactPrecedent) && $dateSecondContact !== $dateSecondContactPrecedent){
+	        $suiviDTO->setSecondContact(new \DateTime($dateSecondContact));
 	    }
+	    
+	    
 	    $suiviDAO->updateSuivi($suiviDTO);
 	    
 	       
@@ -482,7 +490,7 @@ class FicheEditeur extends CI_Controller {
 	        $suiviDAO->setSecondContact($idEditeur, $idFestival);
 	        
 	        // Si décoché et que c'était coché avant
-	    } else if ($check2 == null and $disabledCheck2) {
+	    } else if ($check2 == null and !is_null($contact2)) {
 	        $suiviDAO->unsetSecondContact($idEditeur, $idFestival);
 	    }
 	    
@@ -702,15 +710,6 @@ class FicheEditeur extends CI_Controller {
 	        }
 	        
 	        $this->redirection();
-	}
-	
-	
-	public function modifDatePremierContact(){
-	    
-	}
-	
-	public function modifDateSecondContact(){
-	    
 	}
 	
 }
