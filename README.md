@@ -44,3 +44,7 @@
     ```
     
     en changeant le localhost par le nom de domaine de votre site
+    
+    
+    
+    8. des utilisateurs de bases existent déjà, vous pouvez vous connecter sur l'utilisateur piscine (mdp : piscine) pour vous créer de nouveaux utilisateurs et les modifier.
