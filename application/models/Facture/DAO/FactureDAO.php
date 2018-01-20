@@ -58,7 +58,7 @@ class FactureDAO extends CI_Model
      */
     public function deleteFacture($factureDTO){
         $id = $factureDTO->getIdFacture();
-        return $this->db->where('id', $id)->delete($this->table);
+        return $this->db->where('idFacture', $id)->delete($this->table);
     }
     
     
