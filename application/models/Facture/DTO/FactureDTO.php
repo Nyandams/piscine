@@ -23,6 +23,20 @@ class FactureDTO extends CI_Model
     private $idReservation = null;
     
     
+    public function dateEmissionFactureFormat(){
+        if($this->dateEmissionFacture != null){
+            return $this->getDateEmissionFacture()->format('Y-m-d');
+        }
+    }
+    
+    public function datePaiementFactureFormat(){
+        if($this->datePaiementFacture != null){
+            return $this->getDatePaiementFacture()->format('Y-m-d');
+        }
+    }
+    
+    
+    
     public function dateEmissionFactureToString(){
         if($this->dateEmissionFacture != null){
             return $this->dateEmissionFacture->format('d/m/Y');
@@ -103,7 +117,7 @@ class FactureDTO extends CI_Model
     
     public function unsetDatePaiementFacture()
     {
-        $this->datePaiementFacture = NULL;
+        $this->datePaiementFacture = null;
     }
 
     /**

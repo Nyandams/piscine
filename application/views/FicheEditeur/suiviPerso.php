@@ -10,13 +10,13 @@ if (isset ($factureDTO)) {
     if (!is_null($factureDTO->getDateEmissionFacture()))
     {
         $factureCheck =('checked="checked"');
-        $factureValue = $factureDTO->getDateEmissionFacture()->format('d/m/Y');
+        $factureValue = $factureDTO->dateEmissionFactureFormat();
     }
     
     if (!is_null($factureDTO->getDatePaiementFacture()))
     {
         $paiementCheck = ('checked="checked"');
-        $paiementValue = $factureDTO->getDatePaiementFacture()->format('d/m/Y');
+        $paiementValue = $factureDTO->datePaiementFactureFormat();
     }
 }
 
@@ -38,9 +38,7 @@ if (isset ($factureDTO)) {
         		<label><input type="checkbox" <?php echo ($factureCheck) ?> name="factureEnvoye" id="factureEnvoye">Facture envoyée</label>
         		<?php
         		if (isset($factureValue)){
-        		    echo '<div class="pull-right">
-        		              <label>' . $factureValue .'</label>
-        		          </div>';
+        		    echo '<input type="date" value="'. $factureValue .'" id="dateEmissionFacture" name="dateEmissionFacture">';
         		}
         		?>
         		
@@ -50,9 +48,7 @@ if (isset ($factureDTO)) {
         		<label><input type="checkbox" <?php echo ($paiementCheck) ?> name="paiementEnvoye" id="paiementEnvoye">Paiement effectué</label>
         		<?php
         		if (isset($paiementValue)){
-        		    echo '<div class="pull-right">
-        		              <label>' . $paiementValue .'</label>
-        		          </div>';
+        		    echo '<input type="date" value="'. $paiementValue .'" id="datePaiementFacture" name="datePaiementFacture">';
         		}
         		?>
         	</div>            

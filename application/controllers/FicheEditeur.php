@@ -400,19 +400,36 @@ class FicheEditeur extends CI_Controller {
 	            $idReservation = $reservationDTO->getIdReservation();
 	            $factureDAO = $this->FactureFactory->getInstance();
 	            $factureDTO = $factureDAO->getFactureByIdReservation($idReservation);
+	            $facturePrecedentDTO = $factureDAO->getFactureByIdReservation($idReservation);
+	            $dateEmissionFacturePrecedent = $facturePrecedentDTO->dateEmissionFactureFormat();
+	            $datePaiementFacturePrecedent = $facturePrecedentDTO->datePaiementFactureFormat();
+	            
+	            
+	            $dateEmissionFacture = $this->input->post('dateEmissionFacture');
+	            $datePaiementFacture = $this->input->post('datePaiementFacture');
+	            
+	            
 	            // Enregistrement pour la facture et du paiement
-	            if (null !==($this->input->post("factureEnvoye"))) {
+	            if (null !== ($this->input->post("factureEnvoye")) && is_null($dateEmissionFacturePrecedent)) {
 	                $factureDTO->setDateEmissionFacture(new DateTime());
 	            }
-	            else if (null == $this->input->post("factureEnvoye") and !is_null($factureDTO->getDateEmissionFacture())) {
+	            if ($dateEmissionFacture !== $dateEmissionFacturePrecedent){
+	                $factureDTO->setDateEmissionFacture(new \DateTime($dateEmissionFacture));
+	            }
+	            if (null == $this->input->post("factureEnvoye")) {
 	                $factureDTO->unsetDateEmissionFacture();
 	            }
-	            if (null !==($this->input->post("paiementEnvoye"))) {
+	            if (null !==($this->input->post("paiementEnvoye")) && is_null($datePaiementFacturePrecedent)) {
 	                $factureDTO->setDatePaiementFacture(new DateTime());
 	            }
-	            else if (null == $this->input->post("paiementEnvoye") and !is_null($factureDTO->getDatePaiementFacture())) {
+	            if ($datePaiementFacture !== $datePaimentFacturePrecedent){
+	                $factureDTO->setDatePaiementFacture(new \DateTime($datePaiementFacture));
+	            }
+	            if (null == $this->input->post("paiementEnvoye")) {
 	                $factureDTO->unsetDatePaiementFacture();
 	            }
+	           
+	            
 	            
 	            $factureDAO->updateFacture($factureDTO);
 	            
@@ -467,6 +484,7 @@ class FicheEditeur extends CI_Controller {
 	    
 	    $datePremierContactPrecedent = $suiviPrecedent->premierContactFormat();
 	    $dateSecondContactPrecedent  = $suiviPrecedent->secondContactFormat();
+	    
 	    if (!is_null($datePremierContactPrecedent) && $datePremierContact !== $datePremierContactPrecedent){
 	        $suiviDTO->setPremierContact(new \DateTime($datePremierContact));
 	    }
