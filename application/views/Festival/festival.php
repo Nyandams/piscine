@@ -40,6 +40,7 @@
 foreach($festivalCollection as $festival){
     // Changement de la couleur du panel
     $couleur= "";
+    
     if ($festival->getIdFestival() == $this->session->userdata("idFestival")) {
         $couleur = 'style ="background-color: green;"';
 
@@ -52,7 +53,7 @@ foreach($festivalCollection as $festival){
                             </div>
                             <div class="col-xs-4">
                                 <a class="btn btn-primary btn-xs" href="'. site_url('Festival/changerFestival?idFestival='. $festival->getIdFestival()) .'" role="button"><span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span></a>
-                                <a class="btn btn-primary btn-xs" href="'. site_url('Festival/supprimerFestival?idFestival='. $festival->getIdFestival()) .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#supprimerFestivalModal_' . $festival->getIdFestival() .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </div>
                         </div>                    
                     </div>
@@ -64,6 +65,33 @@ foreach($festivalCollection as $festival){
                 </div>
             ';
     echo $panel;
+    
+    $modalSuppressionFestival =
+    '<div class="modal fade" id="supprimerFestivalModal_' . $festival->getIdFestival() .'" tabindex="-1" role="dialog">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h5 class="modal-title"><b>Attention !</b></h5>
+    
+                          </div>
+    
+                          <form method="POST" action="' . site_url("Festival/supprimerFestival") . '">
+                              <div class="modal-body">
+                                    <p>Etes-vous sûr de vouloir supprimer ce festival ?</p>
+                                    <input type="hidden" name="idFestival" id="idFestival" value="'. $festival->getIdFestival() .'">
+                              </div>
+                              <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                    <button type="submit" class="btn btn-secondary">Valider</button>
+                              </div>
+                         </form>
+                        </div>
+                      </div>
+                    </div>';
+    echo ($modalSuppressionFestival);
 }
 ?>
 
