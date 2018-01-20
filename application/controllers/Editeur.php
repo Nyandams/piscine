@@ -60,7 +60,8 @@ class Editeur extends CI_Controller {
 	*/
 	public function supprimerEditeur() {
 	    // il faut aussi supprimer le suivi qui va avec
-		$idEditeur = $this->input->get("idEditeur");
+	   
+		$idEditeur = $this->input->post("idEditeur");
 		$ensembleSuiviService = $this->EnsembleSuiviFactory->getInstance();
 		$ensembleSuiviService->supprimerEditeur($idEditeur);
 		

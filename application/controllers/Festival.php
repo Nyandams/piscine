@@ -118,7 +118,7 @@ class Festival extends CI_Controller {
     public function supprimerFestival(){
         $reservationDao = $this->ReservationFactory->getInstance();
         $ensembleReservationDAO = $this->EnsembleReservationFactory->getInstance();
-        $idFestival = $this->input->get('idFestival');
+        $idFestival = $this->input->post('idFestival');
         
         //suppression des réservations
         $reservationCollection = $reservationDao->getReservationByIdFestival($idFestival);
@@ -127,7 +127,7 @@ class Festival extends CI_Controller {
         }
         
         //suppression des zones
-        $zoneDao = $this->zoneFactory->getInstance();
+        $zoneDao = $this->ZoneFactory->getInstance();
         $zoneCollection = $zoneDao->getZonesByIdFestival($idFestival);
         foreach ($zoneCollection as $zoneDto){
             $zoneDao->deleteZone($zoneDto);

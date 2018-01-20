@@ -232,22 +232,27 @@
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title"><b>Attention !</b></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true">&times;</span>
                             </button>
+                            <h5 class="modal-title"><b>Attention !</b></h5>
                        
                           </div>
-                          <div class="modal-body">
-                            <p>Etes-vous sûr de vouloir supprimer cet éditeur ?</p>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-			    <a class="btn btn-primary pull-right" href="'. $lienSupp .'" role="button">Valider</a>			   
-                          </div>
+                          
+                          <form method="POST" action="' . site_url("Editeur/supprimerEditeur") . '">
+                              <div class="modal-body">
+                                    <p>Etes-vous sûr de vouloir supprimer cet éditeur ?</p>
+                                    <input type="hidden" name="idEditeur" id="idEditeur" value="'. $idEditeur .'">
+                              </div>
+                              <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                    <button type="submit" class="btn btn-secondary">Valider</button>			   
+                              </div>
+                         </form>
                         </div>
                       </div>
                     </div>';
+		   
 		    echo ($modalSuppressionEditeur);	
 
 

@@ -54,7 +54,7 @@ class ConnexionOrganisateur extends CI_Controller
             redirect(site_url('/welcome'));
         }
     }
-    
+            
     
     public function deconnexion(){
         if (!$this->session->has_userdata('connexionOrganisateur')){

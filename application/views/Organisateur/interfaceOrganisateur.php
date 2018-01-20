@@ -76,7 +76,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h5 class="modal-title" id="exampleModalLabel">Ajouter un organisateur</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Modifier : ' . $nomOrga .'</h5>
             </div>
                             
             <form id="formAjoutOrga" method="POST" action="'. site_url('organisateur/modificationOrganisateur?login=' . $loginOrga) .'">
@@ -100,7 +100,7 @@
                         <input type="password" id="mdp" name="mdp" class="form-control" placeholder="Entre le mot de passe" value="">
                        '. form_error('mdp').'
                         
-                        <label for="mdp">verifmdp</label>
+                        <label for="mdp">Vérification du mot de passe</label>
                         <input type="password" id="verifmdp" name="verifmdp" class="form-control" placeholder="Verification du mot de passe" value="">
                        '. form_error('verifmdp').'
  
