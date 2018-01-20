@@ -702,8 +702,15 @@ class FicheEditeur extends CI_Controller {
 	        }
 	        
 	        $this->redirection();
-
-	
-	
 	}
+	
+	
+	public function modifDatePremierContact(){
+	    
+	}
+	
+	public function modifDateSecondContact(){
+	    
+	}
+	
 }

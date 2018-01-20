@@ -81,7 +81,9 @@ if (isset ($factureDTO)) {
                             	    echo (' disabled="disabled" ');
                             	}
                             	?> name="premierContact" id="premierContact" type="checkbox">1er contact</label> <?php 
-                            	   if($suivi->getPremierContact() != null){echo('<label class="pull-right">('. $suivi->premierContactToString(). ')</label>');}
+                            	   if($suivi->getPremierContact() != null){
+                            	       echo '<input class="form-control col-sm-2" type="date" value="'. $suivi->premierContactFormat() .'" id="dateModifPremierContact">';
+                            	   }
                             	?>
                             </div>
                         </div>
@@ -115,7 +117,9 @@ if (isset ($factureDTO)) {
                         	    echo (' disabled="disabled" ');
                         	}
                         	?> name="deuxiemeContact" id="deuxiemeContact" type="checkbox">2eme contact</label> <?php 
-                        	if(!is_null($suivi->getSecondContact())){echo('<label class="pull-right">('. $suivi->secondContactToString(). ')</label>');}
+                        	if(!is_null($suivi->getSecondContact())){
+                        	    echo '<input class="form-control" type="date" value="'. $suivi->secondContactFormat() .'" id="dateModifSecondContact">';
+                            }
                         	?>
                         </div>
                     </div>

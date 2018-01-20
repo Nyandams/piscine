@@ -75,6 +75,19 @@ class SuiviDTO extends CI_Model
     }
     
     
+    public function premierContactFormat(){
+        if($this->premierContact != null){
+            return $this->getPremierContact()->format('Y-m-d');
+        }
+    }
+    
+    public function secondContactFormat(){
+        if($this->secondContact != null){
+            return $this->getSecondContact()->format('Y-m-d');
+            
+        }
+    }
+    
     
     /**
      * @return the $idEditeur
