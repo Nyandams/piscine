@@ -116,7 +116,7 @@ class FestivalDAO extends CI_Model
      */
     public function deleteFestival($festivalDTO){
         $id = $festivalDTO->getIdFestival();
-        return $this->db->where('id', $id)->delete($this->table);
+        return $this->db->where('idFestival', $id)->delete($this->table);
     }
     
     

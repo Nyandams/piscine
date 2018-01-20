@@ -126,10 +126,17 @@ class Festival extends CI_Controller {
             $ensembleReservationDAO->supprimerReservation($reservationDto->getIdReservation());
         }
         
+        //suppression des suivis
+        $suiviDao = $this->SuiviFactory->getInstance();
+        $suiviCollection = $suiviDao->getSuiviByIdFestival($idFestival);
+        foreach ($suiviCollection as $suiviDto){
+            $suiviDao->deleteSuivi($suiviDto);
+        }
+        
         //suppression du festival
         $festivalDao = $this->FestivalFactory->getInstance();
         try{
-            $festivalDto = $festivalDao->getFestivalById();
+            $festivalDto = $festivalDao->getFestivalById($idFestival);
             $festivalDao->deleteFestival($festivalDto);
         }catch(Exception $e){
         }

@@ -78,9 +78,9 @@ class EnsembleReserverService extends CI_Model
      * @param unknown $idReservation
      */
     public function supprimerReserverByIdReservation($idReservation){
-        $ensembleReserverCollection = $this->getEnsembleReserverByIdReservation(idReservation);
+        $ensembleReserverCollection = $this->getEnsembleReserverByIdReservation($idReservation);
         foreach ($ensembleReserverCollection as $ensembleReserverDto){
-            $this->reserverDAO->deleteReserver($ensembleReserverDto);
+            $this->reserverDAO->deleteReserver($ensembleReserverDto->getReserverDTO());
         }
     }
     
