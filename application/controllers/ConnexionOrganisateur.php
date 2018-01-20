@@ -20,8 +20,8 @@ class ConnexionOrganisateur extends CI_Controller
         
         if (!$this->session->has_userdata('connexionOrganisateur')){
             
-            $this->form_validation->set_rules('pseudo', '"Nom d\'utilisateur"', 'trim|min_length[3]|required|max_length[52]|alpha_dash|encode_php_tags');
-            $this->form_validation->set_rules('mdp', '"Mot de passe"', 'required|min_length[3]|max_length[52]|alpha_dash|encode_php_tags');
+            $this->form_validation->set_rules('pseudo', '"Nom d\'utilisateur"', 'required|encode_php_tags');
+            $this->form_validation->set_rules('mdp', '"Mot de passe"', 'required|encode_php_tags');
             
             if($this->form_validation->run()) {
                 $login = $this->input->post('pseudo');

@@ -36,14 +36,14 @@ class Organisateur extends CI_Controller
     
     
     public function modificationOrganisateur(){
-        $this->form_validation->set_rules('nom', '"Nom"', 'trim|min_length[3]|max_length[52]|alpha_dash|encode_php_tags');
-        $this->form_validation->set_rules('prenom', '"Prenom"', 'trim|min_length[3]|max_length[52]|alpha_dash|encode_php_tags');
+        $this->form_validation->set_rules('nom', '"Nom"', 'encode_php_tags');
+        $this->form_validation->set_rules('prenom', '"Prenom"', 'encode_php_tags');
         
         if($this->form_validation->run()) {
             $login = $this->input->get('login');
             try{
                 $organisateurDTO = $this->dao->getOrganisateurByLogin($login);
-                
+                $organisateurDTO->setLoginOrganisateur($this->input->post('pseudo'));
                 $organisateurDTO->setNomOrganisateur($this->input->post('nom'));
                 $organisateurDTO->setPrenomOrganisateur($this->input->post('prenom'));
                 $organisateurDTO->setAdmin($this->input->post('selectEstAdmin'));
