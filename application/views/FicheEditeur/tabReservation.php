@@ -88,12 +88,12 @@
 
 <!-- Table Reservation -->
 <h3><label class="label label-default">Reservations</label></h3>
-<br/>
 <table id="tabReserver" class="table table-striped table-bordered col-sm-12 text-left" cellspacing="0" width="100%">
         <!-- Entete du tableau -->
         <thead>
             <tr>
                 <th>Jeu</th>
+                <th>Zone</th>
                 <th>Quantité</th> 
                 <th>Reçu</th>
                 <th>Renvoyé</th> 
@@ -111,8 +111,12 @@
                     $jeuDTO = $reservation->getJeuDTO();
                     $reserverDTO = $reservation->getReserverDTO();
                     $typeJeuDTO = $reservation->getTypeJeu();
-                    
-                    
+                    $zoneDto = $reservation->getZoneDTO();
+                    if (is_null($zoneDto)){
+                        $zoneRes = "";
+                    }else{
+                        $zoneRes = $zoneDto->getNomZone();
+                    }
                     $idJeu = $jeuDTO->getIdJeu();
                     $nomJeu = $jeuDTO->getLibelleJeu();
                     $qteJeu = $reserverDTO->getQuantiteJeuReserver();
@@ -141,6 +145,7 @@
                     }
   
                     $ligne = $ligne . '<td>' . $nomJeu . '</td>';
+                    $ligne = $ligne . '<td>' . $zoneRes . '</td>';
                     $ligne = $ligne . '<td>' . $qteJeu . '</td>';
                     $ligne = $ligne . '<td>' . $recuTxt . '</td>';
                     
