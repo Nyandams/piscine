@@ -127,7 +127,7 @@ class Festival extends CI_Controller {
         }
         
         //suppression des zones
-        $zoneDao = $this->zoneFactory->getInstance();
+        $zoneDao = $this->ZoneFactory->getInstance();
         $zoneCollection = $zoneDao->getZonesByIdFestival($idFestival);
         foreach ($zoneCollection as $zoneDto){
             $zoneDao->deleteZone($zoneDto);
