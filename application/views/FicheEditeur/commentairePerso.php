@@ -1,4 +1,5 @@
 <h3><label class="label label-default">Commentaires</label></h3>
+<br/>
 <form method="POST" action="<?php echo site_url('FicheEditeur/sauvegarderCommentaire?idFicheEditeur=' . $idFicheEditeur)?>">
 	<div class="form-row">
 		<textarea class="form-control" id ="commentaire" name="commentaire"" row="3"><?php

@@ -1,5 +1,5 @@
 <h3><label class="label label-default">Suivis</label></h3>
-
+<br/>
 
 <section class="row">
     <form action="<?php echo site_url('FicheEditeur/sauvegarderSuivi?idFicheEditeur=' . $idFicheEditeur); ?>" method="POST">

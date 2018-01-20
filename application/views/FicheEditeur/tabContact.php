@@ -103,8 +103,9 @@
 
 
 
-<!-- Table Jeu -->
+<!-- Table Contact -->
 <h3><label class="label label-default">Contact</label></h3>
+<br/>
 <table id="tabContact" class="table table-striped table-bordered col-sm-12 text-left" cellspacing="0" width="100%">
         <!-- Entete du tableau -->
         <thead>
