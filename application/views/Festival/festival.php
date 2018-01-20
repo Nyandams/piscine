@@ -34,7 +34,7 @@
 </div>
 
 
-<?php 
+<?php  
 
 
 foreach($festivalCollection as $festival){
@@ -47,20 +47,22 @@ foreach($festivalCollection as $festival){
     $panel ='<div class="panel panel-default vignetteFestival col-lg-2 col-sm-3">
                     <div class="panel-heading" ' . $couleur .'">
                         <div class="row">
-                            <div class="col-xs-8">
-                                <h3 class="panel-title text-center">'.$festival->getAnneeFestival().'</h3>
+                            <div class="col-xs-7">
+                                <h3 class="panel-title text-right">'.$festival->getAnneeFestival().'</h3>
                             </div>
-                            <div class="col-xs-4">
+                            <div class="col-xs-5 text-right">
                                 <a class="btn btn-primary btn-xs" href="'. site_url('Festival/changerFestival?idFestival='. $festival->getIdFestival()) .'" role="button"><span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span></a>
                                 <a class="btn btn-primary btn-xs" href="'. site_url('Festival/supprimerFestival?idFestival='. $festival->getIdFestival()) .'" role="button"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </div>
                         </div>                    
                     </div>
+                    
                     <div class="panel-body">
                        <p>Nb Emplacements : '.$festival->getNbEmplacementTotal().'</p>
                        <p>Prix de l\'emplacement : '.$festival->getPrixEmplacementFestival().'</p>
                        <p>Emplacements restants : '. $festival->getNbEmplacementsRestant() .'</p>
                     </div>
+                    
                 </div>
             ';
     echo $panel;
